@@ -2,15 +2,15 @@
 
 from setuptools import setup, find_packages
 
-setup(name='simplecoin',
-      version='0.4.0',
-      description='Dogecoin mining with no registration required.',
-      author='Eric Cook',
-      author_email='eric@simpload.com',
-      url='http://www.simpledoge.com',
+setup(name='simplemona',
+      version='0.4.1',
+      description='Monacoin mining with no registration required.',
+      author='Eric Cook/Musee Ullah',
+      author_email='milkteafuzz@gmail.com',
+      url='http://ilya.milkteafuzz.com',
       entry_points={
           'console_scripts': [
-              'sd_rpc = simplecoin.rpc:entry'
+              'sm_rpc = simplecoin.rpc:entry'
           ]
       },
       packages=find_packages()

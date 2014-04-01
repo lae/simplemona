@@ -1,12 +1,12 @@
-DROP DATABASE IF EXISTS simplecoin;
-DROP DATABASE IF EXISTS simplecoin_testing;
-CREATE USER simplecoin WITH PASSWORD 'testing';
-CREATE DATABASE simplecoin;
-GRANT ALL PRIVILEGES ON DATABASE simplecoin to simplecoin;
+DROP DATABASE IF EXISTS simplemona;
+DROP DATABASE IF EXISTS simplemona_testing;
+CREATE USER simplemona WITH PASSWORD 'testing';
+CREATE DATABASE simplemona;
+GRANT ALL PRIVILEGES ON DATABASE simplemona to simplemona;
 -- Create a testing database to be different than dev
-CREATE DATABASE simplecoin_testing;
-GRANT ALL PRIVILEGES ON DATABASE simplecoin_testing to simplecoin;
-\c simplecoin
+CREATE DATABASE simplemona_testing;
+GRANT ALL PRIVILEGES ON DATABASE simplemona_testing to simplemona;
+\c simplemona
 CREATE EXTENSION hstore;
-\c simplecoin_testing
+\c simplemona_testing
 CREATE EXTENSION hstore;

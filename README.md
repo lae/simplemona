@@ -1,35 +1,44 @@
-Simple Doge
+Simple Mona
 ===========
 
-This repo is the source code for the http://simpledoge.com in its entirety.
+This repo is the source code for the http://simplemona.com in its entirety.
 This includes all Celery tasks for handling the PowerPool stratum mining servers
 output.
 
 Getting Started
 ===============
 
-Simple Doge makes use of PostgreSQL and Redis, as well as RabbitMQ if you'll
+Simple Mona makes use of PostgreSQL and Redis, as well as RabbitMQ if you'll
 be running a test powerpool instance for end to end testing. Setup is designed
-to run on Ubuntu 12.04. If you're doing development you'll also want to install
+to run on Debian Wheezy. If you're doing development you'll also want to install
 Node since Grunt is used.
 
-    apt-get install redis-server postgresql-contrib-9.1 postgresql-9.1 postgresql-server-dev-9.1 
-    # to install rabbitmq as well
-    apt-get install rabbitmq-server
-    # add the ppa that includes latest version of nodejs. Ubuntu repos are really out of date
-    sudo add-apt-repository ppa:chris-lea/node.js
-    sudo apt-get install nodejs
+    # install dotdeb repo
+    echo -e 'deb http://packages.dotdeb.org wheezy all\ndeb-src http://packages.dotdeb.org wheezy all' > /etc/apt/sources.list.d/dotdeb.list
+    wget http://www.dotdeb.org/dotdeb.gpg
+    sudo apt-key add dotdeb.gpg
+    # rabbitmq repo
+    echo 'deb http://www.rabbitmq.com/debian/ testing main' > /etc/apt/sources.list.d/rabbitmq.list
+    wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+    sudo apt-key add rabbitmq-signing-key-public.asc
+    # and wheezy-backports if you have not already
+    echo "deb http://ftp.us.debian.org/debian wheezy-backports main" >> /etc/apt/sources.list
+    # then update and install services
+    sudo apt-get update
+    sudo apt-get install redis-server postgresql-contrib-9.1 postgresql-9.1 postgresql-server-dev-9.1 rabbitmq-server nodejs nodejs-legacy
+    # install npm
+    sudo curl --insecure https://www.npmjs.org/install.sh | bash
 
 Now you'll want to setup a Python virtual enviroment to run the application in.
 This isn't stricly necessary, but not using virtualenv can cause all kinds of 
 headache, so it's *highly* recommended. You'll want to setup virtualenvwrapper 
 to make this easier.
 
-    # make a new virtual enviroment for simpledoge
-    mkvirtualenv sd
+    # make a new virtual enviroment for simplemona
+    mkvirtualenv sm
     # clone the source code repo
-    git clone https://github.com/ericecook/simpledoge.git
-    cd simpledoge
+    git clone https://github.com/liliff/simplemona.git
+    cd simplemona
     pip install -e .
     # install all python dependencies
     pip install -r requirements.txt
@@ -38,12 +47,12 @@ to make this easier.
     sudo npm install -g grunt-cli  # setup grunt binary globally
     npm install  # setup all the grunt libs local to the project
 
-Initialize an empty PostgreSQL database for simpledoge.
+Initialize an empty PostgreSQL database for simplemona.
 
     # creates a new user with password testing, creates the database, enabled
     # contrib extensions
     ./util/reset_db.sh
-    # creates the database schema for simpledoge
+    # creates the database schema for simplemona
     python manage.py init_db
 
 Now everything should be ready for running the server. This project uses Grunt
@@ -52,7 +61,7 @@ in development to watch for file changes and reload the server.
     grunt watch
 
 This should successfully start the development server if all is well. If not,
-taking a look at the uwsgi log can help a lot. Usually I have this running in a
+taking a look at the webserver log can help a lot. Usually I have this running in a
 separate console.
 
-    tail -f uwsgi.log
+    tail -f webserver.log
