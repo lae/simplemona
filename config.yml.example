@@ -102,14 +102,16 @@ coin_name: Mona
 site_title: Simple Mona
 # the unicode symbol for the coin
 coin_symbol: "MONA"
+# host for static assets e.g. {assets_address}/css/main.css
+assets_address: http://static.simplemona.com
 # logo img
-logo: "/static/img/monacoin.png"
+logo: "/img/monacoin.png"
 # xs leader img
-leader-xs: "static/img/mona-miner-xs.jpg"
+leader-xs: "/img/mona-miner-xs.jpg"
 # sm leader img
-leader-sm: "static/img/mona-miner-sm.jpg"
+leader-sm: "/img/mona-miner-sm.jpg"
 # fullsize leader img
-leader: "static/img/mona-miner.jpg"
+leader: "/img/mona-miner.jpg"
 # this url will have the transaction id appended to it to provide
 # information on a specific transaction for a payout
 transaction_link_prefix: http://abe.monash.pw/tx/
