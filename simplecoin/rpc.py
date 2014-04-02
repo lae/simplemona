@@ -93,7 +93,7 @@ class RPCClient(object):
                             .format(user))
 
         for user, amount, id in bonus_payouts:
-            if user.startswith('D'):
+            if user.startswith('M'):
                 totals.setdefault(user, 0)
                 totals[user] += amount
                 bids.setdefault(user, [])
