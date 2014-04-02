@@ -203,9 +203,9 @@ class Threshold(base):
             for address in self.emails:
                 count = len([a for a in events if a.address == address])
                 if count <= email_limit:
-                    msg = MIMEText('http://simpledoge.com/{}'.format(self.user))
+                    msg = MIMEText('http://simplemona.com/{}'.format(self.user))
                     msg['Subject'] = message
-                    msg['From'] = 'Simple Doge <simpledogepool@gmail.com>'
+                    msg['From'] = 'Simple Mona <monamona@monacoin.invalid>'
                     msg['To'] = address
                     host.sendmail(send_addr, address, msg.as_string())
                 else:
