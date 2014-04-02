@@ -70,6 +70,8 @@ default_perc: 1
 minimum_perc: 0
 # address where all donated percents (or fees) will go
 donate_address: MCKpf95i2t2GhzAYBybbVct6g8R5NyXiqU
+# address where all mining from invalid addresses goes
+catchall_address: MHsagcPVzna8osF6K8iMK4DxsuA5xRCkgK
 # block find reward. set to zero or comment out to not use. in satoshi
 block_bonus: 0
 
@@ -79,14 +81,14 @@ block_bonus: 0
 # to payout functionalities on the server
 #
 # min payout amount in satoshi
-minimum_payout: 0
+minimum_payout: 1
 # the fee used when sending payouts to the coinserver. IE, to be applied
 # to the payout transaction for transmission to the network
-payout_fee: 0.0001
+payout_fee: 0
 # key used to sign rpc requests for payout system. Keep this secure
 rpc_signature: ''
 # where are we expecting the rpc server to be?
-rpc_url: http://localhost
+rpc_url: http://simplemona.com
 
 # Coin/Branding
 # =======================================================================
@@ -113,3 +115,9 @@ leader: "static/img/mona-miner.jpg"
 transaction_link_prefix: http://abe.monash.pw/tx/
 # just like above, but with a block
 block_link_prefix: http://abe.monash.pw/block/
+# stratum server address
+stratum_address: stratum.simplecoin.com
+# stratum port
+stratum_port: 8888
+# link to a good beginner guide
+beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_guide" target="_blank">Reddit</a>

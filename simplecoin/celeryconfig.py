@@ -38,4 +38,8 @@ CELERYBEAT_SCHEDULE = {
         'task': 'simplecoin.tasks.difficulty_avg',
         'schedule': timedelta(minutes=2),
     },
+    'update_coin_trans': {
+        'task': 'simplecoin.tasks.update_coin_transaction',
+        'schedule': timedelta(minutes=10),
+    },
 }

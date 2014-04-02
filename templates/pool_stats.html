@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set active_page = "pool_stats" %}
-{% set page_title = "Pool Stats - Efficiency and block information for Simple Mona mining pool" %}
+{% set page_title = "Pool Stats - Efficiency and block information for Simple " ~ config['coin_name'] ~ " mining pool" %}
 {% block body %}
 <script>
 $(document).ready(function() {
@@ -20,7 +20,7 @@ $(document).ready(function() {
       <div class="panel-body text-center">
         <small>Active&nbsp;Workers</small>&nbsp;
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
-                     title="Total workers currently mining the Simple Mona mining pool. Updated every couple minutes."></i>
+                     title="Total workers currently mining on this pool. Updated every couple minutes."></i>
         <br>
         <h4>
           <p><span>{{ g.worker_count }}</span></p>
@@ -33,7 +33,7 @@ $(document).ready(function() {
       <div class="panel-body text-center">
         <small>Average&nbsp;Hashrate</small>&nbsp;
         <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
-                     title="Megahashes per second completed by the pool, an average of the last 10 minutes."></i>
+                     title="Megahashes per second completed by the pool. An average of the last 10 minutes."></i>
         <br>
         <h4>
           <p><span class="odometer phashrate">...</span>&nbsp;MHashes/sec</p>

@@ -12,8 +12,6 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Img ================================================== -->
-
 <div class="row">
 <!-- Quick start ================================================== -->
 
@@ -24,11 +22,11 @@ $(document).ready(function() {
       <ol>
           <li>Configure your stratum client with the information below. Worker name can be anything you'd like:
             <small>
-              <pre><b>URL: </b>stratum+tcp://ilya.milkteafuzz.com
-<b>Port:</b> 8888
-<b>Username: </b>[Your wallet address].[Worker Name]
-<b>Password: </b>anything
-<b>cgminer example:</b> ./cgminer -o stratum+tcp://ilya.milkteafuzz.com:8888 -u MCKpf95i2t2GhzAYBybbVct6g8R5NyXiqU.nanashi -p x -I 13</pre>
+              <pre><b>URL: </b>stratum+tcp://{{ config['stratum_address'] }}
+<b>Port:</b> {{ config['stratum_port'] }}
+<b>Username: </b>[Your wallet address].[Worker Name (can be empty)]
+<b>Password: </b>anything (can be empty)
+<b>cgminer example:</b> ./cgminer -o stratum+tcp://{{ config['stratum_address'] }}:{{ config['stratum_port'] }} -u {{ config['catchall_address'] }}.nanashi -p x -I 13</pre>
             </small>
           </li>
           <li>Check your stats and estimated payout by entering your {{ config['coin_name'] }} address below:</li>
@@ -53,7 +51,6 @@ $(document).ready(function() {
               </fieldset>
             </form>
           </div>
-
         </ol>
     </div>
   </div>
