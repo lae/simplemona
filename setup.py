@@ -11,6 +11,7 @@ setup(name='simplemona',
       entry_points={
           'console_scripts': [
               'sm_rpc = simplecoin.rpc:entry'
+              'sc_rpc = simplecoin.rpc:entry'
           ]
       },
       packages=find_packages()
