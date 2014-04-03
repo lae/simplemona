@@ -40,7 +40,7 @@ email:
 # Celery configuration options. Since celery is run under a flask context
 # then thses are settings for the celery worker.
 celery:
-    CELERY_ACCEPT_CONTENT: ['json', 'msgpack', 'yaml']
+    CELERY_ACCEPT_CONTENT: ['pickle', 'json', 'msgpack', 'yaml']
     # the name of the queue you'll recieve tasks from powerpool on. should
     # match the default queue setting in powerpool instances that connect with
     # this task handler
