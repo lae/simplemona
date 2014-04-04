@@ -1,0 +1,22 @@
+- title: Block Found!
+  severity: success
+  date: 4/4/2014
+  key: 3
+  body: |
+    We've found a block! I'll be working on translation next.
+    ブロックを見つけた！ 次は翻訳を始める
+
+#- title: Stratum Changes
+#  severity: danger
+#  date: 4/4/2014
+#  key: 2
+#  body: |
+#    The stratum was moved to 108.61.20.227. There may be remaining issues.
+
+- title: Testing Phase
+  severity: warning
+  date: 4/3/2014
+  key: 1
+  body: |
+    The stratum and pool may suffer some instability. Please bear with me.
+
