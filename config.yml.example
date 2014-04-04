@@ -2,10 +2,8 @@
 # =======================================================================
 # Where's powerpool running?
 monitor_addrs:
-    - stratum: tcp+stratum://stratum.simplemona.com:8888
-      mon_address: http://localhost:3855/
-#    - stratum: tcp+stratum://localhost:3334
-#      mon_address: http://localhost:3856/
+    - stratum: tcp+stratum://stratum-internal.simplemona.com:8888
+      mon_address: http://stratum-internal.simplemona.com:3855/
 # how many confirmations do we wait before marking blocks mature
 # and allowing payout over RPC
 block_mature_confirms: 120
@@ -27,7 +25,7 @@ coinserv:
     wallet_pass: ''
     account: simplemona_pool
 
-# email server authentication 
+# email server authentication
 email:
     send_address: 'monamona@monacoin.invalid'
     username: ''
@@ -129,7 +127,7 @@ transaction_link_prefix: http://abe.monash.pw/tx/
 # just like above, but with a block
 block_link_prefix: http://abe.monash.pw/block/
 # stratum server address
-stratum_address: stratum.simplecoin.com
+stratum_address: stratum.simplemona.com
 # stratum port
 stratum_port: 8888
 # link to a good beginner guide
