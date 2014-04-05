@@ -13,8 +13,10 @@ latest_ppagent: [0, 3, 4]
 SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona
 # the session encryption key
 SECRET_KEY: 'something_really_secret'
-
-#DEBUG: True
+# a simple list of users to redact from the stats. Should be built out to a 
+# database table at some point
+redacted_addresses:
+    - dsflkgsdlfkgsld;fkgsl;dfkg
 
 # connection information for the coinserver RPC
 coinserv:
@@ -69,6 +71,8 @@ celery:
 # the multiplier used on the last n shares to keep for counting share
 # contributions
 last_n: 2
+# this is the n margin that is left by the cleanup script.
+cleanup_n: 4
 # default donation/bonus percentage applied to payouts if no custom is
 # defined
 default_perc: 1

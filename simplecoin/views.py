@@ -1,19 +1,20 @@
 import calendar
 import time
-import yaml
+
 import datetime
 
+import yaml
 from flask import (current_app, request, render_template, Blueprint, abort,
                    jsonify, g, session, Response)
 from lever import get_joined
 
-from .models import (OneMinuteShare, Block, FiveMinuteShare,
-                     OneHourShare, Status, FiveMinuteReject, OneMinuteReject,
-                     OneHourReject, DonationPercent, BonusPayout)
+from .models import (OneMinuteShare, Block, Blob,
+                     FiveMinuteShare, OneHourShare, Status, DonationPercent,
+                     FiveMinuteHashrate, OneMinuteHashrate, OneHourHashrate, OneMinuteTemperature,
+                     FiveMinuteTemperature, OneHourTemperature)
 from . import db, root, cache
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
-                    get_pool_eff, last_10_shares, total_earned, total_paid,
-                    collect_user_stats, get_adj_round_shares,
+                    get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, last_block_time, get_alerts,
                     last_block_found)
 
@@ -116,16 +117,26 @@ def summary_page():
     if cached_time is not None:
         cached_time = cached_time.replace(second=0, microsecond=0).strftime("%Y-%m-%d %H:%M")
 
-    if user_shares is None:
-        user_list = []
-    else:
-        user_list = [([shares, user, (65536 * last_10_shares(user[6:]) / 600), user_match(user[6:])]) for user, shares in user_shares.iteritems()]
-        user_list = sorted(user_list, key=lambda x: x[0], reverse=True)
+    redacted = set(current_app.config.get('redacted_addresses', set()))
+    user_list = []
+    total_hashrate = 0.0
+    if user_shares is not None:
+        for user, shares in user_shares.iteritems():
+            user = user[6:]
+            hashrate = (65536 * last_10_shares(user) / 600)
+            total_hashrate += hashrate
+            dat = {'hashrate': hashrate,
+                   'shares': shares,
+                   'user': user if user not in redacted else None,
+                   'donation_perc': user_match(user)}
+            user_list.append(dat)
+        user_list = sorted(user_list, key=lambda x: x['shares'], reverse=True)
 
     return render_template('round_summary.html',
                            users=user_list,
                            blockheight=cache.get('blockheight') or 0,
-                           cached_time=cached_time)
+                           cached_time=cached_time,
+                           total_hashrate=total_hashrate)
 
 
 @main.route("/exc_test")
@@ -138,13 +149,69 @@ def exception():
 @main.route("/<address>/<worker>/details/<int:gpu>")
 @main.route("/<address>/details/<int:gpu>", defaults={'worker': ''})
 @main.route("/<address>//details/<int:gpu>", defaults={'worker': ''})
-def worker_detail(address, worker, gpu):
+def gpu_detail(address, worker, gpu):
     status = Status.query.filter_by(user=address, worker=worker).first()
     if status:
         output = status.pretty_json(gpu)
     else:
         output = "Not available"
     return jsonify(output=output)
+
+
+@main.route("/<address>/<worker>")
+def worker_detail(address, worker):
+    status = Status.query.filter_by(user=address, worker=worker).first()
+
+    return render_template('worker_detail.html',
+                           status=status,
+                           username=address,
+                           worker=worker)
+
+
+@main.route("/<address>/<worker>/<stat_type>/<window>")
+def worker_stats(address=None, worker=None, stat_type=None, window="hour"):
+
+    if not address or not worker or not stat_type:
+        return None
+
+    type_lut = {'hash': {'hour': OneMinuteHashrate,
+                         'day': FiveMinuteHashrate,
+                         'day_compressed': OneMinuteHashrate,
+                         'month': OneHourHashrate,
+                         'month_compressed': FiveMinuteHashrate},
+                'temp': {'hour': OneMinuteTemperature,
+                         'day': FiveMinuteTemperature,
+                         'day_compressed': OneMinuteTemperature,
+                         'month': OneHourTemperature,
+                         'month_compressed': FiveMinuteTemperature}}
+
+    # store all the raw data of we've grabbed
+    workers = {}
+
+    typ = type_lut[stat_type][window]
+
+    if window == "day":
+        compress_typ(type_lut[stat_type]['day_compressed'], address, workers, worker=worker)
+    elif window == "month":
+        compress_typ(type_lut[stat_type]['month_compressed'], address, workers, worker=worker)
+
+
+
+    for m in get_typ(typ, address, worker=worker):
+        stamp = calendar.timegm(m.time.utctimetuple())
+        if worker is not None or 'undefined':
+            workers.setdefault(m.device, {})
+            workers[m.device].setdefault(stamp, 0)
+            workers[m.device][stamp] += m.value
+        else:
+            workers.setdefault(m.worker, {})
+            workers[m.worker].setdefault(stamp, 0)
+            workers[m.worker][stamp] += m.value
+    step = typ.slice_seconds
+    end = ((int(time.time()) // step) * step) - (step * 2)
+    start = end - typ.window.total_seconds() + (step * 2)
+
+    return jsonify(start=start, end=end, step=step, workers=workers)
 
 
 @main.route("/<address>")

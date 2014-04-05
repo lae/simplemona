@@ -2,12 +2,13 @@ import calendar
 import datetime
 import time
 import itertools
-import yaml
 
+import yaml
 from flask import current_app
-from bitcoinrpc import CoinRPCException
 from sqlalchemy.sql import func
 
+import requests
+from bitcoinrpc import CoinRPCException
 from . import db, coinserv, cache, root
 from .models import (DonationPercent, OneMinuteReject, OneMinuteShare,
                      FiveMinuteShare, FiveMinuteReject, Payout, BonusPayout,
@@ -57,7 +58,7 @@ def last_block_found():
     return last_block.height
 
 
-def get_typ(typ, address, window=True):
+def get_typ(typ, address, window=True, worker=None):
     """ Gets the latest slices of a specific size. window open toggles
     whether we limit the query to the window size or not. We disable the
     window when compressing smaller time slices because if the crontab
@@ -66,19 +67,29 @@ def get_typ(typ, address, window=True):
     compressed. """
     # grab the correctly sized slices
     base = db.session.query(typ).filter_by(user=address)
+
+    if worker is not None:
+        base = base.filter_by(worker=worker)
     if window is False:
         return base
     grab = typ.floor_time(datetime.datetime.utcnow()) - typ.window
     return base.filter(typ.time >= grab)
 
 
-def compress_typ(typ, address, workers):
-    for slc in get_typ(typ, address, window=False):
-        slice_dt = typ.upper.floor_time(slc.time)
-        stamp = calendar.timegm(slice_dt.utctimetuple())
-        workers.setdefault(slc.worker, {})
-        workers[slc.worker].setdefault(stamp, 0)
-        workers[slc.worker][stamp] += slc.value
+def compress_typ(typ, address, workers, worker=None):
+    for slc in get_typ(typ, address, window=False, worker=worker):
+        if worker is not None:
+            slice_dt = typ.floor_time(slc.time)
+            stamp = calendar.timegm(slice_dt.utctimetuple())
+            workers.setdefault(slc.device, {})
+            workers[slc.device].setdefault(stamp, 0)
+            workers[slc.device][stamp] += slc.value
+        else:
+            slice_dt = typ.upper.floor_time(slc.time)
+            stamp = calendar.timegm(slice_dt.utctimetuple())
+            workers.setdefault(slc.worker, {})
+            workers[slc.worker].setdefault(stamp, 0)
+            workers[slc.worker][stamp] += slc.value
 
 
 @cache.cached(timeout=60, key_prefix='pool_hashrate')
@@ -231,7 +242,12 @@ def collect_user_stats(address):
                  for gpu in workers[st.worker]['status']['gpus']])
         except KeyError:
             workers[st.worker]['wu'] = 0
-        workers[st.worker]['wue'] = workers[st.worker]['wu'] / (workers[st.worker]['total_hashrate']*1000)
+
+        try:
+            workers[st.worker]['wue'] = workers[st.worker]['wu'] / (workers[st.worker]['total_hashrate']*1000)
+        except ZeroDivisionError:
+            workers[st.worker]['wue'] = 0.0
+
         ver = workers[st.worker]['status'].get('v', '0.2.0').split('.')
         try:
             workers[st.worker]['status_version'] = [int(part) for part in ver]
