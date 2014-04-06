@@ -13,10 +13,12 @@ import yaml
 from flask.ext.cache import Cache
 from bitcoinrpc import AuthServiceProxy
 
+from flask.ext.babel import Babel
 
 root = os.path.abspath(os.path.dirname(__file__) + '/../')
 db = SQLAlchemy()
 cache = Cache()
+babel = Babel()
 coinserv = LocalProxy(
     lambda: getattr(current_app, 'rpc_connection', None))
 
@@ -53,6 +55,7 @@ def create_app(config='/config.yml', celery=False):
     cache_config = {'CACHE_TYPE': 'redis'}
     cache_config.update(app.config.get('main_cache', {}))
     cache.init_app(app, config=cache_config)
+    babel.init_app(app)
 
     if not celery:
         hdlr = logging.FileHandler(app.config.get('log_file', 'webserver.log'))

@@ -143,3 +143,12 @@ beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_gu
 #log_file = webserver.log
 # all management commands will be logged here
 #manage_log_file = manage.log
+
+# i18n/localisation configuration
+# =======================================================================
+# default locale to use as fallover
+default_locale: en
+# acceptable locales that we have translations for
+accept_locales:
+  en: English
+  ja: 日本語
