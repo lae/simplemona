@@ -1,13 +1,13 @@
+from pprint import pformat
+import sys
+
 from flask import Blueprint, current_app, jsonify
 from lever import (API, LeverException)
-from pprint import pformat
+import six
 
 from .models import (Block, Share, Transaction, Payout, OneMinuteShare, Status,
                      Blob, BonusPayout)
 from . import db
-
-import six
-import sys
 
 
 api = Blueprint('api_bp', __name__)
@@ -17,7 +17,7 @@ api = Blueprint('api_bp', __name__)
 def api_error_handler(exc):
     # set some defaults
     log = 'debug'
-    msg = "Exception occured in error handling"
+    msg = "Exception occurred in error handling"
     code = 500
     extra = {}
     end_user = {}
@@ -32,7 +32,7 @@ def api_error_handler(exc):
         extra.pop('tb', None)
     except Exception as e:
         current_app.logger.error(
-            "Unhadled API error of type {0} raised".format(type(e)))
+            "Unhandled API error of type {0} raised".format(type(e)))
 
     if hasattr(exc, 'error_key'):
         end_user['error_key'] = e.error_key

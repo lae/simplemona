@@ -1,7 +1,6 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="og:image" content="{{ config['leader-xs'] | safe }}">
   <title>Simple {{ config['coin_name'] | safe }}{% if page_title %} - {{ page_title }}{% endif %}</title>
   <meta name="description" content="A custom mining pool with no registration and a focus on developing new tools for miners">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,16 +9,16 @@
 
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/superhero/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/main.css?revision={{ config['hash'] }}">
-  <link rel="stylesheet" href="/static/css/nv.d3.css?revision={{ config['hash'] }}">
+  <link rel="stylesheet" href="{{ config['assets_address'] | safe }}/css/main.css?revision={{ config['hash'] }}">
+  <link rel="stylesheet" href="{{ config['assets_address'] | safe }}/css/nv.d3.css?revision={{ config['hash'] }}">
   <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.2/d3.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.3.3/ZeroClipboard.min.js"></script>
-  <script src="/static/js/utils.js"></script>
-  <script src="/static/js/nv.d3.min.js"></script>
-  <script src="/static/js/graph.js?revision={{ config['hash'] }}"></Script>
-  <script src="/static/js/bootstrap.min.js"></Script>
+  <script src="{{ config['assets_address'] | safe }}/js/utils.js"></script>
+  <script src="{{ config['assets_address'] | safe }}/js/nv.d3.min.js"></script>
+  <script src="{{ config['assets_address'] | safe }}/js/graph.js?revision={{ config['hash'] }}"></Script>
+  <script src="{{ config['assets_address'] | safe }}/js/bootstrap.min.js"></Script>
   <script>
     $(document).ready(function() {
       var shares, ten_min_hashrate, seconds, khashpersec, shares_per_sec, luck,
@@ -99,45 +98,45 @@
 <body>
   <div class="container">
     <div class="row">
-        <div class="col-md-5 no-padding">
+        <div class="col-md-4 no-padding">
           <h1 style="font-size:51px;">
             <a style=" text-decoration:none;" href="/">
               <div>
-                <img src="{{ config['logo'] | safe }}" style="padding-bottom: 5px;float:left;width:64px;">
+                <img src="{{ config['assets_address'] | safe }}{{ config['logo'] | safe }}" style="padding-bottom: 5px;float:left;width:64px;">
                 <p>&nbsp;Simple&nbsp;{{ config['coin_name'] | safe }}</p>
               </div>
             </a>
           </h1>
         </div>
-        <div class="col-md-7 no-padding">
+        <div class="col-md-8 no-padding">
           <h5 class="stats">
             <div class="col-sm-4">
               <strong data-toggle="tooltip" data-placement="right"
-                title="Total hashrate for the pool, represented in Megahashes per second">Pool&nbsp;Hashrate
-              </strong>:&nbsp;<span class="odometer hashes">...</span> MH/s
+                title="{{ _('Total hashrate for the pool, represented in Megahashes per second') }}">{{ _('Pool&nbsp;Hashrate') }}
+              </strong>:&nbsp;<span class="odometer hashes">...</span>&nbsp;MH/s
               <br>
               <strong data-placement="right"
-                title="Total active clients mining on Simple {{ config['coin_name'] | safe }}">
-                Active&nbsp;Workers</strong>:&nbsp;{{ g.worker_count }}
+                title="{{ _('Total active clients mining on Simple %(coin)s', coin = config['coin_name']) }}">
+                {{ _('Active&nbsp;Workers') }}</strong>:&nbsp;{{ g.worker_count }}
             </div>
             <div class="col-sm-4">
               <strong data-placement="right"
-                title="Total time since the last block was solved">Round&nbsp;Time
+                title="{{ _('Total time since the last block was solved') }}">{{ _('Round&nbsp;Time') }}
               </strong>:&nbsp;
               <span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span>
               <br>
               <strong data-placement="right"
-                title="Estimated time remaining until the next block is found. It assumes round luck will be 100% and that difficulty will not change.">
-                Est.&nbsp;Time&nbsp;Left</strong>:&nbsp;<span class="est_remaining_hours">00</span>:<span class="est_remaining_minutes">00</span>:<span class="est_remaining_seconds">00</span>
+                title="{{ _('Estimated time remaining until the next block is found. It assumes round luck will be 100%% and that difficulty will not change.') }}">
+                {{ _('Est.&nbsp;Time&nbsp;Left') }}</strong>:&nbsp;<span class="est_remaining_hours">00</span>:<span class="est_remaining_minutes">00</span>:<span class="est_remaining_seconds">00</span>
             </div>
             <div class="col-sm-4">
               <strong data-placement="right"
-                title="Total 1 difficulty shares submitted since the last block was solved">Round&nbsp;Shares
+                title="{{ _('Total 1 difficulty shares submitted since the last block was solved') }}">{{ _('Round&nbsp;Shares') }}
               </strong>:&nbsp;<span class="odometer shares">...</span>
               <br>
               <strong data-placement="right"
-                title="Calculated from (shares expected to solve a block)/(shares currently submitted). This results in a percentage that decreases the unluckier the pool is in finding a block. Additionally, the expected number of shares to solve a block is dependent upon the current difficulty, and so large spikes or drops in difficulty often result in strange jumps in round luck">
-                Round&nbsp;Luck</strong>:&nbsp;<span class="odometer luck">...</span>%
+                title="{{ _('Calculated from (shares expected to solve a block)/(shares currently submitted). This results in a percentage that decreases the unluckier the pool is in finding a block. Additionally, the expected number of shares to solve a block is dependent upon the current difficulty, and so large spikes or drops in difficulty often result in strange jumps in round luck') }}">
+                {{ _('Round&nbsp;Luck') }}</strong>:&nbsp;<span class="odometer luck">...</span>%
             </div>
           </h5>
         </div>
@@ -146,30 +145,30 @@
       <div class="navbar navbar-default">
         <div class="navbar-collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li{% if active_page == "home" %} class="active"{% endif %}><a href="/"><i class="fa fa-home too-damn-bright"></i> &nbsp;Home</a></li>
+            <li{% if active_page == "home" %} class="active"{% endif %}><a href="/"><i class="fa fa-home too-damn-bright"></i> &nbsp;{{ _('Home') }}</a></li>
           </ul>
           <ul class="nav navbar-nav hidden-xs hidden-sm hidden-md">
-            <li{% if active_page == "news" %} class="active"{% endif %}><a href="/news"><i class="fa fa-globe too-damn-bright"></i> &nbsp;News</a></li>
-            <!--li><a href="https://kiwiirc.com/client/irc.rizon.net/#commie-subs" target="_blank"><i class="fa fa-comments too-damn-bright"></i> &nbsp;Chat</a></li-->
-            <li class="{% if active_page == "pool_stats" %} active{% endif %}"><a href="/pool_stats"><i class="fa fa-bar-chart-o too-damn-bright"></i> &nbsp;Pool Stats</a></li>
-            <li class="{% if active_page == "stats" %} active{% endif %}"><a href="/stats"><i class="fa fa-user too-damn-bright"></i> &nbsp;User Stats</a></li>
-            <li class="{% if active_page == "round_summary" %} active{% endif %}"><a href="/round_summary"><i class="fa fa-flag too-damn-bright"></i> &nbsp;Round Summary</a></li>
-            <li{% if active_page == "guides" %} class="active"{% endif %}><a href="/guides/"><i class="fa fa-book too-damn-bright"></i> &nbsp;Guides</a></li>
+            <li{% if active_page == "news" %} class="active"{% endif %}><a href="/news"><i class="fa fa-globe too-damn-bright"></i> &nbsp;{{ _('News') }}</a></li>
+            <li><a href="https://kiwiirc.com/client/irc.rizon.net/#monacoin" target="_blank"><i class="fa fa-comments too-damn-bright"></i> &nbsp;{{ _('Chat') }}</a></li>
+            <li class="{% if active_page == "pool_stats" %} active{% endif %}"><a href="/pool_stats"><i class="fa fa-bar-chart-o too-damn-bright"></i> &nbsp;{{ _('Pool Stats') }}</a></li>
+            <li class="{% if active_page == "stats" %} active{% endif %}"><a href="/stats"><i class="fa fa-user too-damn-bright"></i> &nbsp;{{ _('User Stats') }}</a></li>
+            <li class="{% if active_page == "round_summary" %} active{% endif %}"><a href="/round_summary"><i class="fa fa-flag too-damn-bright"></i> &nbsp;{{ _('Round Summary') }}</a></li>
+            <li{% if active_page == "guides" %} class="active"{% endif %}><a href="/guides/"><i class="fa fa-book too-damn-bright"></i> &nbsp;{{ _('Guides') }}</a></li>
           </ul>
           <ul class="nav navbar-nav hidden-lg">
             <li class="dropdown{% if active_page == "stats" or active_page == "pool_stats" or active_page == "round_summary" %} active{% endif %}">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o too-damn-bright"></i> &nbsp;Stats <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o too-damn-bright"></i> &nbsp;{{ _('Stats') }} <b class="caret"></b></a>
               <ul class="dropdown-menu" style="width:100%;">
-                <li><a href="/pool_stats"><i class="fa fa-dashboard too-damn-bright"></i> &nbsp;Pool Stats</a></li>
-                <li><a href="/stats"><i class="fa fa-user too-damn-bright"></i> &nbsp;User Stats</a></li>
-                <li><a href="/round_summary"><i class="fa fa-flag too-damn-bright"></i> &nbsp;Round Summary</a></li>
+                <li><a href="/pool_stats"><i class="fa fa-dashboard too-damn-bright"></i> &nbsp;{{ _('Pool Stats') }}</a></li>
+                <li><a href="/stats"><i class="fa fa-user too-damn-bright"></i> &nbsp;{{ _('User Stats') }}</a></li>
+                <li><a href="/round_summary"><i class="fa fa-flag too-damn-bright"></i> &nbsp;{{ _('Round Summary') }}</a></li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-star too-damn-bright"></i> &nbsp;Extras <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-star too-damn-bright"></i> &nbsp;{{ _('Extras') }} <b class="caret"></b></a>
               <ul class="dropdown-menu" style="width:100%;">
-                <li{% if active_page == "news" %} class="active"{% endif %}><a href="/news"><i class="fa fa-globe too-damn-bright"></i> &nbsp;News</a></li>
-                <li{% if active_page == "guides" %} class="active"{% endif %}><a href="/guides/"><i class="fa fa-book too-damn-bright"></i> &nbsp;Guides</a></li>
+                <li{% if active_page == "news" %} class="active"{% endif %}><a href="/news"><i class="fa fa-globe too-damn-bright"></i> &nbsp;{{ _('News') }}</a></li>
+                <li{% if active_page == "guides" %} class="active"{% endif %}><a href="/guides/"><i class="fa fa-book too-damn-bright"></i> &nbsp;{{ _('Guides') }}</a></li>
               </ul>
             </li>
           </ul>
@@ -204,11 +203,29 @@
       <br>
       <small>
         {% if 'repopath' in config %}
-        Running revision <a href="{{ config['repopath'] }}{{ config['hash'] }}">{{ config['hash'] }}</a>
-        released on {{ config['revdate'] }}.
+        {% autoescape false %}
+        {{ _('Running revision %(hash_link)s released on %(revdate)s.',
+            hash_link = '<a href="%s">%s</a>' % (config['repopath'] + config['hash'], config['hash']),
+            revdate = config['revdate']) }}
+        {% endautoescape %}
         {% endif %}
     </div>
   </div>
+  <!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://stats.milkteafuzz.com/";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "13"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
   {% endblock %}
   </div>
 </body>

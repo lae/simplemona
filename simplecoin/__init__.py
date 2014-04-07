@@ -1,20 +1,24 @@
-from flask import Flask, current_app
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.cache import Cache
-from jinja2 import FileSystemLoader
-from werkzeug.local import LocalProxy
-from bitcoinrpc import AuthServiceProxy
 from datetime import datetime
-
 import subprocess
 import logging
 import os
+
+from flask import Flask, current_app
+from flask.ext.sqlalchemy import SQLAlchemy
+from jinja2 import FileSystemLoader
+
+from werkzeug.local import LocalProxy
 import yaml
 
+from flask.ext.cache import Cache
+from bitcoinrpc import AuthServiceProxy
+
+from flask.ext.babel import Babel
 
 root = os.path.abspath(os.path.dirname(__file__) + '/../')
 db = SQLAlchemy()
 cache = Cache()
+babel = Babel()
 coinserv = LocalProxy(
     lambda: getattr(current_app, 'rpc_connection', None))
 
@@ -51,6 +55,7 @@ def create_app(config='/config.yml', celery=False):
     cache_config = {'CACHE_TYPE': 'redis'}
     cache_config.update(app.config.get('main_cache', {}))
     cache.init_app(app, config=cache_config)
+    babel.init_app(app)
 
     if not celery:
         hdlr = logging.FileHandler(app.config.get('log_file', 'webserver.log'))
@@ -119,7 +124,7 @@ def create_app(config='/config.yml', celery=False):
 
     # Route registration
     # =========================================================================
-    from . import views, models, api
+    from . import views, models, api, rpc_views
     app.register_blueprint(views.main)
     app.register_blueprint(api.api, url_prefix='/api')
 

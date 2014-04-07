@@ -1,29 +1,35 @@
 # General
 # =======================================================================
 # Where's powerpool running?
-monitor_addr: http://127.0.0.1:3855/
+monitor_addrs:
+    - stratum: tcp+stratum://stratum.simplemona.com:8888
+      mon_address: http://stratum.internal:3855/
+    - stratum: tcp+stratum://stratum-ja.simplemona.com:8888
+      mon_address: http://stratum-ja.internal:3855/
 # how many confirmations do we wait before marking blocks mature
 # and allowing payout over RPC
 block_mature_confirms: 120
 # the version that will trigger an upgrade notification
 latest_ppagent: [0, 3, 4]
 # The postgresql database connection configuration
-SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona
+SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona_testing
 # the session encryption key
 SECRET_KEY: 'something_really_secret'
-
-#DEBUG: True
+# a simple list of users to redact from the stats. Should be built out to a 
+# database table at some point
+redacted_addresses:
+    - dsflkgsdlfkgsld;fkgsl;dfkg
 
 # connection information for the coinserver RPC
 coinserv:
     port: 9402
-    address: 127.0.0.1
+    address: coinserver.internal
     username: monacoinrpc
     password: ''
     wallet_pass: ''
     account: simplemona_pool
 
-# email server authentication 
+# email server authentication
 email:
     send_address: 'monamona@monacoin.invalid'
     username: ''
@@ -40,15 +46,19 @@ email:
 # Celery configuration options. Since celery is run under a flask context
 # then thses are settings for the celery worker.
 celery:
-    CELERY_ACCEPT_CONTENT: ['json', 'msgpack', 'yaml']
+    CELERY_ACCEPT_CONTENT: ['pickle', 'json', 'msgpack', 'yaml']
     # the name of the queue you'll recieve tasks from powerpool on. should
     # match the default queue setting in powerpool instances that connect with
     # this task handler
     #CELERY_QUEUES:
-    #    simplemona:
-    #        exchange: simplemona
-    #        binding_key:
-    BROKER_URL: 'amqp://guest:guest@localhost:5672/'
+    #    mona:
+    #        exchange: mona
+    #        binding_key: mona
+    BROKER_URL: 'amqp://guest:guest@localhost:5672/mona'
+# set this to true and celery will only run scheduled tasks to refresh cache
+# objects. This allows you to run a staging version on the same database,
+# but with separate caches
+#stage: False
 
 # Cache configuration
 # ========================================================================
@@ -63,6 +73,8 @@ celery:
 # the multiplier used on the last n shares to keep for counting share
 # contributions
 last_n: 2
+# this is the n margin that is left by the cleanup script.
+cleanup_n: 4
 # default donation/bonus percentage applied to payouts if no custom is
 # defined
 default_perc: 1
@@ -89,6 +101,9 @@ payout_fee: 0
 rpc_signature: ''
 # where are we expecting the rpc server to be?
 rpc_url: http://simplemona.com
+# what the address should start with to try paying it out. 1 for BTC, L for
+# LTC, etc
+payout_prefix: M
 
 # Coin/Branding
 # =======================================================================
@@ -102,22 +117,36 @@ coin_name: Mona
 site_title: Simple Mona
 # the unicode symbol for the coin
 coin_symbol: "MONA"
+# host for static assets e.g. {assets_address}/css/main.css
+assets_address: http://static.simplemona.com
 # logo img
-logo: "/static/img/monacoin.png"
-# xs leader img
-leader-xs: "static/img/mona-miner-xs.jpg"
-# sm leader img
-leader-sm: "static/img/mona-miner-sm.jpg"
-# fullsize leader img
-leader: "static/img/mona-miner.jpg"
+logo: "/img/monacoin.png"
 # this url will have the transaction id appended to it to provide
 # information on a specific transaction for a payout
 transaction_link_prefix: http://abe.monash.pw/tx/
 # just like above, but with a block
 block_link_prefix: http://abe.monash.pw/block/
-# stratum server address
-stratum_address: stratum.simplecoin.com
-# stratum port
-stratum_port: 8888
+# stratum addresses for display
+strata:
+  - address: stratum-ja.simplemona.com
+    port: 8888
+  - address: stratum.simplemona.com
+    port: 8888
 # link to a good beginner guide
 beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_guide" target="_blank">Reddit</a>
+
+# Logging
+# =======================================================================
+# where all webserver exceptions and logging messages will get put
+#log_file = webserver.log
+# all management commands will be logged here
+#manage_log_file = manage.log
+
+# i18n/localisation configuration
+# =======================================================================
+# default locale to use as fallover
+default_locale: en
+# acceptable locales that we have translations for
+accept_locales:
+  en: English
+  ja: 日本語

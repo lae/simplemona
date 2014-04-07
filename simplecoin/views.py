@@ -1,27 +1,34 @@
 import calendar
 import time
-import yaml
+
 import datetime
 
-from itsdangerous import TimedSerializer
+import yaml
 from flask import (current_app, request, render_template, Blueprint, abort,
                    jsonify, g, session, Response)
+from flask.ext.babel import gettext
 from lever import get_joined
 
-from .models import (Transaction, OneMinuteShare, Block, Payout, Blob,
-                     FiveMinuteShare, OneHourShare, Status, FiveMinuteReject,
-                     OneMinuteReject, OneHourReject, DonationPercent,
-                     BonusPayout)
-from . import db, root, cache
+from .models import (OneMinuteShare, Block, Blob,
+                     FiveMinuteShare, OneHourShare, Status, DonationPercent,
+                     FiveMinuteHashrate, OneMinuteHashrate, OneHourHashrate, OneMinuteTemperature,
+                     FiveMinuteTemperature, OneHourTemperature)
+from . import db, root, cache, babel
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
-                    get_pool_eff, last_10_shares, total_earned, total_paid,
-                    collect_user_stats, get_adj_round_shares,
+                    get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, last_block_time, get_alerts,
                     last_block_found)
 
 
 main = Blueprint('main', __name__)
 
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(current_app.config['accept_locales'].keys())
+
+@main.before_request
+def before_request():
+    g.locale = get_locale()
 
 @main.route("/")
 def home():
@@ -43,8 +50,9 @@ def blocks():
 
 @main.route("/pool_stats")
 def pool_stats():
-    current_block = db.session.query(Blob).filter_by(key="block").first()
-    current_block.data['reward'] = int(current_block.data['reward'])
+    current_block = {'reward': cache.get('reward') or 0,
+                     'difficulty': cache.get('difficulty') or 0,
+                     'height': cache.get('blockheight') or 0}
     blocks = db.session.query(Block).order_by(Block.height.desc()).limit(10)
 
     reject_total, accept_total = get_pool_acc_rej()
@@ -58,72 +66,15 @@ def pool_stats():
                            reject_total=reject_total)
 
 
-@main.route("/get_payouts", methods=['POST'])
-def get_payouts():
-    """ Used by remote procedure call to retrieve a list of transactions to
-    be processed. Transaction information is signed for safety. """
-    s = TimedSerializer(current_app.config['rpc_signature'])
-    s.loads(request.data)
-
-    payouts = (Payout.query.filter_by(transaction_id=None).
-               join(Payout.block, aliased=True).filter_by(mature=True))
-    bonus_payouts = BonusPayout.query.filter_by(transaction_id=None)
-    pids = [(p.user, p.amount, p.id) for p in payouts]
-    bids = [(p.user, p.amount, p.id) for p in bonus_payouts]
-    return s.dumps([pids, bids])
-
-
-@main.route("/confirm_payouts", methods=['POST'])
-def confirm_transactions():
-    """ Used as a response from an rpc payout system. This will either reset
-    the sent status of a list of transactions upon failure on the remote side,
-    or create a new CoinTransaction object and link it to the transactions to
-    signify that the transaction has been processed. Both request and response
-    are signed. """
-    s = TimedSerializer(current_app.config['rpc_signature'])
-    data = s.loads(request.data)
-
-    # basic checking of input
-    try:
-        assert len(data['coin_txid']) == 64
-        assert isinstance(data['pids'], list)
-        assert isinstance(data['bids'], list)
-        for id in data['pids']:
-            assert isinstance(id, int)
-        for id in data['bids']:
-            assert isinstance(id, int)
-    except AssertionError:
-        current_app.logger.warn("Invalid data passed to confirm", exc_info=True)
-        abort(400)
-
-    coin_trans = Transaction.create(data['coin_txid'])
-    db.session.flush()
-    Payout.query.filter(Payout.id.in_(data['pids'])).update(
-        {Payout.transaction_id: coin_trans.txid}, synchronize_session=False)
-    BonusPayout.query.filter(BonusPayout.id.in_(data['bids'])).update(
-        {BonusPayout.transaction_id: coin_trans.txid}, synchronize_session=False)
-    db.session.commit()
-    return s.dumps(True)
-
-
 @main.before_request
 def add_pool_stats():
     g.completed_block_shares = get_adj_round_shares()
     g.round_duration = (datetime.datetime.utcnow() - last_block_time()).total_seconds()
     g.hashrate = get_pool_hashrate()
 
-    blobs = Blob.query.filter(Blob.key.in_(("server", "diff"))).all()
-    try:
-        server = [b for b in blobs if b.key == "server"][0]
-        g.worker_count = int(server.data['stratum_clients'])
-    except IndexError:
-        g.worker_count = 0
-    try:
-        diff = float([b for b in blobs if b.key == "diff"][0].data['diff'])
-    except IndexError:
-        diff = -1
-    g.average_difficulty = diff
-    g.shares_to_solve = diff * (2 ** 16)
+    g.worker_count = cache.get('total_workers') or 0
+    g.average_difficulty = cache.get('difficulty_avg') or 0
+    g.shares_to_solve = g.average_difficulty * (2 ** 16)
     g.total_round_shares = g.shares_to_solve * current_app.config['last_n']
     g.alerts = get_alerts()
 
@@ -174,18 +125,26 @@ def summary_page():
     if cached_time is not None:
         cached_time = cached_time.replace(second=0, microsecond=0).strftime("%Y-%m-%d %H:%M")
 
-    if user_shares is None:
-        user_list = []
-    else:
-        user_list = [([shares, user, (65536 * last_10_shares(user[6:]) / 600), user_match(user[6:])]) for user, shares in user_shares.iteritems()]
-        user_list = sorted(user_list, key=lambda x: x[0], reverse=True)
-
-    current_block = db.session.query(Blob).filter_by(key="block").first()
+    redacted = set(current_app.config.get('redacted_addresses', set()))
+    user_list = []
+    total_hashrate = 0.0
+    if user_shares is not None:
+        for user, shares in user_shares.iteritems():
+            user = user[6:]
+            hashrate = (65536 * last_10_shares(user) / 600)
+            total_hashrate += hashrate
+            dat = {'hashrate': hashrate,
+                   'shares': shares,
+                   'user': user if user not in redacted else None,
+                   'donation_perc': user_match(user)}
+            user_list.append(dat)
+        user_list = sorted(user_list, key=lambda x: x['shares'], reverse=True)
 
     return render_template('round_summary.html',
                            users=user_list,
-                           current_block=current_block,
-                           cached_time=cached_time)
+                           blockheight=cache.get('blockheight') or 0,
+                           cached_time=cached_time,
+                           total_hashrate=total_hashrate)
 
 
 @main.route("/exc_test")
@@ -198,13 +157,69 @@ def exception():
 @main.route("/<address>/<worker>/details/<int:gpu>")
 @main.route("/<address>/details/<int:gpu>", defaults={'worker': ''})
 @main.route("/<address>//details/<int:gpu>", defaults={'worker': ''})
-def worker_detail(address, worker, gpu):
+def gpu_detail(address, worker, gpu):
     status = Status.query.filter_by(user=address, worker=worker).first()
     if status:
         output = status.pretty_json(gpu)
     else:
-        output = "Not available"
+        output = gettext("Not available")
     return jsonify(output=output)
+
+
+@main.route("/<address>/<worker>")
+def worker_detail(address, worker):
+    status = Status.query.filter_by(user=address, worker=worker).first()
+
+    return render_template('worker_detail.html',
+                           status=status,
+                           username=address,
+                           worker=worker)
+
+
+@main.route("/<address>/<worker>/<stat_type>/<window>")
+def worker_stats(address=None, worker=None, stat_type=None, window="hour"):
+
+    if not address or not worker or not stat_type:
+        return None
+
+    type_lut = {'hash': {'hour': OneMinuteHashrate,
+                         'day': FiveMinuteHashrate,
+                         'day_compressed': OneMinuteHashrate,
+                         'month': OneHourHashrate,
+                         'month_compressed': FiveMinuteHashrate},
+                'temp': {'hour': OneMinuteTemperature,
+                         'day': FiveMinuteTemperature,
+                         'day_compressed': OneMinuteTemperature,
+                         'month': OneHourTemperature,
+                         'month_compressed': FiveMinuteTemperature}}
+
+    # store all the raw data of we've grabbed
+    workers = {}
+
+    typ = type_lut[stat_type][window]
+
+    if window == "day":
+        compress_typ(type_lut[stat_type]['day_compressed'], address, workers, worker=worker)
+    elif window == "month":
+        compress_typ(type_lut[stat_type]['month_compressed'], address, workers, worker=worker)
+
+
+
+    for m in get_typ(typ, address, worker=worker):
+        stamp = calendar.timegm(m.time.utctimetuple())
+        if worker is not None or 'undefined':
+            workers.setdefault(m.device, {})
+            workers[m.device].setdefault(stamp, 0)
+            workers[m.device][stamp] += m.value
+        else:
+            workers.setdefault(m.worker, {})
+            workers[m.worker].setdefault(stamp, 0)
+            workers[m.worker][stamp] += m.value
+    step = typ.slice_seconds
+    end = ((int(time.time()) // step) * step) - (step * 2)
+    start = end - typ.window.total_seconds() + (step * 2)
+
+    return jsonify(start=start, end=end, step=step, workers=workers)
 
 
 @main.route("/<address>")
@@ -319,9 +334,9 @@ def set_donation(address):
             verify_message(address, vals['message'], vals['signature'])
         except Exception as e:
             current_app.logger.info("Failed to validate!", exc_info=True)
-            result = "An error occurred: " + str(e)
+            result = gettext("An error occurred: ") + str(e)
         else:
-            result = "Successfully changed!"
+            result = gettext("Successfully changed!")
 
     perc = DonationPercent.query.filter_by(user=address).first()
     if not perc:

@@ -1,0 +1,869 @@
+# Translations template for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-04-07 12:30-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: simplecoin/views.py:165
+msgid "Not available"
+msgstr ""
+
+#: simplecoin/views.py:337
+msgid "An error occurred: "
+msgstr ""
+
+#: simplecoin/views.py:339
+msgid "Successfully changed!"
+msgstr ""
+
+#: templates/500.html:3
+msgid "Internal Server Error"
+msgstr ""
+
+#: templates/500.html:4
+msgid ""
+"Seems we've goofed up, sorry about that. This error has been logged. You "
+"might try again in a minute."
+msgstr ""
+
+#: templates/base.html:116
+msgid "Total hashrate for the pool, represented in Megahashes per second"
+msgstr ""
+
+#: templates/base.html:116
+msgid "Pool&nbsp;Hashrate"
+msgstr ""
+
+#: templates/base.html:120
+#, python-format
+msgid "Total active clients mining on Simple %(coin)s"
+msgstr ""
+
+#: templates/base.html:121 templates/pool_stats.html:21
+msgid "Active&nbsp;Workers"
+msgstr ""
+
+#: templates/base.html:125
+msgid "Total time since the last block was solved"
+msgstr ""
+
+#: templates/base.html:125
+msgid "Round&nbsp;Time"
+msgstr ""
+
+#: templates/base.html:130
+#, python-format
+msgid ""
+"Estimated time remaining until the next block is found. It assumes round "
+"luck will be 100%% and that difficulty will not change."
+msgstr ""
+
+#: templates/base.html:131
+msgid "Est.&nbsp;Time&nbsp;Left"
+msgstr ""
+
+#: templates/base.html:135
+msgid "Total 1 difficulty shares submitted since the last block was solved"
+msgstr ""
+
+#: templates/base.html:135
+msgid "Round&nbsp;Shares"
+msgstr ""
+
+#: templates/base.html:139
+msgid ""
+"Calculated from (shares expected to solve a block)/(shares currently "
+"submitted). This results in a percentage that decreases the unluckier the"
+" pool is in finding a block. Additionally, the expected number of shares "
+"to solve a block is dependent upon the current difficulty, and so large "
+"spikes or drops in difficulty often result in strange jumps in round luck"
+msgstr ""
+
+#: templates/base.html:140
+msgid "Round&nbsp;Luck"
+msgstr ""
+
+#: templates/base.html:149
+msgid "Home"
+msgstr ""
+
+#: templates/base.html:152 templates/base.html:171 templates/home.html:112
+#: templates/news.html:3
+msgid "News"
+msgstr ""
+
+#: templates/base.html:153
+msgid "Chat"
+msgstr ""
+
+#: templates/base.html:154 templates/base.html:163 templates/pool_stats.html:16
+msgid "Pool Stats"
+msgstr ""
+
+#: templates/base.html:155 templates/base.html:164
+msgid "User Stats"
+msgstr ""
+
+#: templates/base.html:156 templates/base.html:165
+msgid "Round Summary"
+msgstr ""
+
+#: templates/base.html:157 templates/base.html:172
+msgid "Guides"
+msgstr ""
+
+#: templates/base.html:161
+msgid "Stats"
+msgstr ""
+
+#: templates/base.html:169
+msgid "Extras"
+msgstr ""
+
+#: templates/base.html:208
+#, python-format
+msgid "Running revision %(hash_link)s released on %(revdate)s."
+msgstr ""
+
+#: templates/block_table.html:6
+msgid "Age"
+msgstr ""
+
+#: templates/block_table.html:7
+msgid "Shares"
+msgstr ""
+
+#: templates/block_table.html:8
+msgid "Luck"
+msgstr ""
+
+#: templates/block_table.html:9
+msgid "Round Duration"
+msgstr ""
+
+#: templates/block_table.html:10
+msgid "Payout"
+msgstr ""
+
+#: templates/block_table.html:11
+msgid "Difficulty"
+msgstr ""
+
+#: templates/block_table.html:12
+msgid "Solved by"
+msgstr ""
+
+#: templates/block_table.html:13
+msgid "Block Hash"
+msgstr ""
+
+#: templates/block_table.html:14 templates/round_summary.html:12
+#: templates/user_stats.html:367
+msgid "Blockheight"
+msgstr ""
+
+#: templates/block_table.html:15 templates/user_stats.html:369
+msgid "Status"
+msgstr ""
+
+#: templates/block_table.html:21
+msgid "Current"
+msgstr ""
+
+#: templates/blocks.html:3
+msgid "Block List - Historical list of solved blocks"
+msgstr ""
+
+#: templates/faq.html:3
+msgid "FAQ - Cryptocurrency principles explained in plain english"
+msgstr ""
+
+#: templates/home.html:3
+msgid "Home - Registration-less Monacoin Mining Pool"
+msgstr ""
+
+#: templates/home.html:20
+msgid "Quick start for mining:"
+msgstr ""
+
+#: templates/home.html:21
+msgid "No registration required, payouts go to the address used as username."
+msgstr ""
+
+#: templates/home.html:23
+msgid ""
+"Configure your stratum client with the information below. Worker name can"
+" be anything you'd like:"
+msgstr ""
+
+#: templates/home.html:26
+msgid "URL"
+msgstr ""
+
+#: templates/home.html:27
+msgid "Port"
+msgstr ""
+
+#: templates/home.html:28
+msgid "Username"
+msgstr ""
+
+#: templates/home.html:28
+msgid "[Your wallet address].[Worker Name]"
+msgstr ""
+
+#: templates/home.html:29
+msgid "Password"
+msgstr ""
+
+#: templates/home.html:29
+msgid "anything or empty"
+msgstr ""
+
+#: templates/home.html:30
+msgid "cgminer example"
+msgstr ""
+
+#: templates/home.html:33
+#, python-format
+msgid ""
+"Check your stats and estimated payout by entering your %(coin)s address "
+"below:"
+msgstr ""
+
+#: templates/home.html:41 templates/stats.html:44
+#, python-format
+msgid "Paste your %(coin)s address for quick access to individualized stats."
+msgstr ""
+
+#: templates/home.html:43
+msgid "Recently Visited Stats"
+msgstr ""
+
+#: templates/home.html:50 templates/stats.html:59
+msgid "View Stats"
+msgstr ""
+
+#: templates/home.html:65
+msgid "No registration"
+msgstr ""
+
+#: templates/home.html:66
+msgid ""
+"Unlike most pools, we don't require, or even provide, registration. "
+"Simply connect to our stratum servers with your wallet address."
+msgstr ""
+
+#: templates/home.html:71
+msgid "Secure"
+msgstr ""
+
+#: templates/home.html:72
+msgid ""
+"No registration means your credentials can't become compromised, because "
+"you don't have any! All pool funds are kept off server for increased "
+"security."
+msgstr ""
+
+#: templates/home.html:77
+msgid "No minimum Payout"
+msgstr ""
+
+#: templates/home.html:78
+#, python-format
+msgid ""
+"Payouts are processed every time a block is solved. No minimum balance "
+"required. Payouts are computed using PPLNS with a 0%% fee. The default "
+"donation amount is 1%%, lowerable to 0%%"
+msgstr ""
+
+#: templates/home.html:85
+msgid "Features"
+msgstr ""
+
+#: templates/home.html:95
+msgid "Insightful statistics"
+msgstr ""
+
+#: templates/home.html:96
+msgid ""
+"Graphs broken down by worker give you a good at-a-glance picture of what "
+"is going on."
+msgstr ""
+
+#: templates/home.html:98
+msgid "Easily name a worker anything you want"
+msgstr ""
+
+#: templates/home.html:99
+msgid "Drill down graphs to an individual worker with a click"
+msgstr ""
+
+#: templates/home.html:100
+msgid "Tooltips display your hash rate for each worker at a given point"
+msgstr ""
+
+#: templates/home.html:101
+msgid ""
+"View in 'expanded' mode to see what percentage of your hashing power each"
+" of your rigs is"
+msgstr ""
+
+#: templates/home.html:102
+msgid "Easily see your overall hash rate"
+msgstr ""
+
+#: templates/pool_stats.html:3
+#, python-format
+msgid ""
+"Pool Stats - Efficiency and block information for Simple %(coin)s mining "
+"pool"
+msgstr ""
+
+#: templates/pool_stats.html:23
+msgid "Total workers currently mining on this pool. Updated every couple minutes."
+msgstr ""
+
+#: templates/pool_stats.html:34
+msgid "Average&nbsp;Hashrate"
+msgstr ""
+
+#: templates/pool_stats.html:36
+msgid ""
+"Megahashes per second completed by the pool. An average of the last 10 "
+"minutes."
+msgstr ""
+
+#: templates/pool_stats.html:47
+msgid "Pool Efficiency"
+msgstr ""
+
+#: templates/pool_stats.html:49
+#, python-format
+msgid ""
+"All time efficiency for shares at least 25 hours old. Accepted / Total = "
+"%(equation)s. Updated hourly."
+msgstr ""
+
+#: templates/pool_stats.html:61
+msgid "Pool Hashrate"
+msgstr ""
+
+#: templates/pool_stats.html:63 templates/user_stats.html:113
+#: templates/worker_detail.html:23 templates/worker_detail.html:43
+msgid "Hour"
+msgstr ""
+
+#: templates/pool_stats.html:64 templates/user_stats.html:114
+#: templates/worker_detail.html:26 templates/worker_detail.html:46
+msgid "Day"
+msgstr ""
+
+#: templates/pool_stats.html:65 templates/user_stats.html:115
+#: templates/worker_detail.html:29 templates/worker_detail.html:49
+msgid "Month"
+msgstr ""
+
+#: templates/pool_stats.html:75
+msgid "View all blocks"
+msgstr ""
+
+#: templates/round_summary.html:3
+#, python-format
+msgid "Round Summary - Information regarding the current round on Simple %(coin)s"
+msgstr ""
+
+#: templates/round_summary.html:7
+msgid "Current Round Stats"
+msgstr ""
+
+#: templates/round_summary.html:14
+msgid "Current height of the blockchain."
+msgstr ""
+
+#: templates/round_summary.html:25
+msgid "Est.&nbsp;Shares&nbsp;Remaining"
+msgstr ""
+
+#: templates/round_summary.html:27
+msgid ""
+"An estimation of the number of difficulty 1 shares remaining until "
+"completing a block. This number will be negative if we are unlucky. This "
+"is based on an average difficulty of the last 500 blocks, and will change"
+" a little as the difficulty changes"
+msgstr ""
+
+#: templates/round_summary.html:38
+msgid "Est.&nbsp;Round&nbsp;Time&nbsp;Remaining"
+msgstr ""
+
+#: templates/round_summary.html:40
+#, python-format
+msgid ""
+"Estimated time remaining until the next block is found. It assumes round "
+"luck will be 100%% and that difficulty will not change. This number will "
+"be negative if we are in an unlucky round."
+msgstr ""
+
+#: templates/round_summary.html:51
+msgid "Total&nbsp;N&nbsp;This&nbsp;Round"
+msgstr ""
+
+#: templates/round_summary.html:53
+msgid ""
+"When the round is completed the payout will be based on this number of "
+"shares submitted just before the block was completed. This number is "
+"calculated based on the expected number of shares to complete a block, "
+"and multiplied by two."
+msgstr ""
+
+#: templates/round_summary.html:64
+msgid "Top Users PPLNS Summary"
+msgstr ""
+
+#: templates/round_summary.html:65
+msgid ""
+"All shares to be paid out, based on the Pay Per Last N Share algorithm. "
+"If a payout were to occur these would be extremely similar to the stats "
+"used to determine who gets paid what."
+msgstr ""
+
+#: templates/round_summary.html:66
+#, python-format
+msgid "updated %(cached_time)s UTC"
+msgstr ""
+
+#: templates/round_summary.html:73
+msgid "User"
+msgstr ""
+
+#: templates/round_summary.html:74 templates/user_stats.html:362
+msgid "Shares Contributed"
+msgstr ""
+
+#: templates/round_summary.html:75
+msgid "Hashrate"
+msgstr ""
+
+#: templates/round_summary.html:76 templates/user_stats.html:364
+#, python-format
+msgid "Donation %%"
+msgstr ""
+
+#: templates/round_summary.html:84
+msgid "Anonymous"
+msgstr ""
+
+#: templates/set_donation.html:3
+msgid "Set Donation - Change your donation amount"
+msgstr ""
+
+#: templates/set_donation.html:24
+#, python-format
+msgid "Fee must be less than 100 and greater than %(minimum)s"
+msgstr ""
+
+#: templates/set_donation.html:26
+msgid "Must enter a valid number!"
+msgstr ""
+
+#: templates/set_donation.html:37
+msgid "How to change your donation percentage"
+msgstr ""
+
+#: templates/set_donation.html:40
+#, python-format
+msgid "Type in the %% you want to donate as a number."
+msgstr ""
+
+#: templates/set_donation.html:41
+msgid "Click generate"
+msgstr ""
+
+#: templates/set_donation.html:42
+msgid "Click copy to Clipboard"
+msgstr ""
+
+#: templates/set_donation.html:43
+msgid "Sign the message with your wallet."
+msgstr ""
+
+#: templates/set_donation.html:45
+msgid "Open up your wallet application"
+msgstr ""
+
+#: templates/set_donation.html:46
+msgid "Open <b>file</b>, click <b>sign message</b>"
+msgstr ""
+
+#: templates/set_donation.html:47
+msgid ""
+"You'll need to put in <b>your</b> address and paste the message here. The"
+" screens will look something like <a "
+"href=\"http://imgur.com/a/nUmZ0\">these</a>"
+msgstr ""
+
+#: templates/set_donation.html:48
+msgid "Copy the signature, and paste it on our site"
+msgstr ""
+
+#: templates/set_donation.html:51
+msgid "Click change, and you're done!"
+msgstr ""
+
+#: templates/set_donation.html:54
+#, python-format
+msgid "Current donation percentage: %(percent)s%%"
+msgstr ""
+
+#: templates/set_donation.html:58
+#, python-format
+msgid "Set donation For - %(username)s"
+msgstr ""
+
+#: templates/set_donation.html:62
+msgid "Donation Amount"
+msgstr ""
+
+#: templates/set_donation.html:63
+msgid "Enter a new donation value"
+msgstr ""
+
+#: templates/set_donation.html:65
+msgid "Generate"
+msgstr ""
+
+#: templates/set_donation.html:66
+msgid "Click to copy me."
+msgstr ""
+
+#: templates/set_donation.html:66
+msgid "Copy to Clipboard"
+msgstr ""
+
+#: templates/set_donation.html:67
+msgid "Copied!"
+msgstr ""
+
+#: templates/set_donation.html:69
+msgid "Message to be signed"
+msgstr ""
+
+#: templates/set_donation.html:70
+msgid "Type a donation percentage into the above textbox and hit generate!"
+msgstr ""
+
+#: templates/set_donation.html:73
+msgid "Signature"
+msgstr ""
+
+#: templates/set_donation.html:74
+msgid "Paste signature from your wallet"
+msgstr ""
+
+#: templates/set_donation.html:76
+msgid "Change!"
+msgstr ""
+
+#: templates/stats.html:3
+msgid "Stats - Lookup mining stats for an address"
+msgstr ""
+
+#: templates/stats.html:37
+msgid "Aren't mining with us yet? <a href=\"/\">Look at the quickstart guide.</a>"
+msgstr ""
+
+#: templates/stats.html:47
+msgid "Recently Visited Stats:"
+msgstr ""
+
+#: templates/user_stats.html:3 templates/worker_detail.html:3
+#, python-format
+msgid "User Stats - Mining and account information for user %(username)s"
+msgstr ""
+
+#: templates/user_stats.html:64
+#, python-format
+msgid "User Stats - %(username)s"
+msgstr ""
+
+#: templates/user_stats.html:65 templates/user_stats.html:309
+#, python-format
+msgid "Currently donating %(percent)s%%"
+msgstr ""
+
+#: templates/user_stats.html:72
+msgid "PPLN Shares"
+msgstr ""
+
+#: templates/user_stats.html:74
+msgid "Total shares being counted towards your next payout"
+msgstr ""
+
+#: templates/user_stats.html:82
+msgid "Est. Round Payout"
+msgstr ""
+
+#: templates/user_stats.html:84
+#, python-format
+msgid ""
+"Payout estimate based on PPLNS (Last updated %(time)s). This estimate "
+"will be very close to your actual payout."
+msgstr ""
+
+#: templates/user_stats.html:92
+msgid "Average Hashrate"
+msgstr ""
+
+#: templates/user_stats.html:94
+msgid ""
+"Your average hashrate over the last 10 minutes based on your accepted "
+"shares, NOT PPAgent."
+msgstr ""
+
+#: templates/user_stats.html:102
+#, python-format
+msgid "Est. %(coin)s/day"
+msgstr ""
+
+#: templates/user_stats.html:104
+#, python-format
+msgid ""
+"An estimate based on your hashrate for the last ten minutes, constant "
+"mining at that hashrate, and 100%% round luck. Your actual payout will "
+"fluctuate based on round luck!"
+msgstr ""
+
+#: templates/user_stats.html:124
+msgid "Worker Status"
+msgstr ""
+
+#: templates/user_stats.html:133
+msgid "Online"
+msgstr ""
+
+#: templates/user_stats.html:133
+msgid "Offline"
+msgstr ""
+
+#: templates/user_stats.html:134
+msgid "[unnamed]"
+msgstr ""
+
+#: templates/user_stats.html:137
+msgid "Hashrate:"
+msgstr ""
+
+#: templates/user_stats.html:140
+msgid ""
+"Average hashrate over the last ten minutes based on accepted shares, NOT "
+"PPAgent."
+msgstr ""
+
+#: templates/user_stats.html:141
+msgid "Efficiency"
+msgstr ""
+
+#: templates/user_stats.html:148
+#, python-format
+msgid ""
+"Computed from accepted/total(%(equation)s) shares submitted in the last "
+"24 hours"
+msgstr ""
+
+#: templates/user_stats.html:157
+msgid "Accepted Shares"
+msgstr ""
+
+#: templates/user_stats.html:159
+msgid "Accepted shares over the last 24 hours"
+msgstr ""
+
+#: templates/user_stats.html:162
+msgid "Rejected Shares"
+msgstr ""
+
+#: templates/user_stats.html:164
+msgid "Rejected shares over the last 24 hours"
+msgstr ""
+
+#: templates/user_stats.html:173
+#, python-format
+msgid "%(miner)s status"
+msgstr ""
+
+#: templates/user_stats.html:177
+msgid "Multiple unnamed workers will do wonky things!"
+msgstr ""
+
+#: templates/user_stats.html:182 templates/user_stats.html:189
+msgid "Updated"
+msgstr ""
+
+#: templates/user_stats.html:203
+msgid ""
+"Work Utility is calculated from accepted n1 shares/time mining. This "
+"results in a number that represents the effective contributions, rather "
+"than the raw hashrate."
+msgstr ""
+
+#: templates/user_stats.html:208
+msgid "Summation of the reported average hashrates"
+msgstr ""
+
+#: templates/user_stats.html:222
+#, python-format
+msgid ""
+"This value is calculated from the reported WU(%(wu)s) / reported average "
+"hashrate(%(hashrate)d). A value of 90%%+ is ideal. To increase your WUE "
+"make sure your rig is not having hardware errors"
+msgstr ""
+
+#: templates/user_stats.html:225
+msgid "Detailed view"
+msgstr ""
+
+#: templates/user_stats.html:232
+msgid "GPU"
+msgstr ""
+
+#: templates/user_stats.html:234
+msgid "WUE"
+msgstr ""
+
+#: templates/user_stats.html:235
+#, python-format
+msgid "Accepted/Rejected(%%)"
+msgstr ""
+
+#: templates/user_stats.html:236
+msgid "HW Errors"
+msgstr ""
+
+#: templates/user_stats.html:237
+msgid "Temperature"
+msgstr ""
+
+#: templates/user_stats.html:238
+msgid "Fan Speed"
+msgstr ""
+
+#: templates/user_stats.html:239
+msgid "Core/Memory Clock"
+msgstr ""
+
+#: templates/user_stats.html:283
+msgid "Newer version available here"
+msgstr ""
+
+#: templates/user_stats.html:297
+msgid ""
+"Setup <a href=\"http://www.github.com/icook/ppagent/\">PPAgent</a> to "
+"start reporting cgminer stats directly"
+msgstr ""
+
+#: templates/user_stats.html:309
+msgid "Account"
+msgstr ""
+
+#: templates/user_stats.html:316
+msgid "Balance"
+msgstr ""
+
+#: templates/user_stats.html:318
+msgid "Current unpaid balance not including bonus payouts"
+msgstr ""
+
+#: templates/user_stats.html:326
+msgid "Unconfirmed balance"
+msgstr ""
+
+#: templates/user_stats.html:328
+msgid ""
+"Newly solved block earnings, rewards not yet confirmed. Doesn't including"
+" bonus payouts"
+msgstr ""
+
+#: templates/user_stats.html:336
+msgid "Total earned"
+msgstr ""
+
+#: templates/user_stats.html:338
+msgid "Total ever earned by this address from mining. No bonus payments included."
+msgstr ""
+
+#: templates/user_stats.html:346 templates/user_stats.html:366
+msgid "Total paid"
+msgstr ""
+
+#: templates/user_stats.html:348
+msgid ""
+"Total paid out to this address from mining. Bonus payments are included "
+"in this amount."
+msgstr ""
+
+#: templates/user_stats.html:361
+msgid "Time"
+msgstr ""
+
+#: templates/user_stats.html:363
+msgid "Mined"
+msgstr ""
+
+#: templates/user_stats.html:365
+msgid "Donation/Bonus"
+msgstr ""
+
+#: templates/user_stats.html:368
+msgid "TX id"
+msgstr ""
+
+#: templates/user_stats.html:407 templates/user_stats.html:429
+msgid "Confirmed"
+msgstr ""
+
+#: templates/user_stats.html:409 templates/user_stats.html:431
+msgid "Unconfirmed"
+msgstr ""
+
+#: templates/user_stats.html:418
+msgid "Bonus"
+msgstr ""
+
+#: templates/user_stats.html:445
+msgid "No payouts for this user yet"
+msgstr ""
+
+#: templates/user_stats.html:456
+msgid "GPU Details"
+msgstr ""
+
+#: templates/user_stats.html:462
+msgid "Close"
+msgstr ""
+
+#: templates/worker_detail.html:14
+msgid "Worker Stats"
+msgstr ""
+
+#: templates/worker_detail.html:17
+msgid "Temperature History"
+msgstr ""
+
+#: templates/worker_detail.html:37
+msgid "Hashrate History"
+msgstr ""
+

@@ -3,30 +3,30 @@
     <table class="table table-striped table-hover ">
       <thead>
         <tr>
-          <th>Age</th>
-          <th>Shares</th>
-          <th>Luck</th>
-          <th>Round Duration</th>
-          <th>Payout</th>
-          <th>Difficulty</th>
-          <th>Solved by</th>
-          <th>Block Hash</th>
-          <th>Blockheight</th>
-          <th>Status</th>
+          <th>{{ _('Age') }}</th>
+          <th>{{ _('Shares') }}</th>
+          <th>{{ _('Luck') }}</th>
+          <th>{{ _('Round Duration') }}</th>
+          <th>{{ _('Payout') }}</th>
+          <th>{{ _('Difficulty') }}</th>
+          <th>{{ _('Solved by') }}</th>
+          <th>{{ _('Block Hash') }}</th>
+          <th>{{ _('Blockheight') }}</th>
+          <th>{{ _('Status') }}</th>
         </tr>
       </thead>
       <tbody>
       {% if current_block %}
       <tr class="active">
-        <th>Current</th>
+        <th>{{ _('Current') }}</th>
         <th><span class="odometer blockshares">0</span></th>
         <th><span class="odometer blockluck">0</span>%</th>
         <th><span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span></th>
-        <th>{{ '{:,}'.format((current_block.data['reward'] / 100000000) | round(2)) }}</th>
-        <th>{{ '{:,}'.format((current_block.data['difficulty'] | int)) }}</th>
+        <th>{{ '{:,}'.format((current_block['reward'] / 100000000) | round(2)) }}</th>
+        <th>{{ '{:,}'.format((current_block['difficulty'] | round(4))) }}</th>
         <th>...</th>
         <th>...</th>
-        <th>{{ '{:,}'.format((current_block.data['height']) | int) }}</th>
+        <th>{{ '{:,}'.format((current_block['height']) | int) }}</th>
         <th>In progress</th>
       </tr>
       {% endif %}

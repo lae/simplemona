@@ -1,25 +1,59 @@
+from math import ceil, floor
+import json
+import logging
+import datetime
+
 from flask import current_app
+from sqlalchemy.sql import func
+import sqlalchemy
+
 from celery import Celery
 from simplecoin import db, coinserv, cache
 from simplecoin.utils import last_block_time, last_block_share_id
 from simplecoin.models import (
     Share, Block, OneMinuteShare, Payout, Transaction, Blob, FiveMinuteShare,
     Status, OneMinuteReject, OneMinuteTemperature, FiveMinuteReject,
-    OneMinuteHashrate, Threshold, Event, DonationPercent, BonusPayout)
-from sqlalchemy.sql import func
+    OneMinuteHashrate, Threshold, Event, DonationPercent, BonusPayout,
+    FiveMinuteTemperature, FiveMinuteHashrate)
+from sqlalchemy.sql import func, select
 from cryptokit import bits_to_shares, bits_to_difficulty
+
 from bitcoinrpc import CoinRPCException
 from celery.utils.log import get_task_logger
-from math import ceil, floor
-
 import requests
-import json
-import sqlalchemy
-import logging
-import datetime
+
 
 logger = get_task_logger(__name__)
 celery = Celery('simplecoin')
+
+
+@celery.task(bind=True)
+def update_online_workers(self):
+    """
+    Grabs a list of workers from the running powerpool instances and caches
+    them
+    """
+    try:
+        users = {}
+        for i, pp_config in enumerate(current_app.config['monitor_addrs']):
+            mon_addr = pp_config['mon_address'] + '/clients'
+            try:
+                req = requests.get(mon_addr)
+                data = req.json()
+            except Exception:
+                logger.warn("Unable to connect to {} to gather worker summary."
+                            .format(mon_addr))
+            else:
+                for address, workers in data['clients'].iteritems():
+                    users.setdefault('addr_online_' + address, [])
+                    for d in workers:
+                        users['addr_online_' + address].append((d['worker'], i))
+
+        cache.set_many(users, timeout=480)
+
+    except Exception as exc:
+        logger.error("Unhandled exception in estimating pplns", exc_info=True)
+        raise self.retry(exc=exc)
 
 
 @celery.task(bind=True)
@@ -28,14 +62,19 @@ def update_pplns_est(self):
     Generates redis cached value for share counts of all users based on PPLNS window
     """
     try:
+        logger.info("Recomputing PPLNS for users")
         # grab configured N
         mult = int(current_app.config['last_n'])
         # generate average diff from last 500 blocks
-        diff = Blob.query.filter_by(key="diff").first().data['diff']
+        diff = cache.get('difficulty_avg')
+        if diff is None:
+            logger.warn("Difficulty average is blank, can't calculate pplns estimate")
+            return
         # Calculate the total shares to that are 'counted'
         total_shares = ((float(diff) * (2 ** 16)) * mult)
 
-        # Loop through all shares, descending order, until we'd distributed the shares
+        # Loop through all shares, descending order, until we'd distributed the
+        # shares
         remain = total_shares
         user_shares = {}
         for share in Share.query.order_by(Share.id.desc()).yield_per(5000):
@@ -250,16 +289,13 @@ def add_one_minute(self, user, valid_shares, minute, worker='', dup_shares=0,
 def new_block(self, blockheight, bits=None, reward=None):
     """
     Notification that a new block height has been reached in the network.
+    Sets some things into the cache for display on the website.
     """
     logger.info("Recieved notice of new block height {}".format(blockheight))
-    if not isinstance(blockheight, int):
-        logger.error("Invalid block height submitted, must be integer")
 
-    blob = Blob(key='block', data={'height': str(blockheight),
-                                   'difficulty': str(bits_to_difficulty(bits)),
-                                   'reward': str(reward)})
-    db.session.merge(blob)
-    db.session.commit()
+    cache.set('blockheight', blockheight, timeout=1200)
+    cache.set('difficulty', bits_to_difficulty(bits), timeout=1200)
+    cache.set('reward', reward, timeout=1200)
 
     # keep the last 500 blocks in the cache for getting average difficulty
     cache.cache._client.lpush('block_cache', bits)
@@ -272,42 +308,60 @@ def cleanup(self, simulate=False):
     Finds all the shares that will no longer be used and removes them from
     the database.
     """
+    import time
+    t = time.time()
     try:
-        # find the oldest un-processed block
-        block = (Block.query.
-                 filter_by(processed=False).
-                 order_by(Block.height).first())
-        if block is None:
-            # sloppy hack to get the newest block that is processed
-            block = (Block.query.
-                     filter_by(processed=True).
-                     order_by(Block.height.desc()).first())
-            if block is None:
-                logger.debug("No block found, exiting...")
-                return
+        diff = cache.get('difficulty_avg')
+        diff = 1100.0
+        if diff is None:
+            logger.warn(
+                "Difficulty average is blank, can't safely cleanup")
+            return
+        # count all unprocessed blocks
+        unproc_blocks = len(Block.query.filter_by(processed=False).all())
+        # make sure we leave the right number of shares for them
+        unproc_n = unproc_blocks * current_app.config['last_n']
+        # plus our requested cleanup n for a safe margin
+        cleanup_n = current_app.config.get('cleanup_n', 4) + current_app.config['last_n']
+        # calculate how many n1 shares that is
+        total_shares = int(round(((float(diff) * (2 ** 16)) * (cleanup_n + unproc_n))))
+        stale_id = 0
+        counted_shares = 0
+        rows = 0
+        logger.info("Unprocessed blocks: {}; {} N kept"
+                    .format(unproc_blocks, unproc_n))
+        logger.info("Safety margin N from config: {}".format(cleanup_n))
+        logger.info("Total shares being saved: {}".format(total_shares))
+        # iterate through shares in newest to oldest order to find the share
+        # id that is oldest needed id
+        for shares, id in (db.engine.execution_options(stream_results=True).
+                           execute(select([Share.shares, Share.id]).
+                                   order_by(Share.id.desc()))):
+            rows += 1
+            counted_shares += shares
+            if counted_shares >= total_shares:
+                stale_id = id
+                break
 
-        mult = int(current_app.config['last_n'])
-        # take our standard share count times two for a safe margin. divide
-        # by 16 to get the number of rows, since a rows minimum share count
-        # is 16
-        shares = (bits_to_shares(block.bits) * mult) * 2
-        id_diff = shares // 16
-        # compute the id which earlier ones are safe to delete
-        stale_id = block.last_share.id - id_diff
+        if not stale_id:
+            logger.info("Stale ID is 0, deleting nothing.")
+            return
+
+        logger.info("Time to identify proper id {}".format(time.time() - t))
         if simulate:
-            logger.info("Share for block computed: {}".format(shares // 2))
-            logger.info("Share total margin computed: {}".format(shares))
-            logger.info("Id diff computed: {}".format(id_diff))
             logger.info("Stale ID computed: {}".format(stale_id))
-            exit(0)
-        elif stale_id > 0:
-            logger.info("Cleaning all shares older than {}".format(stale_id))
-            # delete all shares that are sufficiently old
-            Share.query.filter(Share.id < stale_id).delete(
-                synchronize_session=False)
-            db.session.commit()
-        else:
-            logger.info("Not cleaning anything, stale id less than zero")
+            logger.info("Rows iterated to find stale id: {}".format(rows))
+            return
+
+        logger.info("Cleaning all shares older than id {}".format(stale_id))
+        # To prevent integrity errors, all blocks linking to a share that's
+        # going to be deleted needs to be updated to remove reference
+        Block.query.filter(Block.last_share_id <= stale_id).update({Block.last_share_id: None})
+        db.session.flush()
+        # delete all shares that are sufficiently old
+        Share.query.filter(Share.id < stale_id).delete(synchronize_session=False)
+        db.session.commit()
+        logger.info("Time to completion {}".format(time.time() - t))
     except Exception as exc:
         logger.error("Unhandled exception in cleanup", exc_info=True)
         db.session.rollback()
@@ -334,9 +388,6 @@ def payout(self, simulate=False):
         logger.debug("Processing block height {}".format(block.height))
 
         mult = int(current_app.config['last_n'])
-        # take our standard share count times two for a safe margin. divide
-        # by 16 to get the number of rows, since a rows minimum share count
-        # is 16
         total_shares = (bits_to_shares(block.bits) * mult)
         logger.debug("Looking for up to {} total shares".format(total_shares))
         remain = total_shares
@@ -489,6 +540,7 @@ def compress_minute(self):
         OneMinuteShare.compress()
         OneMinuteReject.compress()
         OneMinuteTemperature.compress()
+        OneMinuteHashrate.compress()
         db.session.commit()
     except Exception:
         logger.error("Unhandled exception in compress_minute", exc_info=True)
@@ -500,6 +552,8 @@ def compress_five_minute(self):
     try:
         FiveMinuteShare.compress()
         FiveMinuteReject.compress()
+        FiveMinuteTemperature.compress()
+        FiveMinuteHashrate.compress()
         db.session.commit()
     except Exception:
         logger.error("Unhandled exception in compress_five_minute", exc_info=True)
@@ -607,7 +661,7 @@ def agent_receive(self, address, worker, typ, payload, timestamp):
             if thresh:
                 hr = sum(payload) * 1000
                 if int(hr) == 0:
-                    current_app.logger.warn("Entry with 0 hashrate. Worker {}; User {}".format(worker, address))
+                    logger.warn("Entry with 0 hashrate. Worker {}; User {}".format(worker, address))
                 else:
                     low_hash = thresh and hr <= thresh.hashrate_thresh
                     if low_hash and not thresh.hashrate_err:
@@ -661,23 +715,25 @@ def check_down(self):
 @celery.task(bind=True)
 def server_status(self):
     """
-    Periodic pull update of server stats
+    Periodicly poll the backend to get number of workers and throw it in the cache
     """
     try:
-        mon_addr = current_app.config['monitor_addr']
-        try:
-            req = requests.get(mon_addr)
-            data = req.json()
-        except Exception:
-            logger.warn("Couldn't connect to internal monitor at {}".format(mon_addr),
-                        exc_info=True)
-            output = {'stratum_clients': 0, 'agent_clients': 0}
-        else:
-            output = {'stratum_clients': data['stratum_clients'],
-                      'agent_clients': data['agent_clients']}
-        blob = Blob(key='server', data={k: str(v) for k, v in output.iteritems()})
-        db.session.merge(blob)
-        db.session.commit()
+        total_workers = 0
+        for i, pp_config in enumerate(current_app.config['monitor_addrs']):
+            mon_addr = pp_config['mon_address']
+            try:
+                req = requests.get(mon_addr)
+                data = req.json()
+            except Exception:
+                logger.warn("Couldn't connect to internal monitor at {}"
+                            .format(mon_addr))
+                continue
+            else:
+                cache.set('stratum_workers_' + str(i),
+                          data['stratum_clients'], timeout=1200)
+                total_workers += data['stratum_clients']
+
+        cache.set('total_workers', total_workers, timeout=1200)
     except Exception:
         logger.error("Unhandled exception in server_status", exc_info=True)
         db.session.rollback()
@@ -691,9 +747,8 @@ def difficulty_avg(self):
     try:
         diff_list = cache.cache._client.lrange('block_cache', 0, 500)
         total_diffs = sum([bits_to_difficulty(diff) for diff in diff_list])
-        blob = Blob(key='diff', data={'diff': str(total_diffs / len(diff_list))})
-        db.session.merge(blob)
-        db.session.commit()
+        cache.set('difficulty_avg', total_diffs / len(diff_list),
+                  timeout=120 * 60)
     except Exception as exc:
         logger.warn("Unknown failure in difficulty_avg", exc_info=True)
         raise self.retry(exc=exc)

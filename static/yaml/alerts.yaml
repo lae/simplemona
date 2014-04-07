@@ -1,0 +1,41 @@
+- title: 新しいstratumの場所/New Stratum Location
+  severity: success
+  date: 2014.04.06
+  key: 6
+  body: |
+    新しいstratum立っていました。<a href="/news">ニューズを</a>読んで下さい。
+#- title: Message Queue
+#  severity: danger
+#  date: 2014.04.05
+#  key: 5
+#  body: |
+#    Stratums are down while I look into some issues with the backend. Please 
+#    use a backup pool for the time being.
+#- title: Orphaned Blocks
+#  severity: warning
+#  date: 2014.04.05
+#  key: 4
+#  body: |
+#    This is being looked into. A testing stratum has been set up on port 8887
+#    if you'd like to test. (may be offline)
+#- title: Block Found!
+#  severity: success
+#  date: 2014.04.04
+#  key: 3
+#  body: |
+#    We've found a block! I'll be working on translation next.
+#    ブロックを見つけた！ 次は翻訳を始める
+#- title: Stratum Changes
+#  severity: danger
+#  date: 2014.04.04
+#  key: 2
+#  body: |
+#    The stratum was moved to 108.61.20.227. There may be remaining issues.
+
+- title: Testing Phase
+  severity: warning
+  date: 2014.04.03
+  key: 1
+  body: |
+    The stratum and pool may suffer some instability. Please bear with me.
+

@@ -65,3 +65,15 @@ taking a look at the webserver log can help a lot. Usually I have this running i
 separate console.
 
     tail -f webserver.log
+
+Contributing
+============
+
+If you are looking to contribute back to the original project, please fork the
+original project at simplecrypto/simplecoin.
+
+You should only send pull requests to this project if they are meant for 
+simplemona.com and not for the simplecoin project in general. I will also be
+merging upstream changes on a regular basis, so you can expect your changes to
+be reflected back to this repo if accepted upstream. Feel free, however, to
+send a pull request here if it is rejected upstream, and I'll consider it.

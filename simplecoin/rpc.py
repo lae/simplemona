@@ -1,17 +1,16 @@
-import requests
 import os
-import six
 import logging
 import sys
 import argparse
 import pprint
-
-from time import sleep
-from flask import current_app
 from urlparse import urljoin
-from itsdangerous import TimedSerializer, BadData
-from bitcoinrpc.authproxy import JSONRPCException
 
+import six
+from flask import current_app
+from itsdangerous import TimedSerializer, BadData
+
+import requests
+from bitcoinrpc.authproxy import JSONRPCException
 from .coinserv_cmds import payout_many
 from . import create_app, coinserv
 
@@ -21,6 +20,12 @@ ch = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter('[%(levelname)s] %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+hdlr = logging.FileHandler('rpc.log')
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+hdlr.setFormatter(formatter)
+logger.addHandler(hdlr)
+logger.setLevel(logging.DEBUG)
 
 
 class RPCException(Exception):
@@ -54,6 +59,7 @@ class RPCClient(object):
             raise RPCException("Non 200 from remote")
 
         try:
+            logger.debug("Got {} from remote".format(ret.text))
             return self.serializer.loads(ret.text, max_age or self.max_age)
         except BadData:
             raise RPCException("Invalid signature: {}".format(ret.text))
@@ -64,17 +70,43 @@ class RPCClient(object):
         except JSONRPCException:
             raise RPCException("Coinserver not awake")
 
+    def reset_trans(self, pids, bids, simulate=False):
+        proc_pids = []
+        if pids:
+            proc_pids = [int(i) for i in pids.split(',')]
+        proc_bids = []
+        if bids:
+            proc_bids = [int(i) for i in bids.split(',')]
+        data = {'pids': proc_pids, 'bids': proc_bids, 'reset': True}
+        logger.info("Resetting requested bids and pids")
+        self.post('update_payouts', data=data)
+
     def proc_trans(self, simulate=False):
         self.poke_rpc()
 
-        payouts, bonus_payouts = self.post('get_payouts')
+        lock = True
+        if simulate:
+            lock = False
+
+        payouts, bonus_payouts, lock_res = self.post('get_payouts',
+                                                     data={'lock': lock})
+        if lock:
+            assert lock_res
+
         pids = [t[2] for t in payouts]
         bids = [t[2] for t in bonus_payouts]
-        logger.info("Recieved {} payouts and {} bonus payouts from the server"
-                     .format(len(pids), len(bids)))
+        logger.warn("Locked all recieved payout ids and bonus payout ids. In "
+                    "the event of an error, run the following command to unlock"
+                    "for a retried payout.\nsc_rpc reset_trans '{}' '{}'"
+                    .format(",".join(str(p) for p in pids),
+                            ",".join(str(b) for b in bids)))
+
         if not len(pids) and not len(bids):
             logger.info("No payouts to process..")
             return
+
+        logger.info("Recieved {} payouts and {} bonus payouts from the server"
+                    .format(len(pids), len(bids)))
 
         # builds two dictionaries, one that tracks the total payouts to a user,
         # and another that tracks all the payout ids (pids) giving that amount
@@ -83,7 +115,7 @@ class RPCClient(object):
         pids = {}
         bids = {}
         for user, amount, id in payouts:
-            if user.startswith('M'):
+            if user.startswith(current_app.config['payout_prefix']):
                 totals.setdefault(user, 0)
                 totals[user] += amount
                 pids.setdefault(user, [])
@@ -92,15 +124,17 @@ class RPCClient(object):
                 logger.warn("User {} has been excluded due to invalid address"
                             .format(user))
 
-        for user, amount, id in bonus_payouts:
-            if user.startswith('M'):
+
+        """for user, amount, id in bonus_payouts:
+            if user.startswith(current_app.config['payout_prefix']):
                 totals.setdefault(user, 0)
                 totals[user] += amount
                 bids.setdefault(user, [])
                 bids[user].append(id)
             else:
                 logger.warn("User {} has been excluded due to invalid address"
-                            .format(user))
+                            .format(user))"""
+
 
         # identify the users who meet minimum payout and format for sending
         # to rpc
@@ -144,7 +178,7 @@ class RPCClient(object):
         logger.info("Sending data back to confirm_payouts: " + str(data))
         while True:
             try:
-                if self.post('confirm_payouts', data=data):
+                if self.post('update_payouts', data=data):
                     logger.info("Recieved success response from the server.")
                     break
                 else:
@@ -170,6 +204,11 @@ def entry():
     subparsers.add_parser('proc_trans',
                           help='processes transactions locally by fetching '
                                'from a remote server')
+    reset = subparsers.add_parser('reset_trans',
+                                  help='resets the lock state of a set of pids'
+                                       ' and bids')
+    reset.add_argument('pids')
+    reset.add_argument('bids')
     args = parser.parse_args()
 
     ch.setLevel(getattr(logging, args.log_level))

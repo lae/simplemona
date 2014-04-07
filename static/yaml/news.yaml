@@ -1,4 +1,16 @@
-- title: Welcome
-  date: 3/31/2014
+- title: 新しいstratumの場所
+  date: 2014.04.06
   body: |
-      Enjoy mining.
+    新しいstratumを立っていました、カゴやで。 たぶん、このサーバーは
+    stratum.simplemona.comより弱いですけど、レイテンシは低いです。<br />
+    日本で生きているならば、このstratumをテストください。 アドレスは：<br />
+    stratum+tcp://stratum-ja.simplemona.com:8888<br /><br />
+    A new stratum has been brought up in Kagoya, Japan. The server is weaker 
+    than the primary stratum, but latency should be better for those living in 
+    Japan.<br /> If you are, please try using the new stratum, located at:<br />
+    stratum+tcp://stratum-ja.simplemona.com:8888
+- title: Block Found!
+  date: 2014.04.04
+  body: |
+      We've found a block! I'll be working on translation next.
+      <p>ブロックを見つけた！ 次は翻訳を始める。</p>
