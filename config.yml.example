@@ -2,15 +2,17 @@
 # =======================================================================
 # Where's powerpool running?
 monitor_addrs:
-    - stratum: tcp+stratum://stratum-internal.simplemona.com:8888
-      mon_address: http://stratum-internal.simplemona.com:3855/
+    - stratum: tcp+stratum://stratum.simplemona.com:8888
+      mon_address: http://stratum.internal:3855/
+    - stratum: tcp+stratum://stratum-ja.simplemona.com:8888
+      mon_address: http://stratum-ja.internal:3855/
 # how many confirmations do we wait before marking blocks mature
 # and allowing payout over RPC
 block_mature_confirms: 120
 # the version that will trigger an upgrade notification
 latest_ppagent: [0, 3, 4]
 # The postgresql database connection configuration
-SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona
+SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona_testing
 # the session encryption key
 SECRET_KEY: 'something_really_secret'
 # a simple list of users to redact from the stats. Should be built out to a 
@@ -21,7 +23,7 @@ redacted_addresses:
 # connection information for the coinserver RPC
 coinserv:
     port: 9402
-    address: 127.0.0.1
+    address: coinserver.internal
     username: monacoinrpc
     password: ''
     wallet_pass: ''
@@ -119,21 +121,17 @@ coin_symbol: "MONA"
 assets_address: http://static.simplemona.com
 # logo img
 logo: "/img/monacoin.png"
-# xs leader img
-leader-xs: "/img/mona-miner-xs.jpg"
-# sm leader img
-leader-sm: "/img/mona-miner-sm.jpg"
-# fullsize leader img
-leader: "/img/mona-miner.jpg"
 # this url will have the transaction id appended to it to provide
 # information on a specific transaction for a payout
 transaction_link_prefix: http://abe.monash.pw/tx/
 # just like above, but with a block
 block_link_prefix: http://abe.monash.pw/block/
-# stratum server address
-stratum_address: stratum.simplemona.com
-# stratum port
-stratum_port: 8888
+# stratum addresses for display
+strata:
+  - address: stratum-ja.simplemona.com
+    port: 8888
+  - address: stratum.simplemona.com
+    port: 8888
 # link to a good beginner guide
 beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_guide" target="_blank">Reddit</a>
 
