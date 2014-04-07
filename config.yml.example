@@ -10,7 +10,7 @@ block_mature_confirms: 120
 # the version that will trigger an upgrade notification
 latest_ppagent: [0, 3, 4]
 # The postgresql database connection configuration
-SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona
+SQLALCHEMY_DATABASE_URI: postgresql://simplemona:testing@localhost:5432/simplemona_testing
 # the session encryption key
 SECRET_KEY: 'something_really_secret'
 # a simple list of users to redact from the stats. Should be built out to a 
@@ -130,10 +130,12 @@ leader: "/img/mona-miner.jpg"
 transaction_link_prefix: http://abe.monash.pw/tx/
 # just like above, but with a block
 block_link_prefix: http://abe.monash.pw/block/
-# stratum server address
-stratum_address: stratum.simplemona.com
-# stratum port
-stratum_port: 8888
+# stratum addresses for display
+strata:
+  - address: stratum-ja.simplemona.com
+    port: 8888
+  - address: stratum.simplemona.com
+    port: 8888
 # link to a good beginner guide
 beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_guide" target="_blank">Reddit</a>
 
