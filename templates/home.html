@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set active_page = "home" %}
-{% set page_title = "Home - Registration-less Monacoin Mining Pool" %}
+{% set page_title = gettext("Home - Registration-less Monacoin Mining Pool") %}
 {% block body %}
 <script>
 $(document).ready(function() {
@@ -17,19 +17,20 @@ $(document).ready(function() {
 
   <div class="col-lg-12">
     <div class="well well-lg" style="padding-right:30px;">
-      <h3>Quick start for mining:</h3>
-      <h4><b>No registration required, payouts go to the address used as username.</b></h4>
+      <h3>{{ _('Quick start for mining:') }}</h3>
+      <h4><b>{{ _('No registration required, payouts go to the address used as username.') }}</b></h4>
       <ol>
-          <li>Configure your stratum client with the information below. Worker name can be anything you'd like:
+          <li>{{ _('Configure your stratum client with the information below. Worker name can be anything you\'d like:') }}
             <small>
-              <pre><b>URL: </b>stratum+tcp://{{ config['stratum_address'] }}
-<b>Port:</b> {{ config['stratum_port'] }}
-<b>Username: </b>[Your wallet address].[Worker Name (can be empty)]
-<b>Password: </b>anything (can be empty)
-<b>cgminer example:</b> ./cgminer -o stratum+tcp://{{ config['stratum_address'] }}:{{ config['stratum_port'] }} -u {{ config['catchall_address'] }}.nanashi -p x -I 13</pre>
+              <pre>
+<b>{{ _('URL') }}:</b> stratum+tcp://{{ config['stratum_address'] }}
+<b>{{ _('Port') }}:</b> {{ config['stratum_port'] }}
+<b>{{ _('Username') }}:</b> {{ _('[Your wallet address].[Worker Name]') }}
+<b>{{ _('Password') }}:</b> {{ _('anything or empty') }}
+<b>{{ _('cgminer example') }}:</b> ./cgminer -o stratum+tcp://{{ config['stratum_address'] }}:{{ config['stratum_port'] }} -u {{ config['catchall_address'] }}.nanashi -I 13</pre>
             </small>
           </li>
-          <li>Check your stats and estimated payout by entering your {{ config['coin_name'] }} address below:</li>
+          <li>{{ _('Check your stats and estimated payout by entering your %(coin)s address below:', coin = config['coin_name']) }}</li>
           <div class="form-group">
             <form class="bs-example form-horizontal" id="statsform">
               <fieldset>
@@ -37,16 +38,16 @@ $(document).ready(function() {
                   <div class="col-lg-9">
                     <input type="text" class="form-control" id="inputAddress" placeholder="{{ config['coin_name'] }} Address">
                     <span class="help-block">
-                        Paste your {{ config['coin_name'] }} address for quick access to individualized stats.
+                        {{ _('Paste your %(coin)s address for quick access to individualized stats.', coin = config['coin_name']) }}
                         {% if 'recent_users' in session %}
-                          <h4>Recently Visited Stats:</h4>
+                          <h4>{{ _('Recently Visited Stats') }}:</h4>
                           {% for address in session['recent_users'][:2] %}
                           <h5><a href="/{{ address }}">{{ address }}</a></h5>
                           {% endfor %}
                         {% endif %}
                     </span>
                   </div>
-                  <button type="submit" class="btn btn-default">View Stats</button>
+                  <button type="submit" class="btn btn-default">{{ _('View Stats') }}</button>
                 </div>
               </fieldset>
             </form>
@@ -61,29 +62,27 @@ $(document).ready(function() {
 <div class="row">
   <div class="col-md-4">
     <div class="well well-lg" style="height: 180px;">
-      <h3><i class="fa fa-times too-damn-bright"></i> &nbsp;No registration</h3>
-      Unlike most pools, we don't require, or even provide, registration. Simply connect to our stratum servers with your monacoin address.
+      <h3><i class="fa fa-times too-damn-bright"></i> &nbsp;{{ _('No registration') }}</h3>
+      {{ _('Unlike most pools, we don\'t require, or even provide, registration. Simply connect to our stratum servers with your wallet address.') }}
     </div>
   </div>
   <div class="col-md-4">
     <div class="well well-lg" style="height: 180px;">
-      <h3><i class="fa fa-lock too-damn-bright"></i> &nbsp;Secure</h3>
-      No registration means your credentials can't become compromised, because
-      you don't have any!
+      <h3><i class="fa fa-lock too-damn-bright"></i> &nbsp;{{ _('Secure') }}</h3>
+      {{ _('No registration means your credentials can\'t become compromised, because you don\'t have any! All pool funds are kept off server for increased security.') }}
     </div>
   </div>
   <div class="col-md-4">
     <div class="well well-lg" style="height: 180px;">
-      <h3><i class="fa fa-clock-o too-damn-bright"></i> &nbsp;No minimum Payout</h3>
-      Payouts are processed every time a block is solved. No minimum balance required. Payouts are computed using PPLNS with a 0% fee.
-      The default donation amount is 1%, lowerable to 0%
+      <h3><i class="fa fa-clock-o too-damn-bright"></i> &nbsp;{{ _('No minimum Payout') }}</h3>
+      {{ _('Payouts are processed every time a block is solved. No minimum balance required. Payouts are computed using PPLNS with a 0%% fee. The default donation amount is 1%%, lowerable to 0%%') }}
     </div>
   </div>
 </div>
 
 <!-- Cool Features ================================================== -->
 
-<h2>Features</h2>
+<h2>{{ _('Features') }}</h2>
 <br>
 <div class="row row-header">
   <div class="col-lg-12">
@@ -93,14 +92,14 @@ $(document).ready(function() {
           <img src="{{ config['assets_address'] | safe }}/img/graphs.png" style="box-shadow: -1px -1px 1px #777;margin-top:15px;max-width:98%;">
         </div>
         <div class="col-md-5">
-          <h3>Insightful statistics</h3>
-          <p>Graphs broken down by worker give you a good at-a-glance picture of what is going on.</p>
+          <h3>{{ _('Insightful statistics') }}</h3>
+          <p>{{ _('Graphs broken down by worker give you a good at-a-glance picture of what is going on.') }}</p>
           <ul>
-            <li>Easily name a worker anything you want</li>
-            <li>Drill down graphs to an individual worker with a click</li>
-            <li>Tooltips display your hash rate for each worker at a given point</li>
-            <li>View in 'expanded' mode to see what percentage of your hashing power each of your rigs is</li>
-            <li>Easily see your overall hash rate</li>
+            <li>{{ _('Easily name a worker anything you want') }}</li>
+            <li>{{ _('Drill down graphs to an individual worker with a click') }}</li>
+            <li>{{ _('Tooltips display your hash rate for each worker at a given point') }}</li>
+            <li>{{ _('View in \'expanded\' mode to see what percentage of your hashing power each of your rigs is') }}</li>
+            <li>{{ _('Easily see your overall hash rate') }}</li>
           </ul>
         </div>
       </div>
@@ -110,7 +109,7 @@ $(document).ready(function() {
 
 
 <!-- News/Announcements ================================================== -->
-<h2>News</h2>
+<h2>{{ _('News') }}</h2>
 <div class="row row-header">
   <div class="col-lg-12">
     {% for new in news[:3] %}

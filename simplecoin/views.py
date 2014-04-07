@@ -6,13 +6,14 @@ import datetime
 import yaml
 from flask import (current_app, request, render_template, Blueprint, abort,
                    jsonify, g, session, Response)
+from flask.ext.babel import gettext
 from lever import get_joined
 
 from .models import (OneMinuteShare, Block, Blob,
                      FiveMinuteShare, OneHourShare, Status, DonationPercent,
                      FiveMinuteHashrate, OneMinuteHashrate, OneHourHashrate, OneMinuteTemperature,
                      FiveMinuteTemperature, OneHourTemperature)
-from . import db, root, cache
+from . import db, root, cache, babel
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
                     get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, last_block_time, get_alerts,
@@ -21,6 +22,13 @@ from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
 
 main = Blueprint('main', __name__)
 
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(current_app.config['accept_locales'].keys())
+
+@main.before_request
+def before_request():
+    g.locale = get_locale()
 
 @main.route("/")
 def home():
@@ -154,7 +162,7 @@ def gpu_detail(address, worker, gpu):
     if status:
         output = status.pretty_json(gpu)
     else:
-        output = "Not available"
+        output = gettext("Not available")
     return jsonify(output=output)
 
 
@@ -326,9 +334,9 @@ def set_donation(address):
             verify_message(address, vals['message'], vals['signature'])
         except Exception as e:
             current_app.logger.info("Failed to validate!", exc_info=True)
-            result = "An error occurred: " + str(e)
+            result = gettext("An error occurred: ") + str(e)
         else:
-            result = "Successfully changed!"
+            result = gettext("Successfully changed!")
 
     perc = DonationPercent.query.filter_by(user=address).first()
     if not perc:
