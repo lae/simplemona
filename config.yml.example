@@ -145,7 +145,7 @@ beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_gu
 # i18n/localisation configuration
 # =======================================================================
 # default locale to use as fallover
-default_locale: en
+default_locale: ja
 # acceptable locales that we have translations for
 accept_locales:
   en: English
