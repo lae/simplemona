@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-04-06 18:36-0500\n"
-"PO-Revision-Date: 2014-04-06 18:39-0600\n"
+"PO-Revision-Date: 2014-04-06 19:07-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -63,7 +63,7 @@ msgstr ""
 
 #: templates/base.html:125
 msgid "Round&nbsp;Time"
-msgstr ""
+msgstr "ラウンド時間"
 
 #: templates/base.html:130
 #, python-format
@@ -82,7 +82,7 @@ msgstr ""
 
 #: templates/base.html:135
 msgid "Round&nbsp;Shares"
-msgstr ""
+msgstr "ラウンドシェア"
 
 #: templates/base.html:139
 msgid ""
@@ -95,7 +95,7 @@ msgstr ""
 
 #: templates/base.html:140
 msgid "Round&nbsp;Luck"
-msgstr ""
+msgstr "ラウンド運"
 
 #: templates/base.html:149
 msgid "Home"
@@ -121,7 +121,7 @@ msgstr "ユーザー統計"
 
 #: templates/base.html:156 templates/base.html:165
 msgid "Round Summary"
-msgstr ""
+msgstr "ラウンド摘録"
 
 #: templates/base.html:157 templates/base.html:172
 msgid "Guides"
@@ -142,23 +142,23 @@ msgstr ""
 
 #: templates/block_table.html:6
 msgid "Age"
-msgstr ""
+msgstr "エージ"
 
 #: templates/block_table.html:7
 msgid "Shares"
-msgstr ""
+msgstr "シェア"
 
 #: templates/block_table.html:8
 msgid "Luck"
-msgstr ""
+msgstr "運"
 
 #: templates/block_table.html:9
 msgid "Round Duration"
-msgstr ""
+msgstr "ラウンド時間"
 
 #: templates/block_table.html:10
 msgid "Payout"
-msgstr ""
+msgstr "支出金"
 
 #: templates/block_table.html:11
 msgid "Difficulty"
@@ -170,12 +170,12 @@ msgstr ""
 
 #: templates/block_table.html:13
 msgid "Block Hash"
-msgstr ""
+msgstr "ブロックハッシュ"
 
 #: templates/block_table.html:14 templates/round_summary.html:12
 #: templates/user_stats.html:367
 msgid "Blockheight"
-msgstr ""
+msgstr "ブロックハイト"
 
 #: templates/block_table.html:15 templates/user_stats.html:369
 #, fuzzy
@@ -184,7 +184,7 @@ msgstr "統計"
 
 #: templates/block_table.html:21
 msgid "Current"
-msgstr ""
+msgstr "現在"
 
 #: templates/blocks.html:3
 msgid "Block List - Historical list of solved blocks"
@@ -200,11 +200,11 @@ msgstr ""
 
 #: templates/home.html:20
 msgid "Quick start for mining:"
-msgstr ""
+msgstr "マイニングのクイックスタート"
 
 #: templates/home.html:21
 msgid "No registration required, payouts go to the address used as username."
-msgstr ""
+msgstr "位置決めは必要ない。Payouts go to the address used as username."
 
 #: templates/home.html:23
 msgid ""
@@ -262,7 +262,7 @@ msgstr ""
 
 #: templates/home.html:65
 msgid "No registration"
-msgstr ""
+msgstr "位置決めない"
 
 #: templates/home.html:66
 msgid ""
@@ -835,11 +835,11 @@ msgstr ""
 
 #: templates/user_stats.html:418
 msgid "Bonus"
-msgstr ""
+msgstr "ボナス"
 
 #: templates/user_stats.html:445
 msgid "No payouts for this user yet"
-msgstr ""
+msgstr "支出金はまだいない "
 
 #: templates/user_stats.html:456
 msgid "GPU Details"
