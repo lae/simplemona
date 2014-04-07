@@ -8,6 +8,7 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 
 from flask import current_app
+from flask.ext.babel import gettext
 from sqlalchemy.schema import CheckConstraint
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.dialects.postgresql import HSTORE, ARRAY
@@ -60,14 +61,14 @@ class Block(base):
     @property
     def status(self):
         if self.mature:
-            return "Mature"
+            return gettext("Mature")
         if self.orphan:
-            return "Orphan"
+            return gettext("Orphan")
         confirms = self.confirms_remaining
         if confirms is not None:
-            return "{} Confirms Reamining".format(confirms)
+            return gettext("%(confirms)d Confirms Remaining", confirms = confirms)
         else:
-            return "Pending confirmation"
+            return gettext("Pending confirmation")
 
     @classmethod
     def create(cls, user, height, total_value, transaction_fees, bits, hash,
@@ -294,20 +295,20 @@ class Payout(Transfer):
     def status(self):
         if self.transaction:
             if self.transaction.confirmed is True:
-                return "Payout Transaction Confirmed"
+                return gettext("Payout Transaction Confirmed")
             else:
-                return "Payout Transaction Pending"
+                return gettext("Payout Transaction Pending")
         elif self.block.orphan:
-            return "Block Orphaned"
+            return gettext("Block Orphaned")
         elif not self.block.mature:
 
             confirms = self.block.confirms_remaining
             if confirms is not None:
-                return "{} Block Confirms Remaining".format(confirms)
+                return gettext("%(confirms)d Block Confirms Remaining", confirms = confirms)
             else:
-                return "Pending Block Confirmation"
+                return gettext("Pending Block Confirmation")
         else:
-            return "Payout Pending"
+            return gettext("Payout Pending")
 
 
 class BonusPayout(Transfer):
