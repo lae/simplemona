@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: 0.1.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-04-06 18:36-0500\n"
-"PO-Revision-Date: 2014-04-06 19:07-0600\n"
-"Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
+"PO-Revision-Date: 2014-04-07 21:25+0900\n"
+"Last-Translator: En__ <>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -20,46 +20,48 @@ msgstr ""
 
 #: simplecoin/views.py:165
 msgid "Not available"
-msgstr ""
+msgstr "利用できません"
 
 #: simplecoin/views.py:337
 msgid "An error occurred: "
-msgstr ""
+msgstr "エラーが発生しました:"
 
 #: simplecoin/views.py:339
 msgid "Successfully changed!"
-msgstr ""
+msgstr "変更に成功しました"
 
 #: templates/500.html:3
 msgid "Internal Server Error"
-msgstr ""
+msgstr "Internal Server Error"
 
 #: templates/500.html:4
 msgid ""
 "Seems we've goofed up, sorry about that. This error has been logged. You "
 "might try again in a minute."
 msgstr ""
+"問題が発生しました。エラーは記録されています。やり直してみるといいかもしれま"
+"せん。"
 
 #: templates/base.html:116
 msgid "Total hashrate for the pool, represented in Megahashes per second"
-msgstr ""
+msgstr "プールの合計ハッシュレート(MH/s)"
 
 #: templates/base.html:116
 msgid "Pool&nbsp;Hashrate"
-msgstr "プールハスレト"
+msgstr "プールハッシュレート"
 
 #: templates/base.html:120
 #, python-format
 msgid "Total active clients mining on Simple %(coin)s"
-msgstr ""
+msgstr "Simple %(coin)sのアクティブ採掘者数"
 
 #: templates/base.html:121 templates/pool_stats.html:21
 msgid "Active&nbsp;Workers"
-msgstr "アクチブワーカー"
+msgstr "アクティブワーカー"
 
 #: templates/base.html:125
 msgid "Total time since the last block was solved"
-msgstr ""
+msgstr "前のブロックが発見されてからの合計時間"
 
 #: templates/base.html:125
 msgid "Round&nbsp;Time"
@@ -71,14 +73,16 @@ msgid ""
 "Estimated time remaining until the next block is found. It assumes round "
 "luck will be 100%% and that difficulty will not change."
 msgstr ""
+"次のブロックが発見されるまでの予想残り時間です。ラウンド運が100%%でdifficulty"
+"が変わらないことを想定しています。"
 
 #: templates/base.html:131
 msgid "Est.&nbsp;Time&nbsp;Left"
-msgstr ""
+msgstr "予想残り時間"
 
 #: templates/base.html:135
 msgid "Total 1 difficulty shares submitted since the last block was solved"
-msgstr ""
+msgstr "前のブロックが発見されてから合計1 difficulty sharesが送信された"
 
 #: templates/base.html:135
 msgid "Round&nbsp;Shares"
@@ -92,6 +96,10 @@ msgid ""
 "solve a block is dependent upon the current difficulty, and so large spikes "
 "or drops in difficulty often result in strange jumps in round luck"
 msgstr ""
+" (ブロック発見の期待シェア)/(今までに送信されたシェア)から計算しています。こ"
+"の割合が減っていくならプールがなかなかブロックを見つけられない不運な状態で"
+"す。また、期待値は現在のdifficultyを見ているので、急激にdifficultyが上がった"
+"り下がったりした場合、しばしばラウンド運は変な動き方をします。"
 
 #: templates/base.html:140
 msgid "Round&nbsp;Luck"
@@ -104,7 +112,7 @@ msgstr "ホーム"
 #: templates/base.html:152 templates/base.html:171 templates/home.html:112
 #: templates/news.html:3
 msgid "News"
-msgstr "ニューズ"
+msgstr "ニュース"
 
 #: templates/base.html:153
 msgid "Chat"
@@ -121,11 +129,11 @@ msgstr "ユーザー統計"
 
 #: templates/base.html:156 templates/base.html:165
 msgid "Round Summary"
-msgstr "ラウンド摘録"
+msgstr "ラウンド概要"
 
 #: templates/base.html:157 templates/base.html:172
 msgid "Guides"
-msgstr "導き手"
+msgstr "ガイド"
 
 #: templates/base.html:161
 msgid "Stats"
@@ -133,16 +141,16 @@ msgstr "統計"
 
 #: templates/base.html:169
 msgid "Extras"
-msgstr "エキストラ"
+msgstr "その他"
 
 #: templates/base.html:208
 #, python-format
 msgid "Running revision %(hash_link)s released on %(revdate)s."
-msgstr ""
+msgstr "今の改訂版%(hash_link)s. は %(revdate)s にリリースされました。"
 
 #: templates/block_table.html:6
 msgid "Age"
-msgstr "エージ"
+msgstr "発見時"
 
 #: templates/block_table.html:7
 msgid "Shares"
@@ -158,15 +166,15 @@ msgstr "ラウンド時間"
 
 #: templates/block_table.html:10
 msgid "Payout"
-msgstr "支出金"
+msgstr "支払金"
 
 #: templates/block_table.html:11
 msgid "Difficulty"
-msgstr ""
+msgstr "Difficulty"
 
 #: templates/block_table.html:12
 msgid "Solved by"
-msgstr ""
+msgstr "発見者"
 
 #: templates/block_table.html:13
 msgid "Block Hash"
@@ -175,12 +183,11 @@ msgstr "ブロックハッシュ"
 #: templates/block_table.html:14 templates/round_summary.html:12
 #: templates/user_stats.html:367
 msgid "Blockheight"
-msgstr "ブロックハイト"
+msgstr "ブロック長"
 
 #: templates/block_table.html:15 templates/user_stats.html:369
-#, fuzzy
 msgid "Status"
-msgstr "統計"
+msgstr "状態"
 
 #: templates/block_table.html:21
 msgid "Current"
@@ -188,33 +195,37 @@ msgstr "現在"
 
 #: templates/blocks.html:3
 msgid "Block List - Historical list of solved blocks"
-msgstr ""
+msgstr "ブロックリスト - 過去に発見されたブロックのリスト"
 
 #: templates/faq.html:3
 msgid "FAQ - Cryptocurrency principles explained in plain english"
-msgstr ""
+msgstr "よくある質問 - 暗号通貨の原則は簡単な英語で説明します"
 
 #: templates/home.html:3
 msgid "Home - Registration-less Monacoin Mining Pool"
-msgstr ""
+msgstr "ホーム - 登録不要のモナーコイン採掘プール"
 
 #: templates/home.html:20
 msgid "Quick start for mining:"
-msgstr "マイニングのクイックスタート"
+msgstr "すぐに採掘を開始:"
 
 #: templates/home.html:21
 msgid "No registration required, payouts go to the address used as username."
-msgstr "位置決めは必要ない。Payouts go to the address used as username."
+msgstr ""
+"登録は必要ありません。支払いはユーザ名として使われたアドレスに直接振り込まれ"
+"ます。"
 
 #: templates/home.html:23
 msgid ""
 "Configure your stratum client with the information below. Worker name can be "
 "anything you'd like:"
 msgstr ""
+"下記の情報を使ってあなたのstratumクライアントの設定してください。ワーカーの名"
+"前は何でも良いです。"
 
 #: templates/home.html:26
 msgid "URL"
-msgstr "ＵＲＬ"
+msgstr "URL"
 
 #: templates/home.html:27
 msgid "Port"
@@ -222,11 +233,11 @@ msgstr "ポート"
 
 #: templates/home.html:28
 msgid "Username"
-msgstr "ユーザー名前"
+msgstr "ユーザー名"
 
 #: templates/home.html:28
 msgid "[Your wallet address].[Worker Name]"
-msgstr "[お前のワレートアドレス].[ワーカー名前]"
+msgstr "[あなたのウォレットアドレス].[ワーカー名]"
 
 #: templates/home.html:29
 msgid "Password"
@@ -234,11 +245,11 @@ msgstr "パスワード"
 
 #: templates/home.html:29
 msgid "anything or empty"
-msgstr "何でもＯＫです"
+msgstr "何でもOKです"
 
 #: templates/home.html:30
 msgid "cgminer example"
-msgstr "cgminer ex."
+msgstr "cgminerの例"
 
 #: templates/home.html:33
 #, python-format
@@ -246,43 +257,49 @@ msgid ""
 "Check your stats and estimated payout by entering your %(coin)s address "
 "below:"
 msgstr ""
+"あなたの統計情報と予想支払金を確認するには、下の欄にあなたの%(coin)sアドレス"
+"を入力してください:"
 
 #: templates/home.html:41 templates/stats.html:44
 #, python-format
 msgid "Paste your %(coin)s address for quick access to individualized stats."
-msgstr ""
+msgstr "個別の統計を見るためにあなたの%(coin)sアドレスをペーストしてください。"
 
 #: templates/home.html:43
 msgid "Recently Visited Stats"
-msgstr ""
+msgstr "最近見たアドレス"
 
 #: templates/home.html:50 templates/stats.html:59
 msgid "View Stats"
-msgstr ""
+msgstr "統計情報を見る"
 
 #: templates/home.html:65
 msgid "No registration"
-msgstr "位置決めない"
+msgstr "登録不要"
 
 #: templates/home.html:66
 msgid ""
 "Unlike most pools, we don't require, or even provide, registration. Simply "
 "connect to our stratum servers with your wallet address."
 msgstr ""
+"よくあるプールと違い、登録は必要ありません。あなたのウォレットアドレスを使っ"
+"て簡単に接続できます。"
 
 #: templates/home.html:71
 msgid "Secure"
-msgstr ""
+msgstr "安全"
 
 #: templates/home.html:72
 msgid ""
 "No registration means your credentials can't become compromised, because you "
 "don't have any! All pool funds are kept off server for increased security."
 msgstr ""
+"登録不要ということはあなたの経歴が危険にさらされることはありません。プールの"
+"全資金はセキュリティを高めるためサーバー上にありません。"
 
 #: templates/home.html:77
 msgid "No minimum Payout"
-msgstr ""
+msgstr "最少支払金なし"
 
 #: templates/home.html:78
 #, python-format
@@ -291,68 +308,70 @@ msgid ""
 "required. Payouts are computed using PPLNS with a 0%% fee. The default "
 "donation amount is 1%%, lowerable to 0%%"
 msgstr ""
+"支払いはブロックが発見されるたびに行われます。最小支払金はありません。支払い"
+"はPPLS方式で計算されます。デフォルトの寄付は1%%、最低0%%にも変更できます。"
 
 #: templates/home.html:85
 msgid "Features"
-msgstr ""
+msgstr "特徴"
 
 #: templates/home.html:95
 msgid "Insightful statistics"
-msgstr ""
+msgstr "詳細な統計"
 
 #: templates/home.html:96
 msgid ""
 "Graphs broken down by worker give you a good at-a-glance picture of what is "
 "going on."
 msgstr ""
+"ワーカー別に分析されたグラフは何が起こっているかひと目で分かりやすいです。"
 
 #: templates/home.html:98
 msgid "Easily name a worker anything you want"
-msgstr ""
+msgstr "ワーカーにはあなたの好きな簡単な名前をつければ良いです"
 
 #: templates/home.html:99
 msgid "Drill down graphs to an individual worker with a click"
-msgstr ""
+msgstr "クリックすればワーカー別の詳細なグラフになります"
 
 #: templates/home.html:100
 msgid "Tooltips display your hash rate for each worker at a given point"
-msgstr ""
+msgstr "ツールチップはその時点でのワーカーのハッシュレートを表示します"
 
 #: templates/home.html:101
 msgid ""
 "View in 'expanded' mode to see what percentage of your hashing power each of "
 "your rigs is"
-msgstr ""
+msgstr "'expaned'モードで見るとあなたのリグでの割合がどのくらいか分かります"
 
 #: templates/home.html:102
 msgid "Easily see your overall hash rate"
-msgstr ""
+msgstr "あなたの全体ハッシュレートを簡単に見ることができます"
 
 #: templates/pool_stats.html:3
 #, python-format
 msgid ""
 "Pool Stats - Efficiency and block information for Simple %(coin)s mining pool"
-msgstr ""
+msgstr "プール統計 - Simple %(coin)s 採掘プールの効率とブロック情報"
 
 #: templates/pool_stats.html:23
 msgid ""
 "Total workers currently mining on this pool. Updated every couple minutes."
-msgstr ""
+msgstr "現在このプールで採掘しているワーカーの数です。数分毎に更新。"
 
 #: templates/pool_stats.html:34
-#, fuzzy
 msgid "Average&nbsp;Hashrate"
-msgstr "プールハスレト"
+msgstr "平均ハッシュレート"
 
 #: templates/pool_stats.html:36
 msgid ""
 "Megahashes per second completed by the pool. An average of the last 10 "
 "minutes."
-msgstr ""
+msgstr "プール全体でのハッシュレート(MH/s)です。最近10分間の平均です。"
 
 #: templates/pool_stats.html:47
 msgid "Pool Efficiency"
-msgstr ""
+msgstr "プールの効率"
 
 #: templates/pool_stats.html:49
 #, python-format
@@ -360,11 +379,12 @@ msgid ""
 "All time efficiency for shares at least 25 hours old. Accepted / Total = "
 "%(equation)s. Updated hourly."
 msgstr ""
+"25時間より前の全時間のシェア効率です。Accepted / Total = %(equation)s. 1時間"
+"毎の更新。"
 
 #: templates/pool_stats.html:61
-#, fuzzy
 msgid "Pool Hashrate"
-msgstr "プールハスレト"
+msgstr "プールハッシュレート"
 
 #: templates/pool_stats.html:63 templates/user_stats.html:113
 #: templates/worker_detail.html:23 templates/worker_detail.html:43
@@ -383,25 +403,25 @@ msgstr "月"
 
 #: templates/pool_stats.html:75
 msgid "View all blocks"
-msgstr ""
+msgstr "全てのブロックを見る"
 
 #: templates/round_summary.html:3
 #, python-format
 msgid ""
 "Round Summary - Information regarding the current round on Simple %(coin)s"
-msgstr ""
+msgstr "ラウンド概要 - Simple %(coin)sの現在のラウンドに関する情報"
 
 #: templates/round_summary.html:7
 msgid "Current Round Stats"
-msgstr ""
+msgstr "現在のラウンド情報"
 
 #: templates/round_summary.html:14
 msgid "Current height of the blockchain."
-msgstr ""
+msgstr "現在のブロックチェインの長さ"
 
 #: templates/round_summary.html:25
 msgid "Est.&nbsp;Shares&nbsp;Remaining"
-msgstr ""
+msgstr "予想残りシェア"
 
 #: templates/round_summary.html:27
 msgid ""
@@ -410,10 +430,13 @@ msgid ""
 "based on an average difficulty of the last 500 blocks, and will change a "
 "little as the difficulty changes"
 msgstr ""
+"ブロックを完了する残り1シェアまでのdifficultyの予想値です。この数字がマイナス"
+"になった時は運が悪いです。これは最近500ブロックの平均difficultyに基づいてお"
+"り、difficultyが変動すると少し変動します。"
 
 #: templates/round_summary.html:38
 msgid "Est.&nbsp;Round&nbsp;Time&nbsp;Remaining"
-msgstr ""
+msgstr "予想残り時間"
 
 #: templates/round_summary.html:40
 #, python-format
@@ -422,10 +445,13 @@ msgid ""
 "luck will be 100%% and that difficulty will not change. This number will be "
 "negative if we are in an unlucky round."
 msgstr ""
+"次のブロックが発見されるまでの予想残り時間です。ラウンド運が100%%でdifficulty"
+"が変わらないことを想定しています。数字がマイナスになった時は、不運な状態で"
+"す。"
 
 #: templates/round_summary.html:51
 msgid "Total&nbsp;N&nbsp;This&nbsp;Round"
-msgstr ""
+msgstr "Total&nbsp;N&nbsp;This&nbsp;Round"
 
 #: templates/round_summary.html:53
 msgid ""
@@ -434,10 +460,13 @@ msgid ""
 "calculated based on the expected number of shares to complete a block, and "
 "multiplied by two."
 msgstr ""
+"このラウンドが完了した時、ブロックが完了する直前までに送信されたシェアの数に"
+"基づいて支払金が分配されます。この数字はブロックが完了されるのに予想される"
+"シェアの数に基づいて計算され、2倍されます。"
 
 #: templates/round_summary.html:64
 msgid "Top Users PPLNS Summary"
-msgstr ""
+msgstr "トップユーザーのPPLNS一覧"
 
 #: templates/round_summary.html:65
 msgid ""
@@ -445,11 +474,13 @@ msgid ""
 "payout were to occur these would be extremely similar to the stats used to "
 "determine who gets paid what."
 msgstr ""
+"全てのシェアはPPLNSアルゴリズムに基づいて支払われます。支払金が発生した時、こ"
+"れは支払金を決定する統計に非常に近いものになります。"
 
 #: templates/round_summary.html:66
 #, python-format
 msgid "updated %(cached_time)s UTC"
-msgstr ""
+msgstr "更新 %(cached_time)s UTC"
 
 #: templates/round_summary.html:73
 msgid "User"
@@ -457,17 +488,16 @@ msgstr "ユーザー"
 
 #: templates/round_summary.html:74 templates/user_stats.html:362
 msgid "Shares Contributed"
-msgstr ""
+msgstr "シェア貢献度"
 
 #: templates/round_summary.html:75
-#, fuzzy
 msgid "Hashrate"
-msgstr "プールハスレト"
+msgstr "ハッシュレート"
 
 #: templates/round_summary.html:76 templates/user_stats.html:364
 #, python-format
 msgid "Donation %%"
-msgstr "寄付割"
+msgstr "寄付"
 
 #: templates/round_summary.html:84
 msgid "Anonymous"
@@ -475,41 +505,41 @@ msgstr "名無し"
 
 #: templates/set_donation.html:3
 msgid "Set Donation - Change your donation amount"
-msgstr ""
+msgstr "寄付の設定 - あなたの寄付額を変更します"
 
 #: templates/set_donation.html:24
 #, python-format
 msgid "Fee must be less than 100 and greater than %(minimum)s"
-msgstr ""
+msgstr "手数料は%(minimum)s以上100以下でないといけません"
 
 #: templates/set_donation.html:26
 msgid "Must enter a valid number!"
-msgstr ""
+msgstr "有効な数字を入れてください!"
 
 #: templates/set_donation.html:37
 msgid "How to change your donation percentage"
-msgstr ""
+msgstr "寄付額の変更方法"
 
 #: templates/set_donation.html:40
 #, python-format
 msgid "Type in the %% you want to donate as a number."
-msgstr ""
+msgstr "何%%寄付したいか数字で入力してください。"
 
 #: templates/set_donation.html:41
 msgid "Click generate"
-msgstr ""
+msgstr "生成をクリックします"
 
 #: templates/set_donation.html:42
 msgid "Click copy to Clipboard"
-msgstr ""
+msgstr "クリップボードにコピーをクリックします"
 
 #: templates/set_donation.html:45
 msgid "Open up your wallet application"
-msgstr ""
+msgstr "あなたのウォレットソフトを開きます"
 
 #: templates/set_donation.html:46
 msgid "Open <b>file</b>, click <b>sign message</b>"
-msgstr ""
+msgstr "<b>file</b>を開いて、<b>sign message</b>をクリックします。"
 
 #: templates/set_donation.html:47
 msgid ""
@@ -517,86 +547,91 @@ msgid ""
 "screens will look something like <a href=\"http://imgur.com/a/nUmZ0\">these</"
 "a>"
 msgstr ""
+"そこに<b>あなたの</b>アドレスを入れて、さっきのメッセージをペーストして署名し"
+"ます。<a href=\"http://imgur.com/a/nUmZ0\">この画像</a>のようにやれば良いで"
+"す。"
 
 #: templates/set_donation.html:48
 msgid "Copy the signature, and paste it on our site"
-msgstr ""
+msgstr "署名をコピーして、このサイトにペーストします"
 
 #: templates/set_donation.html:51
 msgid "Click change, and you're done!"
-msgstr ""
+msgstr "変更をクリックして完了。"
 
 #: templates/set_donation.html:54
 #, python-format
 msgid "Current donation percentage: %(percent)s%%"
-msgstr ""
+msgstr "現在の寄付: %(percent)s%%"
 
 #: templates/set_donation.html:58
 #, python-format
 msgid "Set donation For - %(username)s"
-msgstr ""
+msgstr "寄付の設定 - %(username)s"
 
 #: templates/set_donation.html:62
 msgid "Donation Amount"
-msgstr ""
+msgstr "寄付額"
 
 #: templates/set_donation.html:63
 msgid "Enter a new donation value"
-msgstr ""
+msgstr "新しい寄付の値を入れてください"
 
 #: templates/set_donation.html:65
 msgid "Generate"
-msgstr ""
+msgstr "生成"
 
 #: templates/set_donation.html:66
 msgid "Click to copy me."
-msgstr ""
+msgstr "クリックでコピー"
 
 #: templates/set_donation.html:66
 msgid "Copy to Clipboard"
-msgstr ""
+msgstr "クリップボードにコピー"
 
 #: templates/set_donation.html:67
 msgid "Copied!"
-msgstr ""
+msgstr "コピー完了"
 
 #: templates/set_donation.html:69
 msgid "Message to be signed"
-msgstr ""
+msgstr "署名するメッセージ"
 
 #: templates/set_donation.html:70
 msgid "Type a donation percentage into the above textbox and hit generate!"
-msgstr ""
+msgstr "上の欄に寄付の割合を%%で入力して生成をクリックしてください"
 
 #: templates/set_donation.html:73
 msgid "Signature"
-msgstr ""
+msgstr "署名"
 
 #: templates/set_donation.html:74
 msgid "Paste signature from your wallet"
-msgstr ""
+msgstr "あなたのウォレットから署名をペーストしてください"
 
 #: templates/set_donation.html:76
 msgid "Change!"
-msgstr ""
+msgstr "変更!"
 
 #: templates/stats.html:3
 msgid "Stats - Lookup mining stats for an address"
-msgstr ""
+msgstr "統計 - アドレスの採掘の状態を調査"
 
 #: templates/stats.html:37
 msgid ""
 "Aren't mining with us yet? <a href=\"/\">Look at the quickstart guide.</a>"
 msgstr ""
+"まだ採掘を始めていませんか? <a href=\"/\">このクイックスタートガイドを見てく"
+"ださい。</a>"
 
 #: templates/stats.html:47
 msgid "Recently Visited Stats:"
-msgstr ""
+msgstr "最近見たアドレス"
 
 #: templates/user_stats.html:3 templates/worker_detail.html:3
 #, python-format
 msgid "User Stats - Mining and account information for user %(username)s"
-msgstr ""
+msgstr "ユーザー統計 - 採掘とアカウントの情報 ユーザー %(username)s"
 
 #: templates/user_stats.html:64
 #, python-format
@@ -610,15 +645,15 @@ msgstr "現在%(percent)s%%を寄付"
 
 #: templates/user_stats.html:72
 msgid "PPLN Shares"
-msgstr ""
+msgstr "PPLNシェア"
 
 #: templates/user_stats.html:74
 msgid "Total shares being counted towards your next payout"
-msgstr ""
+msgstr "合計シェアは次の支払いに反映されます"
 
 #: templates/user_stats.html:82
 msgid "Est. Round Payout"
-msgstr ""
+msgstr "予想支払金"
 
 #: templates/user_stats.html:84
 #, python-format
@@ -626,22 +661,25 @@ msgid ""
 "Payout estimate based on PPLNS (Last updated %(time)s. This estimate will be "
 "very close to your actual payout."
 msgstr ""
+"支払金の予想はPPLNS(最終アップデート %(time)sに基づいています。 この予想は実"
+"際の支払いにかなり近くなります。"
 
 #: templates/user_stats.html:92
-#, fuzzy
 msgid "Average Hashrate"
-msgstr "プールハスレト"
+msgstr "平均ハッシュレート"
 
 #: templates/user_stats.html:94
 msgid ""
 "Your average hashrate over the last 10 minutes based on your accepted "
 "shares, NOT PPAgent."
 msgstr ""
+"10分間に送信されたシェアに基づいたあなたの平均ハッシュレート。PPAgentではあり"
+"ません。"
 
 #: templates/user_stats.html:102
 #, python-format
 msgid "Est. %(coin)s/day"
-msgstr "Est. %(coin)s/日"
+msgstr "予想 %(coin)s/日"
 
 #: templates/user_stats.html:104
 #, python-format
@@ -650,9 +688,11 @@ msgid ""
 "at that hashrate, and 100%% round luck. Your actual payout will fluctuate "
 "based on round luck!"
 msgstr ""
+"10分間のあなたのハッシュレートに基づき、そのハッシュレートのまま掘り続け、"
+"100%%のラウンド運だった場合の予想です。実際の支払いはラウンド運によって変動し"
+"ます。"
 
 #: templates/user_stats.html:124
-#, fuzzy
 msgid "Worker Status"
 msgstr "ユーザー統計"
 
@@ -669,42 +709,42 @@ msgid "[unnamed]"
 msgstr "[名前なし]"
 
 #: templates/user_stats.html:137
-#, fuzzy
 msgid "Hashrate:"
-msgstr "プールハスレト"
+msgstr "ハッシュレート:"
 
 #: templates/user_stats.html:140
 msgid ""
 "Average hashrate over the last ten minutes based on accepted shares, NOT "
 "PPAgent."
 msgstr ""
+"10分間に送信されたシェアに基づいた平均ハッシュレート。PPAgentではありません。"
 
 #: templates/user_stats.html:141
 msgid "Efficiency"
-msgstr ""
+msgstr "効率"
 
 #: templates/user_stats.html:148
 #, python-format
 msgid ""
 "Computed from accepted/total(%(equation)s) shares submitted in the last 24 "
 "hours"
-msgstr ""
+msgstr "過去24時間の間に提出されたaccepted/total(%(equation)s)のシェアから算出"
 
 #: templates/user_stats.html:159
 msgid "Accepted shares over the last 24 hours"
-msgstr ""
+msgstr "過去24時間に受理されたシェア"
 
 #: templates/user_stats.html:164
 msgid "Rejected shares over the last 24 hours"
-msgstr ""
+msgstr "過去24時間に拒絶されたシェア"
 
 #: templates/user_stats.html:177
 msgid "Multiple unnamed workers will do wonky things!"
-msgstr ""
+msgstr "複数の名無しワーカーが変なことをしています!"
 
 #: templates/user_stats.html:182 templates/user_stats.html:189
 msgid "Updated"
-msgstr ""
+msgstr "アップデート完了"
 
 #: templates/user_stats.html:203
 msgid ""
@@ -712,10 +752,12 @@ msgid ""
 "in a number that represents the effective contributions, rather than the raw "
 "hashrate."
 msgstr ""
+"Work Utilityは採掘によって受理されたn1シェア/時間から計算されます。この結果は"
+"ハッシュレートそのものというよりは貢献度の効率の割合です。"
 
 #: templates/user_stats.html:208
 msgid "Summation of the reported average hashrates"
-msgstr ""
+msgstr "報告された平均ハッシュレートの合計"
 
 #: templates/user_stats.html:222
 #, python-format
@@ -724,49 +766,54 @@ msgid ""
 "hashrate(%(hashrate)d). A value of 90%%+ is ideal. To increase your WUE make "
 "sure your rig is not having hardware errors"
 msgstr ""
+"この数値は報告されたWU(%(wu)s)/報告された平均ハッシュレート(%(hashrate)d)から"
+"計算されます。数値が90%% 以上が理想的です。あなたのWUEを上げるためには、"
+"HardWare errorがでていないことを確認してください。"
 
 #: templates/user_stats.html:225
 msgid "Detailed view"
-msgstr ""
+msgstr "詳細"
 
 #: templates/user_stats.html:232
 msgid "GPU"
-msgstr ""
+msgstr "GPU"
 
 #: templates/user_stats.html:234
 msgid "WUE"
-msgstr ""
+msgstr "WUE"
 
 #: templates/user_stats.html:235
 #, python-format
 msgid "Accepted/Rejected(%%)"
-msgstr ""
+msgstr "Accepted/Rejected(%%)"
 
 #: templates/user_stats.html:236
 msgid "HW Errors"
-msgstr ""
+msgstr "HW Errors"
 
 #: templates/user_stats.html:237
 msgid "Temperature"
-msgstr ""
+msgstr "温度"
 
 #: templates/user_stats.html:238
 msgid "Fan Speed"
-msgstr ""
+msgstr "ファンスピード"
 
 #: templates/user_stats.html:239
 msgid "Core/Memory Clock"
-msgstr ""
+msgstr "コア/メモリークロック"
 
 #: templates/user_stats.html:283
 msgid "Newer version available here"
-msgstr ""
+msgstr "新しいバージョンが利用可能です"
 
 #: templates/user_stats.html:297
 msgid ""
 "Setup <a href=\"http://www.github.com/icook/ppagent/\">PPAgent</a> to start "
 "reporting cgminer stats directly"
 msgstr ""
+"cgminerの統計の送信をするには、<a href=\"http://www.github.com/icook/ppagent/"
+"\">PPAgent</a>を使ってください。"
 
 #: templates/user_stats.html:309
 msgid "Account"
@@ -774,90 +821,91 @@ msgstr "アカウント"
 
 #: templates/user_stats.html:316
 msgid "Balance"
-msgstr "バランス"
+msgstr "残高"
 
 #: templates/user_stats.html:318
 msgid "Current unpaid balance not including bonus payouts"
-msgstr ""
+msgstr "現在支払われていない残高です。ボーナスは含まれていません。"
 
 #: templates/user_stats.html:326
 msgid "Unconfirmed balance"
-msgstr ""
+msgstr "承認待ち残高"
 
 #: templates/user_stats.html:328
 msgid ""
 "Newly solved block earnings, rewards not yet confirmed. Doesn't including "
 "bonus payouts"
 msgstr ""
+"新たに発見したブロックの収益ですが、報酬はまだ承認されていません。ボーナスは"
+"含まれていません。"
 
 #: templates/user_stats.html:336
 msgid "Total earned"
-msgstr ""
+msgstr "合計獲得額"
 
 #: templates/user_stats.html:338
 msgid ""
 "Total ever earned by this address from mining. No bonus payments included."
-msgstr ""
+msgstr "これまで採掘によって獲得した合計金額です。ボーナスは含まれていません。"
 
 #: templates/user_stats.html:346 templates/user_stats.html:366
 msgid "Total paid"
-msgstr ""
+msgstr "合計支払額"
 
 #: templates/user_stats.html:348
 msgid ""
 "Total paid out to this address from mining. Bonus payments are included in "
 "this amount."
-msgstr ""
+msgstr "採掘によって支払われた合計金額です。ボーナスもこの中に含まれています。"
 
 #: templates/user_stats.html:361
 msgid "Time"
-msgstr ""
+msgstr "時間"
 
 #: templates/user_stats.html:363
 msgid "Mined"
-msgstr ""
+msgstr "報酬"
 
 #: templates/user_stats.html:365
 msgid "Donation/Bonus"
-msgstr ""
+msgstr "寄付/ボーナス"
 
 #: templates/user_stats.html:368
 msgid "TX id"
-msgstr ""
+msgstr "TX id"
 
 #: templates/user_stats.html:407 templates/user_stats.html:429
 msgid "Confirmed"
-msgstr ""
+msgstr "承認済み"
 
 #: templates/user_stats.html:409 templates/user_stats.html:431
 msgid "Unconfirmed"
-msgstr ""
+msgstr "承認待ち"
 
 #: templates/user_stats.html:418
 msgid "Bonus"
-msgstr "ボナス"
+msgstr "ボーナス"
 
 #: templates/user_stats.html:445
 msgid "No payouts for this user yet"
-msgstr "支出金はまだいない "
+msgstr "このユーザーの支払金はまだありません"
 
 #: templates/user_stats.html:456
 msgid "GPU Details"
-msgstr ""
+msgstr "GPU詳細"
 
 #: templates/user_stats.html:462
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: templates/worker_detail.html:14
-#, fuzzy
 msgid "Worker Stats"
 msgstr "ユーザー統計"
 
 #: templates/worker_detail.html:17
 msgid "Temperature History"
-msgstr ""
+msgstr "温度履歴"
 
 #: templates/worker_detail.html:37
 msgid "Hashrate History"
-msgstr ""
+msgstr "ハッシュレート履歴"
