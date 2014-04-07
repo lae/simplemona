@@ -154,12 +154,12 @@ $(document).ready(function() {
         <div class="panel-body" style="padding:0px;">
           <div class="table-responsive  bs-component" style="position:relative;padding:9px;">
             <div class="col-xs-6 text-center">
-              <h4>Accepted Shares: {{ '{:,}'.format(worker['accepted']) }}&nbsp;
+              <h4>{{ _('Accepted Shares') }}: {{ '{:,}'.format(worker['accepted']) }}&nbsp;
                 <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
                      title="{{ _('Accepted shares over the last 24 hours') }}"></i></h4>
             </div>
             <div class="col-xs-6 text-center">
-              <h4>Rejected Shares: {{ '{:,}'.format(worker['rejected']) }}&nbsp;
+              <h4>{{ _('Rejected Shares') }}: {{ '{:,}'.format(worker['rejected']) }}&nbsp;
                 <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
                      title="{{ _('Rejected shares over the last 24 hours') }}"></i></h4>
             </div>
@@ -170,7 +170,7 @@ $(document).ready(function() {
           {% set stat = worker['status'] %}
           <div class="table-responsive bs-component worker-table-wrapper">
             <div class="worker-wrapper">
-              <b>{{ stat['type'] }} status</b>
+              <b>{{ _('%(miner)s status', miner = stat['type']) }}</b>
             {% if not worker['name'] %}
               {# Show a warning about unnamed workers #}
               <small style="font-size:14px;color:#ff0000;font-weight:400;">
