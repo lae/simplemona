@@ -2,8 +2,10 @@
 # =======================================================================
 # Where's powerpool running?
 monitor_addrs:
-    - stratum: tcp+stratum://stratum-internal.simplemona.com:8888
-      mon_address: http://stratum-internal.simplemona.com:3855/
+    - stratum: tcp+stratum://stratum.simplemona.com:8888
+      mon_address: http://stratum.internal:3855/
+    - stratum: tcp+stratum://stratum-ja.simplemona.com:8888
+      mon_address: http://stratum-ja.internal:3855/
 # how many confirmations do we wait before marking blocks mature
 # and allowing payout over RPC
 block_mature_confirms: 120
@@ -21,7 +23,7 @@ redacted_addresses:
 # connection information for the coinserver RPC
 coinserv:
     port: 9402
-    address: 127.0.0.1
+    address: coinserver.internal
     username: monacoinrpc
     password: ''
     wallet_pass: ''
@@ -119,12 +121,6 @@ coin_symbol: "MONA"
 assets_address: http://static.simplemona.com
 # logo img
 logo: "/img/monacoin.png"
-# xs leader img
-leader-xs: "/img/mona-miner-xs.jpg"
-# sm leader img
-leader-sm: "/img/mona-miner-sm.jpg"
-# fullsize leader img
-leader: "/img/mona-miner.jpg"
 # this url will have the transaction id appended to it to provide
 # information on a specific transaction for a payout
 transaction_link_prefix: http://abe.monash.pw/tx/
