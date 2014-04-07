@@ -1,3 +1,16 @@
+- title: 本稼働中！ Up and running!
+  date: 2014.04.08
+  body: |
+    Simple Monaの準備が完了しました！ぜひ、あなたのハッシュパワーを投じてください。<br />
+    Simple Monaは発展途上のため、バックアッププールの設定を忘れないでください。<br />
+    翻訳とバグ報告をしていただいたすべての人々に感謝します。<br />
+    このプールのスレッド http://askmona.org/XXX。スレッドはプールについての議論や質問、
+    問題の報告等にお使いください。<br /><br />
+    Simple Mona is now ready! Please feel free to throw some hashing power this way,
+    but be sure to keep a backup pool since this pool is still pretty green.<br />
+    Thank you to all those who helped with translation and bug reporting to bring this pool to fruition!<br />
+    A discussion thread for the launch is at http://askmona.org/XXX.
+    Use this thread to discuss the pool, ask questions, or report any issues with the pool.
 - title: 新しいstratumの場所
   date: 2014.04.06
   body: |
