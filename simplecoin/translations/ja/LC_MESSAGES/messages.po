@@ -4,11 +4,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.1.0\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-06 18:36-0500\n"
-"PO-Revision-Date: 2014-04-07 21:25+0900\n"
-"Last-Translator: En__ <>\n"
+"Project-Id-Version: 0.1.1\n"
+"Report-Msgid-Bugs-To: sleepingkyoto@yahoo.co.jp\n"
+"POT-Creation-Date: 2014-04-07 12:30-0500\n"
+"PO-Revision-Date: 2014-04-07 12:33-0600\n"
+"Last-Translator: En__/keystore00 <>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -39,8 +39,7 @@ msgid ""
 "Seems we've goofed up, sorry about that. This error has been logged. You "
 "might try again in a minute."
 msgstr ""
-"問題が発生しました。エラーは記録されています。やり直してみるといいかもしれま"
-"せん。"
+"問題が発生しました。エラーは記録されています。数分後にやり直してください。"
 
 #: templates/base.html:116
 msgid "Total hashrate for the pool, represented in Megahashes per second"
@@ -99,7 +98,7 @@ msgstr ""
 " (ブロック発見の期待シェア)/(今までに送信されたシェア)から計算しています。こ"
 "の割合が減っていくならプールがなかなかブロックを見つけられない不運な状態で"
 "す。また、期待値は現在のdifficultyを見ているので、急激にdifficultyが上がった"
-"り下がったりした場合、しばしばラウンド運は変な動き方をします。"
+"り下がったりした場合、ラウンド運はしばしば変な動き方をします。"
 
 #: templates/base.html:140
 msgid "Round&nbsp;Luck"
@@ -146,7 +145,7 @@ msgstr "その他"
 #: templates/base.html:208
 #, python-format
 msgid "Running revision %(hash_link)s released on %(revdate)s."
-msgstr "今の改訂版%(hash_link)s. は %(revdate)s にリリースされました。"
+msgstr "現在の改訂版%(hash_link)s. は %(revdate)s にリリースされました。"
 
 #: templates/block_table.html:6
 msgid "Age"
@@ -309,7 +308,7 @@ msgid ""
 "donation amount is 1%%, lowerable to 0%%"
 msgstr ""
 "支払いはブロックが発見されるたびに行われます。最小支払金はありません。支払い"
-"はPPLS方式で計算されます。デフォルトの寄付は1%%、最低0%%にも変更できます。"
+"はPPLNS方式で計算されます。デフォルトの寄付は1%%、最低0%%にも変更できます。"
 
 #: templates/home.html:85
 msgid "Features"
@@ -379,8 +378,8 @@ msgid ""
 "All time efficiency for shares at least 25 hours old. Accepted / Total = "
 "%(equation)s. Updated hourly."
 msgstr ""
-"25時間より前の全時間のシェア効率です。Accepted / Total = %(equation)s. 1時間"
-"毎の更新。"
+"25時間より前の全時間のシェア効率です。受理 / 合計 = %(equation)s. 1時間毎に更"
+"新。"
 
 #: templates/pool_stats.html:61
 msgid "Pool Hashrate"
@@ -451,7 +450,7 @@ msgstr ""
 
 #: templates/round_summary.html:51
 msgid "Total&nbsp;N&nbsp;This&nbsp;Round"
-msgstr "Total&nbsp;N&nbsp;This&nbsp;Round"
+msgstr "このラウンドの合計N"
 
 #: templates/round_summary.html:53
 msgid ""
@@ -527,15 +526,19 @@ msgstr "何%%寄付したいか数字で入力してください。"
 
 #: templates/set_donation.html:41
 msgid "Click generate"
-msgstr "生成をクリックします"
+msgstr "生成をクリックします。"
 
 #: templates/set_donation.html:42
 msgid "Click copy to Clipboard"
-msgstr "クリップボードにコピーをクリックします"
+msgstr "クリップボードにコピーをクリックします。"
+
+#: templates/set_donation.html:43
+msgid "Sign the message with your wallet."
+msgstr "あなたのウォレットから署名をペーストしてください。"
 
 #: templates/set_donation.html:45
 msgid "Open up your wallet application"
-msgstr "あなたのウォレットソフトを開きます"
+msgstr "あなたのウォレットソフトを開きます。"
 
 #: templates/set_donation.html:46
 msgid "Open <b>file</b>, click <b>sign message</b>"
@@ -548,12 +551,12 @@ msgid ""
 "a>"
 msgstr ""
 "そこに<b>あなたの</b>アドレスを入れて、さっきのメッセージをペーストして署名し"
-"ます。<a href=\"http://imgur.com/a/nUmZ0\">この画像</a>のようにやれば良いで"
+"ます。<a href=\"http://imgur.com/6dNcNO5\">この画像</a>のようにやれば良いで"
 "す。"
 
 #: templates/set_donation.html:48
 msgid "Copy the signature, and paste it on our site"
-msgstr "署名をコピーして、このサイトにペーストします"
+msgstr "署名をコピーして、このサイトにペーストします。"
 
 #: templates/set_donation.html:51
 msgid "Click change, and you're done!"
@@ -575,7 +578,7 @@ msgstr "寄付額"
 
 #: templates/set_donation.html:63
 msgid "Enter a new donation value"
-msgstr "新しい寄付の値を入れてください"
+msgstr "新しい寄付の数値を入れてください"
 
 #: templates/set_donation.html:65
 msgid "Generate"
@@ -658,11 +661,11 @@ msgstr "予想支払金"
 #: templates/user_stats.html:84
 #, python-format
 msgid ""
-"Payout estimate based on PPLNS (Last updated %(time)s. This estimate will be "
-"very close to your actual payout."
+"Payout estimate based on PPLNS (Last updated %(time)s). This estimate will "
+"be very close to your actual payout."
 msgstr ""
-"支払金の予想はPPLNS(最終アップデート %(time)sに基づいています。 この予想は実"
-"際の支払いにかなり近くなります。"
+"支払金の予想はPPLNS(最終更新 %(time)s)に基づいています。 この予想は実際の支払"
+"いにかなり近くなります。"
 
 #: templates/user_stats.html:92
 msgid "Average Hashrate"
@@ -728,15 +731,28 @@ msgstr "効率"
 msgid ""
 "Computed from accepted/total(%(equation)s) shares submitted in the last 24 "
 "hours"
-msgstr "過去24時間の間に提出されたaccepted/total(%(equation)s)のシェアから算出"
+msgstr "過去24時間の間に提出されたシェアの受理/合計(%(equation)s)から算出"
+
+#: templates/user_stats.html:157
+msgid "Accepted Shares"
+msgstr "受理されたシェア"
 
 #: templates/user_stats.html:159
 msgid "Accepted shares over the last 24 hours"
 msgstr "過去24時間に受理されたシェア"
 
+#: templates/user_stats.html:162
+msgid "Rejected Shares"
+msgstr "拒絶されたシェア"
+
 #: templates/user_stats.html:164
 msgid "Rejected shares over the last 24 hours"
 msgstr "過去24時間に拒絶されたシェア"
+
+#: templates/user_stats.html:173
+#, python-format
+msgid "%(miner)s status"
+msgstr "%(miner)s の状態"
 
 #: templates/user_stats.html:177
 msgid "Multiple unnamed workers will do wonky things!"
@@ -744,7 +760,7 @@ msgstr "複数の名無しワーカーが変なことをしています!"
 
 #: templates/user_stats.html:182 templates/user_stats.html:189
 msgid "Updated"
-msgstr "アップデート完了"
+msgstr "更新"
 
 #: templates/user_stats.html:203
 msgid ""
@@ -767,8 +783,8 @@ msgid ""
 "sure your rig is not having hardware errors"
 msgstr ""
 "この数値は報告されたWU(%(wu)s)/報告された平均ハッシュレート(%(hashrate)d)から"
-"計算されます。数値が90%% 以上が理想的です。あなたのWUEを上げるためには、"
-"HardWare errorがでていないことを確認してください。"
+"計算されます。90%%以上の 数値であれば理想的です。あなたのWUEを上げるために"
+"は、Hardware errorがでていないことを確認してください。"
 
 #: templates/user_stats.html:225
 msgid "Detailed view"
@@ -785,7 +801,7 @@ msgstr "WUE"
 #: templates/user_stats.html:235
 #, python-format
 msgid "Accepted/Rejected(%%)"
-msgstr "Accepted/Rejected(%%)"
+msgstr "受理/拒絶(%%)"
 
 #: templates/user_stats.html:236
 msgid "HW Errors"
@@ -860,7 +876,7 @@ msgstr "採掘によって支払われた合計金額です。ボーナスもこ
 
 #: templates/user_stats.html:361
 msgid "Time"
-msgstr "時間"
+msgstr "発見時"
 
 #: templates/user_stats.html:363
 msgid "Mined"
@@ -872,7 +888,7 @@ msgstr "寄付/ボーナス"
 
 #: templates/user_stats.html:368
 msgid "TX id"
-msgstr "TX id"
+msgstr "取引ID"
 
 #: templates/user_stats.html:407 templates/user_stats.html:429
 msgid "Confirmed"

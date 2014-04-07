@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-06 18:36-0500\n"
+"POT-Creation-Date: 2014-04-07 12:30-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -497,6 +497,10 @@ msgstr ""
 msgid "Click copy to Clipboard"
 msgstr ""
 
+#: templates/set_donation.html:43
+msgid "Sign the message with your wallet."
+msgstr ""
+
 #: templates/set_donation.html:45
 msgid "Open up your wallet application"
 msgstr ""
@@ -616,8 +620,8 @@ msgstr ""
 #: templates/user_stats.html:84
 #, python-format
 msgid ""
-"Payout estimate based on PPLNS (Last updated %(time)s. This estimate will"
-" be very close to your actual payout."
+"Payout estimate based on PPLNS (Last updated %(time)s). This estimate "
+"will be very close to your actual payout."
 msgstr ""
 
 #: templates/user_stats.html:92
@@ -680,12 +684,25 @@ msgid ""
 "24 hours"
 msgstr ""
 
+#: templates/user_stats.html:157
+msgid "Accepted Shares"
+msgstr ""
+
 #: templates/user_stats.html:159
 msgid "Accepted shares over the last 24 hours"
 msgstr ""
 
+#: templates/user_stats.html:162
+msgid "Rejected Shares"
+msgstr ""
+
 #: templates/user_stats.html:164
 msgid "Rejected shares over the last 24 hours"
+msgstr ""
+
+#: templates/user_stats.html:173
+#, python-format
+msgid "%(miner)s status"
 msgstr ""
 
 #: templates/user_stats.html:177
