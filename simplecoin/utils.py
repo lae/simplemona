@@ -146,8 +146,10 @@ def last_10_shares(user):
 
 @cache.memoize(timeout=60)
 def total_earned(user):
-    return (db.session.query(func.sum(Payout.amount)).
-            filter_by(user=user).scalar() or 0.0)
+    total_p = (Payout.query.filter_by(user=user).
+               join(Payout.block, aliased=True).
+               filter_by(orphan=False))
+    return sum([payout.amount for payout in total_p])
 
 
 @cache.memoize(timeout=60)
@@ -191,7 +193,7 @@ def collect_user_stats(address):
 
     unconfirmed_balance = (Payout.query.filter_by(user=address).
                            join(Payout.block, aliased=True).
-                           filter_by(mature=False))
+                           filter_by(mature=False, orphan=False))
     unconfirmed_balance = sum([payout.amount for payout in unconfirmed_balance])
     balance -= unconfirmed_balance
 

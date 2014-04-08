@@ -243,7 +243,7 @@ $(document).ready(function() {
                 {% for gpu in stat['gpus'] %}
                   <tr class="gpu" data-url="/{{ username }}/{{ worker['name'] }}/details/{{ loop.index0 }}">
                     <th>{{ loop.index0 }}</th>
-                    <th {% if (gpu.get('MHS av', 0)*1000) == 0 %}class="warning"{% endif %}>
+                    <th>
                       {{ (gpu.get('MHS av', 0)*1000)|round|int }}
                     </th>
                     <th>
@@ -401,16 +401,7 @@ $(document).ready(function() {
                     </a>
                     {% endif %}
                   </th>
-                  <th>
-                    {% if payout.transaction_id %}
-                      {% if payout.transaction.confirmed == True %}
-                        {{ _('Confirmed') }}
-                      {% else %}
-                        {{ _('Unconfirmed') }}
-                      {% endif %}
-                    {% else %}
-                      -
-                    {% endif %}</th>
+                  <th>{{ payout.status }}</th>
                 </tr>
               {% else %}
                 <tr>
@@ -426,12 +417,12 @@ $(document).ready(function() {
                   <th>
                     {% if obj.transaction_id %}
                       {% if obj.transaction.confirmed == True %}
-                        {{ _('Confirmed') }}
+                        {{ _('Payout Confirmed') }}
                       {% else %}
-                        {{ _('Unconfirmed') }}
+                        {{ _('Payout Unconfirmed') }}
                       {% endif %}
                     {% else %}
-                      -
+                      {{ _('Payout Pending') }}
                     {% endif %}</th>
                 </tr>
               {% endif %}

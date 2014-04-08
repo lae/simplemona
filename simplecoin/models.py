@@ -8,13 +8,14 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 
 from flask import current_app
+from flask.ext.babel import gettext
 from sqlalchemy.schema import CheckConstraint
 from sqlalchemy.ext.declarative import AbstractConcreteBase, declared_attr
 from sqlalchemy.dialects.postgresql import HSTORE, ARRAY
 
 from cryptokit import bits_to_difficulty
 from .model_lib import base
-from . import db
+from . import db, cache
 
 
 class Blob(base):
@@ -60,10 +61,14 @@ class Block(base):
     @property
     def status(self):
         if self.mature:
-            return "Mature"
+            return gettext("Mature")
         if self.orphan:
-            return "Orphan"
-        return "Unconfirmed"
+            return gettext("Orphan")
+        confirms = self.confirms_remaining
+        if confirms is not None:
+            return gettext("%(confirms)d Confirms Remaining", confirms = confirms)
+        else:
+            return gettext("Pending confirmation")
 
     @classmethod
     def create(cls, user, height, total_value, transaction_fees, bits, hash,
@@ -91,6 +96,15 @@ class Block(base):
         seconds = round((self.found_at - self.time_started).total_seconds())
         formatted_time = str(timedelta(seconds=seconds))
         return formatted_time
+
+    @property
+    def confirms_remaining(self):
+        bh = cache.get('blockheight')
+        if not bh:
+            return None
+        confirms_req = current_app.config['block_mature_confirms']
+        # prevent displaying negative confirms
+        return max(0, confirms_req - (bh - self.height))
 
 
 class Share(base):
@@ -182,7 +196,7 @@ class Threshold(base):
         try:
             econf = current_app.config['email']
             if not econf.get('enabled', True):
-                logger.warn("Skipping actual email send because disabled!")
+                current_app.logger.warn("Skipping actual email send because disabled!")
                 return True
 
             send_addr = econf['send_address']
@@ -276,6 +290,25 @@ class Payout(Transfer):
                      perc=perc, perc_applied=perc_applied)
         db.session.add(payout)
         return payout
+
+    @property
+    def status(self):
+        if self.transaction:
+            if self.transaction.confirmed is True:
+                return gettext("Payout Transaction Confirmed")
+            else:
+                return gettext("Payout Transaction Pending")
+        elif self.block.orphan:
+            return gettext("Block Orphaned")
+        elif not self.block.mature:
+
+            confirms = self.block.confirms_remaining
+            if confirms is not None:
+                return gettext("%(confirms)d Block Confirms Remaining", confirms = confirms)
+            else:
+                return gettext("Pending Block Confirmation")
+        else:
+            return gettext("Payout Pending")
 
 
 class BonusPayout(Transfer):

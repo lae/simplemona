@@ -56,6 +56,7 @@ def create_app(config='/config.yml', celery=False):
     cache_config.update(app.config.get('main_cache', {}))
     cache.init_app(app, config=cache_config)
     babel.init_app(app)
+    app.config['BABEL_DEFAULT_LOCALE'] = app.config.get('default_locale')
 
     if not celery:
         hdlr = logging.FileHandler(app.config.get('log_file', 'webserver.log'))

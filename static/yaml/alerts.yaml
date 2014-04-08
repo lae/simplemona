@@ -1,9 +1,16 @@
-- title: 新しいstratumの場所/New Stratum Location
+- title: プールを新しくしました！/Newly Launched!
   severity: success
-  date: 2014.04.06
-  key: 6
+  date: 2014.04.08
+  key: 7
   body: |
-    新しいstratum立っていました。<a href="/news">ニューズを</a>読んで下さい。
+    現在プールは本稼働中です。詳しくはニュースを見てください。<br />
+    We're now running in production mode. Please read the news for more info.
+#- title: 新しいstratumの場所/New Stratum Location
+#  severity: success
+#  date: 2014.04.06
+#  key: 6
+#  body: |
+#    新しいstratum立っていました。<a href="/news">ニューズを</a>読んで下さい。
 #- title: Message Queue
 #  severity: danger
 #  date: 2014.04.05
@@ -31,11 +38,9 @@
 #  key: 2
 #  body: |
 #    The stratum was moved to 108.61.20.227. There may be remaining issues.
-
-- title: Testing Phase
-  severity: warning
-  date: 2014.04.03
-  key: 1
-  body: |
-    The stratum and pool may suffer some instability. Please bear with me.
-
+#- title: Testing Phase
+#  severity: warning
+#  date: 2014.04.03
+#  key: 1
+#  body: |
+#    The stratum and pool may suffer some instability. Please bear with me.
