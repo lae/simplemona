@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-04-07 18:02-0500\n"
-"PO-Revision-Date: 2014-04-07 18:07-0600\n"
-"Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
+"PO-Revision-Date: 2014-04-07 20:41-0600\n"
+"Last-Translator: neet4vip (En__) <>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -20,45 +20,45 @@ msgstr ""
 
 #: simplecoin/models.py:64
 msgid "Mature"
-msgstr ""
+msgstr "承認済み"
 
 #: simplecoin/models.py:66
 msgid "Orphan"
-msgstr ""
+msgstr "孤立"
 
 #: simplecoin/models.py:69
 #, python-format
 msgid "%(confirms)d Confirms Remaining"
-msgstr ""
+msgstr "残り%(confirms)d回の承認待ち"
 
 #: simplecoin/models.py:71
 msgid "Pending confirmation"
-msgstr ""
+msgstr "承認保留中"
 
 #: simplecoin/models.py:298
 msgid "Payout Transaction Confirmed"
-msgstr ""
+msgstr "支払い取引承認済み"
 
 #: simplecoin/models.py:300
 msgid "Payout Transaction Pending"
-msgstr ""
+msgstr "支払い取引保留中"
 
 #: simplecoin/models.py:302
 msgid "Block Orphaned"
-msgstr ""
+msgstr "孤立したブロック"
 
 #: simplecoin/models.py:307
 #, python-format
 msgid "%(confirms)d Block Confirms Remaining"
-msgstr ""
+msgstr "残り%(confirms)dブロックの承認待ち"
 
 #: simplecoin/models.py:309
 msgid "Pending Block Confirmation"
-msgstr ""
+msgstr "ブロックの承認保留中"
 
 #: simplecoin/models.py:311 templates/user_stats.html:425
 msgid "Payout Pending"
-msgstr ""
+msgstr "支払い保留中"
 
 #: simplecoin/views.py:165
 msgid "Not available"
@@ -938,11 +938,11 @@ msgstr "ボーナス"
 
 #: templates/user_stats.html:420
 msgid "Payout Confirmed"
-msgstr ""
+msgstr "支払い承認済み"
 
 #: templates/user_stats.html:422
 msgid "Payout Unconfirmed"
-msgstr ""
+msgstr "支払い承認待ち"
 
 #: templates/user_stats.html:436
 msgid "No payouts for this user yet"
