@@ -29,7 +29,7 @@ $(document).ready(function() {
 {% endif %}{% endfor %}
 <b>{{ _('Username') }}:</b> {{ _('[Your wallet address].[Worker Name]') }}
 <b>{{ _('Password') }}:</b> {{ _('anything or empty') }}
-<b>{{ _('cgminer example') }}:</b> ./cgminer -o stratum+tcp://{{ config['stratum_address'] }}:{{ config['stratum_port'] }} -u {{ config['catchall_address'] }}.nanashi -I 13</pre>
+<b>{{ _('cgminer example') }}:</b> ./cgminer -o stratum+tcp://{{ config['strata'][0]['address'] }}:{{ config['strata'][0]['port'] }} -u {{ config['catchall_address'] }}.nanashi -I 13</pre>
             </small>
           </li>
           <li>{{ _('Check your stats and estimated payout by entering your %(coin)s address below:', coin = config['coin_name']) }}</li>
