@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-07 18:02-0500\n"
-"PO-Revision-Date: 2014-04-07 20:41-0600\n"
-"Last-Translator: neet4vip (En__) <>\n"
+"POT-Creation-Date: 2014-04-09 03:02-0500\n"
+"PO-Revision-Date: 2014-04-09 03:03-0600\n"
+"Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -60,15 +60,15 @@ msgstr "ブロックの承認保留中"
 msgid "Payout Pending"
 msgstr "支払い保留中"
 
-#: simplecoin/views.py:165
+#: simplecoin/views.py:194
 msgid "Not available"
 msgstr "利用できません"
 
-#: simplecoin/views.py:337
+#: simplecoin/views.py:366
 msgid "An error occurred: "
 msgstr "エラーが発生しました:"
 
-#: simplecoin/views.py:339
+#: simplecoin/views.py:368
 msgid "Successfully changed!"
 msgstr "変更に成功しました"
 
@@ -83,32 +83,32 @@ msgid ""
 msgstr ""
 "問題が発生しました。エラーは記録されています。数分後にやり直してください。"
 
-#: templates/base.html:115
+#: templates/base.html:117
 msgid "Total hashrate for the pool, represented in Megahashes per second"
 msgstr "プールの合計ハッシュレート(MH/s)"
 
-#: templates/base.html:115
+#: templates/base.html:117
 msgid "Pool&nbsp;Hashrate"
 msgstr "プールハッシュレート"
 
-#: templates/base.html:119
+#: templates/base.html:121
 #, python-format
 msgid "Total active clients mining on Simple %(coin)s"
 msgstr "Simple %(coin)sのアクティブ採掘者数"
 
-#: templates/base.html:120 templates/pool_stats.html:21
+#: templates/base.html:122 templates/pool_stats.html:21
 msgid "Active&nbsp;Workers"
 msgstr "アクティブワーカー"
 
-#: templates/base.html:124
+#: templates/base.html:126
 msgid "Total time since the last block was solved"
 msgstr "前のブロックが発見されてからの合計時間"
 
-#: templates/base.html:124
+#: templates/base.html:126
 msgid "Round&nbsp;Time"
 msgstr "ラウンド時間"
 
-#: templates/base.html:129
+#: templates/base.html:131
 #, python-format
 msgid ""
 "Estimated time remaining until the next block is found. It assumes round "
@@ -117,19 +117,19 @@ msgstr ""
 "次のブロックが発見されるまでの予想残り時間です。ラウンド運が100%%でdifficulty"
 "が変わらないことを想定しています。"
 
-#: templates/base.html:130
+#: templates/base.html:132
 msgid "Est.&nbsp;Time&nbsp;Left"
 msgstr "予想残り時間"
 
-#: templates/base.html:134
+#: templates/base.html:136
 msgid "Total 1 difficulty shares submitted since the last block was solved"
 msgstr "前のブロックが発見されてから合計1 difficulty sharesが送信された"
 
-#: templates/base.html:134
+#: templates/base.html:136
 msgid "Round&nbsp;Shares"
 msgstr "ラウンドシェア"
 
-#: templates/base.html:138
+#: templates/base.html:140
 msgid ""
 "Calculated from (shares expected to solve a block)/(shares currently "
 "submitted). This results in a percentage that decreases the unluckier the "
@@ -142,49 +142,49 @@ msgstr ""
 "す。また、期待値は現在のdifficultyを見ているので、急激にdifficultyが上がった"
 "り下がったりした場合、ラウンド運はしばしば変な動き方をします。"
 
-#: templates/base.html:139
+#: templates/base.html:141
 msgid "Round&nbsp;Luck"
 msgstr "ラウンド運"
 
-#: templates/base.html:148
+#: templates/base.html:150
 msgid "Home"
 msgstr "ホーム"
 
-#: templates/base.html:151 templates/base.html:170 templates/home.html:114
+#: templates/base.html:153 templates/base.html:172 templates/home.html:114
 #: templates/news.html:3
 msgid "News"
 msgstr "ニュース"
 
-#: templates/base.html:152
+#: templates/base.html:154
 msgid "Chat"
 msgstr "チャット"
 
-#: templates/base.html:153 templates/base.html:162
+#: templates/base.html:155 templates/base.html:164
 #: templates/pool_stats.html:16
 msgid "Pool Stats"
 msgstr "プール統計"
 
-#: templates/base.html:154 templates/base.html:163
+#: templates/base.html:156 templates/base.html:165
 msgid "User Stats"
 msgstr "ユーザー統計"
 
-#: templates/base.html:155 templates/base.html:164
+#: templates/base.html:157 templates/base.html:166
 msgid "Round Summary"
 msgstr "ラウンド概要"
 
-#: templates/base.html:156 templates/base.html:171
+#: templates/base.html:158 templates/base.html:173
 msgid "Guides"
 msgstr "ガイド"
 
-#: templates/base.html:160
+#: templates/base.html:162
 msgid "Stats"
 msgstr "統計"
 
-#: templates/base.html:168
+#: templates/base.html:170
 msgid "Extras"
 msgstr "その他"
 
-#: templates/base.html:207
+#: templates/base.html:209
 #, python-format
 msgid "Running revision %(hash_link)s released on %(revdate)s."
 msgstr "現在の改訂版%(hash_link)s. は %(revdate)s にリリースされました。"
@@ -423,26 +423,34 @@ msgstr ""
 "25時間より前の全時間のシェア効率です。受理 / 合計 = %(equation)s. 1時間毎に更"
 "新。"
 
-#: templates/pool_stats.html:61
+#: templates/pool_stats.html:60
+msgid "Network&nbsp;Hashrate"
+msgstr "ネットワークハッシュレート"
+
+#: templates/pool_stats.html:62
+msgid "Megahashes per second completed by the network."
+msgstr "ネットワーク全体でのハッシュレート(MH/s)です。"
+
+#: templates/pool_stats.html:74
 msgid "Pool Hashrate"
 msgstr "プールハッシュレート"
 
-#: templates/pool_stats.html:63 templates/user_stats.html:113
+#: templates/pool_stats.html:76 templates/user_stats.html:113
 #: templates/worker_detail.html:23 templates/worker_detail.html:43
 msgid "Hour"
 msgstr "時"
 
-#: templates/pool_stats.html:64 templates/user_stats.html:114
+#: templates/pool_stats.html:77 templates/user_stats.html:114
 #: templates/worker_detail.html:26 templates/worker_detail.html:46
 msgid "Day"
 msgstr "日"
 
-#: templates/pool_stats.html:65 templates/user_stats.html:115
+#: templates/pool_stats.html:78 templates/user_stats.html:115
 #: templates/worker_detail.html:29 templates/worker_detail.html:49
 msgid "Month"
 msgstr "月"
 
-#: templates/pool_stats.html:75
+#: templates/pool_stats.html:88
 msgid "View all blocks"
 msgstr "全てのブロックを見る"
 
