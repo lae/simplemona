@@ -15,7 +15,7 @@ $(document).ready(function() {
 <div class="row page-header">
   <h2 style="word-wrap:break-word;">{{ _('Pool Stats') }}</h2>
   <br>
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <div class="panel panel-default">
       <div class="panel-body text-center">
         <small>{{ _('Active&nbsp;Workers') }}</small>&nbsp;
@@ -28,7 +28,7 @@ $(document).ready(function() {
       </div>
     </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <div class="panel panel-default">
       <div class="panel-body text-center">
         <small>{{ _('Average&nbsp;Hashrate') }}</small>&nbsp;
@@ -41,7 +41,7 @@ $(document).ready(function() {
       </div>
     </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <div class="panel panel-default">
       <div class="panel-body text-center">
         <small>{{ _('Pool Efficiency') }}</small>&nbsp;
@@ -50,6 +50,19 @@ $(document).ready(function() {
         <br>
         <h4>
           <p><span>{{ efficiency | round(2) }}%</span></p>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <small>{{ _('Network&nbsp;Hashrate') }}</small>&nbsp;
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
+                     title="{{ _('Megahashes per second completed by the network.') }}"></i>
+        <br>
+        <h4>
+          <p><span class="odometer nhashrate">...</span>&nbsp;MHashes/sec</p>
         </h4>
       </div>
     </div>

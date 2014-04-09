@@ -29,6 +29,7 @@
       seconds = {{ g.round_duration }};
       total_round_shares = {{ g.total_round_shares }}
       khashpersec = {{ g.hashrate }};
+      net_khashpersec = {{ g.net_hashrate }};
       shares_per_sec = (shares / seconds);
       round_time = {{ g.shares_to_solve }} / shares_per_sec;
 
@@ -78,6 +79,7 @@
 
         $('.odometer.hashes').text(numberWithCommas(Math.round(khashpersec/100)/10));
         $('.odometer.phashrate').text(numberWithCommas(Math.round(khashpersec/100)/10));
+        $('.odometer.nhashrate').text(numberWithCommas(Math.round(net_khashpersec/100)/10));
         $('.odometer.luck').text(numberWithCommas(Math.round(luck) / 10));
         $('.odometer.blockluck').text(numberWithCommas(Math.round(luck) / 10));
         $('.odometer.remaining_shares').text(numberWithCommas(Math.round(shares_remaining)));

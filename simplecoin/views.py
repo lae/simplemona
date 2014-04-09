@@ -16,7 +16,7 @@ from .models import (OneMinuteShare, Block, Blob,
 from . import db, root, cache, babel
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
                     get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
-                    get_pool_hashrate, last_block_time, get_alerts,
+                    get_pool_hashrate, get_network_hashrate, last_block_time, get_alerts,
                     last_block_found)
 
 
@@ -71,6 +71,7 @@ def add_pool_stats():
     g.completed_block_shares = get_adj_round_shares()
     g.round_duration = (datetime.datetime.utcnow() - last_block_time()).total_seconds()
     g.hashrate = get_pool_hashrate()
+    g.net_hashrate = get_network_hashrate()
 
     g.worker_count = cache.get('total_workers') or 0
     g.average_difficulty = cache.get('difficulty_avg') or 0
@@ -91,6 +92,7 @@ def close_alert(id):
 def pool_stats_api():
     ret = {}
     ret['hashrate'] = get_pool_hashrate()
+    ret['net_hashrate'] = get_network_hashrate()
     ret['workers'] = g.worker_count
     ret['completed_shares'] = g.completed_block_shares
     ret['total_round_shares'] = g.total_round_shares
@@ -122,7 +124,7 @@ def mpos_pool_stats_api():
                 "esttime": round((float(g.shares_to_solve) - g.completed_block_shares) / sps, 0),
                 "estshares": round(g.shares_to_solve, 0),
                 "timesincelast": round(g.round_duration, 0),
-                "nethashrate": round((difficulty * 2**32) / 60, 0)
+                "nethashrate": get_network_hashrate()
                 }
         ret['getpoolstatus'] = {"version": "0.3", "runtime": 0, "data": data}
 

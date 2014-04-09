@@ -166,6 +166,10 @@ def total_bonus(user):
             filter_by(user=user).scalar() or 0.0)
 
 
+@cache.memoize(timeout=60)
+def get_network_hashrate():
+    return coinserv.getmininginfo()['networkhashps']/10.0**3
+
 @cache.cached(timeout=3600, key_prefix='get_pool_acc_rej')
 def get_pool_acc_rej():
     rejects = db.session.query(OneHourReject).order_by(OneHourReject.time.asc())
