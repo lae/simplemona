@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-09 03:02-0500\n"
-"PO-Revision-Date: 2014-04-09 03:03-0600\n"
+"POT-Creation-Date: 2014-04-09 03:23-0500\n"
+"PO-Revision-Date: 2014-04-09 03:25-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "Total hashrate for the pool, represented in Megahashes per second"
 msgstr "プールの合計ハッシュレート(MH/s)"
 
-#: templates/base.html:117
+#: templates/base.html:117 templates/pool_stats.html:34
 msgid "Pool&nbsp;Hashrate"
 msgstr "プールハッシュレート"
 
@@ -399,10 +399,6 @@ msgstr "プール統計 - Simple %(coin)s 採掘プールの効率とブロッ�
 msgid ""
 "Total workers currently mining on this pool. Updated every couple minutes."
 msgstr "現在このプールで採掘しているワーカーの数です。数分毎に更新。"
-
-#: templates/pool_stats.html:34
-msgid "Average&nbsp;Hashrate"
-msgstr "平均ハッシュレート"
 
 #: templates/pool_stats.html:36
 msgid ""
@@ -975,3 +971,6 @@ msgstr "温度履歴"
 #: templates/worker_detail.html:37
 msgid "Hashrate History"
 msgstr "ハッシュレート履歴"
+
+#~ msgid "Average&nbsp;Hashrate"
+#~ msgstr "プールハッシュレート"

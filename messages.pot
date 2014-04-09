@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-09 03:02-0500\n"
+"POT-Creation-Date: 2014-04-09 03:23-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgstr ""
 msgid "Total hashrate for the pool, represented in Megahashes per second"
 msgstr ""
 
-#: templates/base.html:117
+#: templates/base.html:117 templates/pool_stats.html:34
 msgid "Pool&nbsp;Hashrate"
 msgstr ""
 
@@ -377,10 +377,6 @@ msgstr ""
 
 #: templates/pool_stats.html:23
 msgid "Total workers currently mining on this pool. Updated every couple minutes."
-msgstr ""
-
-#: templates/pool_stats.html:34
-msgid "Average&nbsp;Hashrate"
 msgstr ""
 
 #: templates/pool_stats.html:36
