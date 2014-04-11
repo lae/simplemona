@@ -9,19 +9,19 @@ caching_tasks = {
     },
     'compute_pplns': {
         'task': 'simplecoin.tasks.update_pplns_est',
-        'schedule': timedelta(minutes=15)
+        'schedule': timedelta(minutes=10)
     },
     'update_online_workers': {
         'task': 'simplecoin.tasks.update_online_workers',
-        'schedule': timedelta(minutes=2)
+        'schedule': timedelta(minutes=1)
     },
     'update_diff_average': {
         'task': 'simplecoin.tasks.difficulty_avg',
-        'schedule': timedelta(minutes=15),
+        'schedule': timedelta(minutes=10),
     },
     'server_status': {
         'task': 'simplecoin.tasks.server_status',
-        'schedule': timedelta(minutes=2),
+        'schedule': timedelta(minutes=1),
     },
 }
 
