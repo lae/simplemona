@@ -16,8 +16,8 @@ from . import db, root, cache
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
                     get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, last_block_time, get_alerts,
-                    last_block_found, resort_recent_visit, collect_acct_items, all_blocks, get_block_stats,
-                    last_blockheight)
+                    last_block_found, collect_acct_items, all_blocks, get_block_stats,
+                    last_blockheight, resort_recent_visit)
 
 
 main = Blueprint('main', __name__)
