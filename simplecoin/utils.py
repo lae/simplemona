@@ -105,6 +105,16 @@ def get_pool_hashrate():
     # khash per second
     return (float(ten_min) * (2 ** 16)) / 600000
 
+@cache.cached(timeout=60, key_prefix='pool_workers')
+def get_pool_workers():
+    """ Retrieves the pool's worker count over the past 10 minutes. """
+    dt = datetime.datetime.utcnow()
+    twelve_ago = dt - datetime.timedelta(minutes=12)
+    two_ago = dt - datetime.timedelta(minutes=2)
+    ten_min = (OneMinuteShare.query.filter(OneMinuteShare.time >= twelve_ago,
+                                           OneMinuteShare.time <= two_ago))
+    ten_min = len(set(["%s.%s" % (s.user, s.worker) for s in ten_min]))
+    return ten_min
 
 @cache.cached(timeout=60, key_prefix='round_shares')
 def get_round_shares():

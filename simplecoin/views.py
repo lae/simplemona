@@ -17,7 +17,7 @@ from . import db, root, cache, babel
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
                     get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, get_network_hashrate, last_block_time, get_alerts,
-                    last_block_found)
+                    get_pool_workers, last_block_found)
 
 
 main = Blueprint('main', __name__)
@@ -73,7 +73,7 @@ def add_pool_stats():
     g.hashrate = get_pool_hashrate()
     g.net_hashrate = get_network_hashrate()
 
-    g.worker_count = cache.get('total_workers') or 0
+    g.worker_count = get_pool_workers() or 0
     g.average_difficulty = cache.get('difficulty_avg') or 0
     g.shares_to_solve = g.average_difficulty * (2 ** 16)
     g.total_round_shares = g.shares_to_solve * current_app.config['last_n']
