@@ -211,8 +211,8 @@ def collect_user_stats(address):
     unconfirmed_balance = sum([payout.amount for payout in unconfirmed_balance])
     balance -= unconfirmed_balance
 
-    payouts = Payout.query.filter_by(user=address).order_by(Payout.id.desc()).limit(20)
-    bonuses = BonusPayout.query.filter_by(user=address).order_by(BonusPayout.id.desc()).limit(20)
+    payouts = Payout.query.filter_by(user=address).order_by(Payout.id.desc()).limit(40)
+    bonuses = BonusPayout.query.filter_by(user=address).order_by(BonusPayout.id.desc()).limit(40)
     acct_items = sorted(itertools.chain(payouts, bonuses),
                         key=lambda i: i.created_at, reverse=True)
     round_shares = cache.get('pplns_' + address) or 0
