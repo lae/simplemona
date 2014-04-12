@@ -295,6 +295,10 @@ class Payout(Transfer):
         return payout
 
     @property
+    def timestamp(self):
+        return calendar.timegm(self.created_at.utctimetuple())
+
+    @property
     def status(self):
         if self.transaction:
             if self.transaction.confirmed is True:
