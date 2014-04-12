@@ -1,3 +1,26 @@
+- title: -2% Fees are over!
+  date: 2014.04.12 16:00 JST
+  body: |
+    The -2% fee pool promo is now over. I will be keeping 0% fees running for
+    this pool, with a default donation of 1%. You can change this on your user 
+    stats page, but I would greatly appreciate keeping the donation fee intact 
+    to support the pool servers and development.<br /><br />
+    Thank you to neetvip, palon7, and some anonymous patrons for donating to 
+    the pool funds to help keep the promo going, and thank you to all of our 
+    new miners and I look forward to your continued patronage!<br /><br />
+    -2%手数料ボーナスは終わりました。デフォルト1%、最低0%の手数料はこのまま
+    維持します。ユーザ統計のページから変更することができますが、プールの維持と
+    開発を応援するためにそのままにしてくれると非常に嬉しいです。<br /><br />
+    PRのための資金を提供してくれたneet4vip、palon7、そして何人かの匿名の寄付に
+    感謝します。新規のマイナーの皆さんにも感謝します、今後も愛顧のほどよろしく
+    お願いいたします!
+- title: Payout Scheduling
+  date: 2014.04.10 11:30 JST
+  body: |
+    Payouts will be performed around every 12 hours (give or take a few hours, 
+    depending on if I'm available), to reduce client noise in miners wallets.~$
+    Thank you for understanding.<br />
+    支払いは12時間毎に行われます、。理解に感謝します。
 - title: 本稼働中！ Up and running!
   date: 2014.04.08
   body: |

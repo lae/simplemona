@@ -1,3 +1,10 @@
+#- title: New York Stratum
+#  severity: warning
+#  date: 2014.04.12 15:06 JST
+#  key: 13
+#  body: |
+#    stratum.simplemona.com failed temporarily. stratum-ja was unaffected. 
+#`    stratum.simplemona.comは一時的に落ちました。stratum-jaは大丈夫です。
 #- title: Stratum Restarts
 #  severity: warning
 #  date: 2014.04.10 13:27 JST
@@ -6,13 +13,13 @@
 #    Stratums were offline for a few seconds in order to restart recompiled 
 #    monacoind (for more outbound connections and RPC threads), and to change 
 #    VARDIFF to 8-1024.
-- title: Payout Scheduling
-  severity: success
-  date: 2014.04.10 11:30 JST
-  key: 11
-  body: |
-    Payouts will be performed around every 12 hours, to reduce client noise. 
-    Thank you for understanding. 支払いは12時間毎に行われます。
+#- title: Payout Scheduling
+#  severity: success
+#  date: 2014.04.10 11:30 JST
+#  key: 11
+#  body: |
+#    Payouts will be performed around every 12 hours, to reduce client noise. 
+#    Thank you for understanding. 支払いは12時間毎に行われます。
 #- title: Stratum Restarts
 #  severity: warning
 #  date: 2014.04.10 06:46 JST
@@ -20,14 +27,14 @@
 #  body: |
 #    Stratums were offline for a few seconds in order to increase VARDIFF from 
 #    16-512 to 16-2048.
-- title: Pool Promo
-  severity: success
-  date: 2014.04.09 23:55 JST
-  key: 9
-  body: |
-    We're running with -2% fees for the time being (which means you get 2% more
-    mona). Invite your friends here! しばらくの間 -2% の手数料(つまり2%多くMONA
-    がもらえます)で運営します。 是非知り合いを紹介してください！
+#- title: Pool Promo
+#  severity: success
+#  date: 2014.04.09 23:55 JST
+#  key: 9
+#  body: |
+#    We're running with -2% fees for the time being (which means you get 2% more
+#    mona). Invite your friends here! しばらくの間 -2% の手数料(つまり2%多くMONA
+#    がもらえます)で運営します。 是非知り合いを紹介してください！
 #- title: Wonky statistics
 #  severity: warning
 #  date: 2014.04.09
