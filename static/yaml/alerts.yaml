@@ -1,3 +1,10 @@
+#- title: Data Issues
+#  severity: danger
+#  date: 2014.04.17 04:37 JST
+#  key: 14
+#  body: |
+#    Data is now being recorded again, but the issue that existed over the past
+#    10 hours is still being looked into. 今は<a href="http://askmona.org/728#res_120">Ask Mona</a>を読んでください
 #- title: New York Stratum
 #  severity: warning
 #  date: 2014.04.12 15:06 JST

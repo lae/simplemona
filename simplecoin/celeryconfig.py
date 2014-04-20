@@ -19,10 +19,10 @@ caching_tasks = {
         'task': 'simplecoin.tasks.difficulty_avg',
         'schedule': timedelta(minutes=10),
     },
-#    'server_status': {
-#        'task': 'simplecoin.tasks.server_status',
-#        'schedule': timedelta(minutes=1),
-#    },
+    'server_status': {
+        'task': 'simplecoin.tasks.server_status',
+        'schedule': timedelta(minutes=1),
+    },
 }
 
 database_tasks = {
