@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-10 11:44-0500\n"
-"PO-Revision-Date: 2014-04-10 11:46-0600\n"
+"POT-Creation-Date: 2014-04-20 17:42-0500\n"
+"PO-Revision-Date: 2014-04-20 17:43-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -60,15 +60,15 @@ msgstr "ブロックの承認保留中"
 msgid "Payout Pending"
 msgstr "支払い保留中"
 
-#: simplecoin/views.py:194
+#: simplecoin/views.py:199
 msgid "Not available"
 msgstr "利用できません"
 
-#: simplecoin/views.py:366
+#: simplecoin/views.py:371
 msgid "An error occurred: "
 msgstr "エラーが発生しました:"
 
-#: simplecoin/views.py:368
+#: simplecoin/views.py:373
 msgid "Successfully changed!"
 msgstr "変更に成功しました"
 
@@ -184,7 +184,11 @@ msgstr "統計"
 msgid "Extras"
 msgstr "その他"
 
-#: templates/base.html:209
+#: templates/base.html:179
+msgid "Language"
+msgstr "言語"
+
+#: templates/base.html:219
 #, python-format
 msgid "Running revision %(hash_link)s released on %(revdate)s."
 msgstr "現在の改訂版%(hash_link)s. は %(revdate)s にリリースされました。"

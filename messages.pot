@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-10 11:44-0500\n"
+"POT-Creation-Date: 2014-04-20 17:42-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,15 +59,15 @@ msgstr ""
 msgid "Payout Pending"
 msgstr ""
 
-#: simplecoin/views.py:194
+#: simplecoin/views.py:199
 msgid "Not available"
 msgstr ""
 
-#: simplecoin/views.py:366
+#: simplecoin/views.py:371
 msgid "An error occurred: "
 msgstr ""
 
-#: simplecoin/views.py:368
+#: simplecoin/views.py:373
 msgid "Successfully changed!"
 msgstr ""
 
@@ -175,7 +175,11 @@ msgstr ""
 msgid "Extras"
 msgstr ""
 
-#: templates/base.html:209
+#: templates/base.html:179
+msgid "Language"
+msgstr ""
+
+#: templates/base.html:219
 #, python-format
 msgid "Running revision %(hash_link)s released on %(revdate)s."
 msgstr ""

@@ -24,7 +24,12 @@ main = Blueprint('main', __name__)
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(current_app.config['accept_locales'].keys())
+    new_language = request.args.get('lang')
+    if new_language:
+        session['lang'] = new_language
+    elif not 'lang' in session:
+        session['lang'] = request.accept_languages.best_match(current_app.config['accept_locales'].keys())
+    return session['lang']
 
 @main.before_request
 def before_request():
