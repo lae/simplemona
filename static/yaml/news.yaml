@@ -1,4 +1,4 @@
-- title: Regarding recent downtime
+- title: Regarding recent downtime/最近の障害期間について
   date: 2014.04.18 09:30 JST
   body: |
     One of our dedicated server providers, Dacentec, who hosts this web site
@@ -8,16 +8,28 @@
     node on this server. The configuration did not have proper failover, and
     thus the queues on the stratum servers were lost (in other words - shares
     and new block notifications stopped getting recorded).<br /><br />
+    ウェブサイトとワーカー管理用の専用サーバーを設置しているDacentec社が、
+    一時的なトラフィック増大によりインターネットから切断されました。これは
+    一時的なものでしたが、stratumサーバーがRabbitMQノードから切断される原因に
+    なりました。適切なフェイルオーバーを設定していなかったので、このように
+    stratum上のキューが失われてしまいました(要するに、シェアとブロック発見の
+    記録が止まりました)。<br /><br />
     As the stratums were still online, blocks were found, and the rewards from
     those blocks have been paid out. The payouts were estimated based on the
     aggregate payout from the previous 5 recorded blocks, in the following
-    transactions:<br />
+    transactions:<br /><br />
+    その間もstratumはオンラインだったので、ブロックは発見されており、その報酬は
+    支払いました。支払いは最近5ブロックのトランザクションの平均から推測
+    しました。トランザクションは以下の通りです:
     <blockquote><a href="http://abe.monash.pw/tx/02eba94b7fecfb53241550be98cff4aa81385d878717c6601f46859604e7addf">02eba94b7fecfb53241550be98cff4aa81385d878717c6601f46859604e7addf</a><br />
-    <a href="abe.monash.pw/tx/75a6d04ac05dc1b4a39a2795ce4eb4ddb9cec6c5a90e2bd3142c800efbaafe54">75a6d04ac05dc1b4a39a2795ce4eb4ddb9cec6c5a90e2bd3142c800efbaafe54</a></blockquote>
+    <a href="http://abe.monash.pw/tx/75a6d04ac05dc1b4a39a2795ce4eb4ddb9cec6c5a90e2bd3142c800efbaafe54">75a6d04ac05dc1b4a39a2795ce4eb4ddb9cec6c5a90e2bd3142c800efbaafe54</a></blockquote>
     To prevent data loss from reoccuring in the future, the RabbitMQ cluster
     will be configured for proper HA failover in the case of disconnect. I
     will also be launching a Sensu monitoring instance for proper escalations
-    during emergencies like this one.
+    during emergencies like this one.<br /><br />
+    将来の再発時のデータ喪失を防止するために、RabbitMQクラスタが切断された時に
+    適切にシェアを保存するように設定します。今回のような緊急時用の監視ソフト
+    Sensuも用意する予定です。
 - title: -2% Fees are over!
   date: 2014.04.12 16:00 JST
   body: |
