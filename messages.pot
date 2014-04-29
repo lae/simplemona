@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-20 17:42-0500\n"
+"POT-Creation-Date: 2014-04-29 01:03-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,57 +17,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: simplecoin/models.py:64
+#: simplecoin/models.py:69
 msgid "Mature"
 msgstr ""
 
-#: simplecoin/models.py:66
+#: simplecoin/models.py:71
 msgid "Orphan"
 msgstr ""
 
-#: simplecoin/models.py:69
+#: simplecoin/models.py:74
 #, python-format
 msgid "%(confirms)d Confirms Remaining"
 msgstr ""
 
-#: simplecoin/models.py:71
+#: simplecoin/models.py:76
 msgid "Pending confirmation"
 msgstr ""
 
-#: simplecoin/models.py:298
+#: simplecoin/models.py:297 simplecoin/models.py:344
 msgid "Payout Transaction Confirmed"
 msgstr ""
 
-#: simplecoin/models.py:300
+#: simplecoin/models.py:299 simplecoin/models.py:346
 msgid "Payout Transaction Pending"
 msgstr ""
 
-#: simplecoin/models.py:302
-msgid "Block Orphaned"
-msgstr ""
-
-#: simplecoin/models.py:307
+#: simplecoin/models.py:306 simplecoin/models.py:353
 #, python-format
 msgid "%(confirms)d Block Confirms Remaining"
 msgstr ""
 
-#: simplecoin/models.py:309
+#: simplecoin/models.py:309 simplecoin/models.py:356
 msgid "Pending Block Confirmation"
 msgstr ""
 
-#: simplecoin/models.py:311 templates/user_stats.html:425
+#: simplecoin/models.py:311 simplecoin/models.py:358
 msgid "Payout Pending"
 msgstr ""
 
-#: simplecoin/views.py:199
+#: simplecoin/models.py:348
+msgid "Block Orphaned"
+msgstr ""
+
+#: simplecoin/views.py:288
 msgid "Not available"
 msgstr ""
 
-#: simplecoin/views.py:371
+#: simplecoin/views.py:456
 msgid "An error occurred: "
 msgstr ""
 
-#: simplecoin/views.py:373
+#: simplecoin/views.py:458
 msgid "Successfully changed!"
 msgstr ""
 
@@ -81,51 +81,101 @@ msgid ""
 "might try again in a minute."
 msgstr ""
 
-#: templates/base.html:117
+#: templates/account.html:3
+msgid "Account Details - Historical payout list"
+msgstr ""
+
+#: templates/acct_table.html:20
+msgid "Time"
+msgstr ""
+
+#: templates/acct_table.html:21 templates/round_summary.html:79
+msgid "Shares Contributed"
+msgstr ""
+
+#: templates/acct_table.html:22
+msgid "Mined"
+msgstr ""
+
+#: templates/acct_table.html:23 templates/round_summary.html:81
+#, python-format
+msgid "Donation %%"
+msgstr ""
+
+#: templates/acct_table.html:24
+msgid "Donation/Bonus"
+msgstr ""
+
+#: templates/acct_table.html:25 templates/user_stats.html:346
+msgid "Total paid"
+msgstr ""
+
+#: templates/acct_table.html:26 templates/block_table.html:27
+#: templates/network_stats.html:58 templates/round_summary.html:17
+msgid "Blockheight"
+msgstr ""
+
+#: templates/acct_table.html:27
+msgid "TX id"
+msgstr ""
+
+#: templates/acct_table.html:28 templates/block_table.html:28
+msgid "Status"
+msgstr ""
+
+#: templates/acct_table.html:68
+msgid "Bonus"
+msgstr ""
+
+#: templates/acct_table.html:86
+msgid "No payouts for this user yet"
+msgstr ""
+
+#: templates/base.html:118
 msgid "Total hashrate for the pool, represented in Megahashes per second"
 msgstr ""
 
-#: templates/base.html:117 templates/pool_stats.html:34
+#: templates/base.html:118 templates/pool_stats.html:34
 msgid "Pool&nbsp;Hashrate"
 msgstr ""
 
-#: templates/base.html:121
+#: templates/base.html:122
 #, python-format
 msgid "Total active clients mining on Simple %(coin)s"
 msgstr ""
 
-#: templates/base.html:122 templates/pool_stats.html:21
+#: templates/base.html:123 templates/pool_stats.html:21
 msgid "Active&nbsp;Workers"
 msgstr ""
 
-#: templates/base.html:126
+#: templates/base.html:127
 msgid "Total time since the last block was solved"
 msgstr ""
 
-#: templates/base.html:126
+#: templates/base.html:127
 msgid "Round&nbsp;Time"
 msgstr ""
 
-#: templates/base.html:131
+#: templates/base.html:132
 #, python-format
 msgid ""
 "Estimated time remaining until the next block is found. It assumes round "
 "luck will be 100%% and that difficulty will not change."
 msgstr ""
 
-#: templates/base.html:132
+#: templates/base.html:133
 msgid "Est.&nbsp;Time&nbsp;Left"
 msgstr ""
 
-#: templates/base.html:136
+#: templates/base.html:137
 msgid "Total 1 difficulty shares submitted since the last block was solved"
 msgstr ""
 
-#: templates/base.html:136
+#: templates/base.html:137
 msgid "Round&nbsp;Shares"
 msgstr ""
 
-#: templates/base.html:140
+#: templates/base.html:141
 msgid ""
 "Calculated from (shares expected to solve a block)/(shares currently "
 "submitted). This results in a percentage that decreases the unluckier the"
@@ -134,98 +184,89 @@ msgid ""
 "spikes or drops in difficulty often result in strange jumps in round luck"
 msgstr ""
 
-#: templates/base.html:141
+#: templates/base.html:142
 msgid "Round&nbsp;Luck"
 msgstr ""
 
-#: templates/base.html:150
+#: templates/base.html:151
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:153 templates/base.html:172 templates/home.html:114
+#: templates/base.html:154 templates/base.html:175 templates/home.html:114
 #: templates/news.html:3
 msgid "News"
 msgstr ""
 
-#: templates/base.html:154
+#: templates/base.html:155
 msgid "Chat"
 msgstr ""
 
-#: templates/base.html:155 templates/base.html:164 templates/pool_stats.html:16
+#: templates/base.html:156 templates/base.html:166 templates/pool_stats.html:16
 msgid "Pool Stats"
 msgstr ""
 
-#: templates/base.html:156 templates/base.html:165
+#: templates/base.html:157 templates/base.html:167
 msgid "User Stats"
 msgstr ""
 
-#: templates/base.html:157 templates/base.html:166
+#: templates/base.html:159 templates/base.html:169
 msgid "Round Summary"
 msgstr ""
 
-#: templates/base.html:158 templates/base.html:173
+#: templates/base.html:160 templates/base.html:176
 msgid "Guides"
 msgstr ""
 
-#: templates/base.html:162
+#: templates/base.html:164
 msgid "Stats"
 msgstr ""
 
-#: templates/base.html:170
+#: templates/base.html:173
 msgid "Extras"
 msgstr ""
 
-#: templates/base.html:179
+#: templates/base.html:182
 msgid "Language"
 msgstr ""
 
-#: templates/base.html:219
+#: templates/base.html:222
 #, python-format
 msgid "Running revision %(hash_link)s released on %(revdate)s."
 msgstr ""
 
-#: templates/block_table.html:6
+#: templates/block_table.html:19
 msgid "Age"
 msgstr ""
 
-#: templates/block_table.html:7
+#: templates/block_table.html:20
 msgid "Shares"
 msgstr ""
 
-#: templates/block_table.html:8
+#: templates/block_table.html:21
 msgid "Luck"
 msgstr ""
 
-#: templates/block_table.html:9
+#: templates/block_table.html:22
 msgid "Round Duration"
 msgstr ""
 
-#: templates/block_table.html:10
+#: templates/block_table.html:23
 msgid "Payout"
 msgstr ""
 
-#: templates/block_table.html:11
+#: templates/block_table.html:24
 msgid "Difficulty"
 msgstr ""
 
-#: templates/block_table.html:12
+#: templates/block_table.html:25
 msgid "Solved by"
 msgstr ""
 
-#: templates/block_table.html:13
+#: templates/block_table.html:26
 msgid "Block Hash"
 msgstr ""
 
-#: templates/block_table.html:14 templates/round_summary.html:12
-#: templates/user_stats.html:367
-msgid "Blockheight"
-msgstr ""
-
-#: templates/block_table.html:15 templates/user_stats.html:369
-msgid "Status"
-msgstr ""
-
-#: templates/block_table.html:21
+#: templates/block_table.html:34
 msgid "Current"
 msgstr ""
 
@@ -372,6 +413,67 @@ msgstr ""
 msgid "Easily see your overall hash rate"
 msgstr ""
 
+#: templates/network_stats.html:3
+#, python-format
+msgid ""
+"Network Stats - Difficulty and Network Hashrate graphs for %(coin)s "
+"mining pool"
+msgstr ""
+
+#: templates/network_stats.html:14
+msgid "Network Stats"
+msgstr ""
+
+#: templates/network_stats.html:19
+msgid "Avg Network Difficulty"
+msgstr ""
+
+#: templates/network_stats.html:21
+msgid "The average difficulty for the last 500 blocks"
+msgstr ""
+
+#: templates/network_stats.html:32
+msgid "Network&nbsp;Difficulty"
+msgstr ""
+
+#: templates/network_stats.html:34
+msgid "Difficulty to solve the current block"
+msgstr ""
+
+#: templates/network_stats.html:45 templates/network_stats.html:89
+msgid "Network Hashrate"
+msgstr ""
+
+#: templates/network_stats.html:47
+msgid "Total hashrate for the network"
+msgstr ""
+
+#: templates/network_stats.html:60
+msgid "Number of blocks in the blockchain"
+msgstr ""
+
+#: templates/network_stats.html:72
+msgid "Network Difficulty"
+msgstr ""
+
+#: templates/network_stats.html:76 templates/network_stats.html:93
+#: templates/pool_stats.html:77 templates/user_stats.html:113
+#: templates/worker_detail.html:23 templates/worker_detail.html:43
+msgid "Hour"
+msgstr ""
+
+#: templates/network_stats.html:78 templates/network_stats.html:95
+#: templates/pool_stats.html:78 templates/user_stats.html:114
+#: templates/worker_detail.html:26 templates/worker_detail.html:46
+msgid "Day"
+msgstr ""
+
+#: templates/network_stats.html:80 templates/network_stats.html:97
+#: templates/pool_stats.html:79 templates/user_stats.html:115
+#: templates/worker_detail.html:29 templates/worker_detail.html:49
+msgid "Month"
+msgstr ""
+
 #: templates/pool_stats.html:3
 #, python-format
 msgid ""
@@ -412,22 +514,40 @@ msgstr ""
 msgid "Pool Hashrate"
 msgstr ""
 
-#: templates/pool_stats.html:76 templates/user_stats.html:113
-#: templates/worker_detail.html:23 templates/worker_detail.html:43
-msgid "Hour"
+#: templates/pool_stats.html:89
+msgid "Block Statistics"
 msgstr ""
 
-#: templates/pool_stats.html:77 templates/user_stats.html:114
-#: templates/worker_detail.html:26 templates/worker_detail.html:46
-msgid "Day"
+#: templates/pool_stats.html:94
+msgid "Pool&nbsp;Luck"
 msgstr ""
 
-#: templates/pool_stats.html:78 templates/user_stats.html:115
-#: templates/worker_detail.html:29 templates/worker_detail.html:49
-msgid "Month"
+#: templates/pool_stats.html:96
+msgid ""
+"All time luck for the pool. Over time this will approach 100%. Lower "
+"numbers are worse, higher numbers are better"
 msgstr ""
 
-#: templates/pool_stats.html:88
+#: templates/pool_stats.html:107
+msgid "Current&nbsp;Effective&nbsp;Return"
+msgstr ""
+
+#: templates/pool_stats.html:109
+msgid ""
+"Expected return per Megahash per day, based on current all time pool "
+"luck, the average difficulty for the last 500 blocks, and removes the "
+"percentage of orphaned blocks."
+msgstr ""
+
+#: templates/pool_stats.html:120
+msgid "Orphan&nbsp;Percentage"
+msgstr ""
+
+#: templates/pool_stats.html:122
+msgid "All time percentage of blocks that are orphaned"
+msgstr ""
+
+#: templates/pool_stats.html:132
 msgid "View all blocks"
 msgstr ""
 
@@ -436,19 +556,19 @@ msgstr ""
 msgid "Round Summary - Information regarding the current round on Simple %(coin)s"
 msgstr ""
 
-#: templates/round_summary.html:7
+#: templates/round_summary.html:12
 msgid "Current Round Stats"
 msgstr ""
 
-#: templates/round_summary.html:14
+#: templates/round_summary.html:19
 msgid "Current height of the blockchain."
 msgstr ""
 
-#: templates/round_summary.html:25
+#: templates/round_summary.html:30
 msgid "Est.&nbsp;Shares&nbsp;Remaining"
 msgstr ""
 
-#: templates/round_summary.html:27
+#: templates/round_summary.html:32
 msgid ""
 "An estimation of the number of difficulty 1 shares remaining until "
 "completing a block. This number will be negative if we are unlucky. This "
@@ -456,11 +576,11 @@ msgid ""
 " a little as the difficulty changes"
 msgstr ""
 
-#: templates/round_summary.html:38
+#: templates/round_summary.html:43
 msgid "Est.&nbsp;Round&nbsp;Time&nbsp;Remaining"
 msgstr ""
 
-#: templates/round_summary.html:40
+#: templates/round_summary.html:45
 #, python-format
 msgid ""
 "Estimated time remaining until the next block is found. It assumes round "
@@ -468,11 +588,11 @@ msgid ""
 "be negative if we are in an unlucky round."
 msgstr ""
 
-#: templates/round_summary.html:51
+#: templates/round_summary.html:56
 msgid "Total&nbsp;N&nbsp;This&nbsp;Round"
 msgstr ""
 
-#: templates/round_summary.html:53
+#: templates/round_summary.html:58
 msgid ""
 "When the round is completed the payout will be based on this number of "
 "shares submitted just before the block was completed. This number is "
@@ -480,40 +600,31 @@ msgid ""
 "and multiplied by two."
 msgstr ""
 
-#: templates/round_summary.html:64
+#: templates/round_summary.html:69
 msgid "Top Users PPLNS Summary"
 msgstr ""
 
-#: templates/round_summary.html:65
+#: templates/round_summary.html:70
 msgid ""
 "All shares to be paid out, based on the Pay Per Last N Share algorithm. "
 "If a payout were to occur these would be extremely similar to the stats "
 "used to determine who gets paid what."
 msgstr ""
 
-#: templates/round_summary.html:66
+#: templates/round_summary.html:71
 #, python-format
 msgid "updated %(cached_time)s UTC"
 msgstr ""
 
-#: templates/round_summary.html:73
+#: templates/round_summary.html:78
 msgid "User"
 msgstr ""
 
-#: templates/round_summary.html:74 templates/user_stats.html:362
-msgid "Shares Contributed"
-msgstr ""
-
-#: templates/round_summary.html:75
+#: templates/round_summary.html:80
 msgid "Hashrate"
 msgstr ""
 
-#: templates/round_summary.html:76 templates/user_stats.html:364
-#, python-format
-msgid "Donation %%"
-msgstr ""
-
-#: templates/round_summary.html:84
+#: templates/round_summary.html:89
 msgid "Anonymous"
 msgstr ""
 
@@ -855,53 +966,17 @@ msgstr ""
 msgid "Total ever earned by this address from mining. No bonus payments included."
 msgstr ""
 
-#: templates/user_stats.html:346 templates/user_stats.html:366
-msgid "Total paid"
-msgstr ""
-
 #: templates/user_stats.html:348
 msgid ""
 "Total paid out to this address from mining. Bonus payments are included "
 "in this amount."
 msgstr ""
 
-#: templates/user_stats.html:361
-msgid "Time"
-msgstr ""
-
-#: templates/user_stats.html:363
-msgid "Mined"
-msgstr ""
-
-#: templates/user_stats.html:365
-msgid "Donation/Bonus"
-msgstr ""
-
-#: templates/user_stats.html:368
-msgid "TX id"
-msgstr ""
-
-#: templates/user_stats.html:409
-msgid "Bonus"
-msgstr ""
-
-#: templates/user_stats.html:420
-msgid "Payout Confirmed"
-msgstr ""
-
-#: templates/user_stats.html:422
-msgid "Payout Unconfirmed"
-msgstr ""
-
-#: templates/user_stats.html:436
-msgid "No payouts for this user yet"
-msgstr ""
-
-#: templates/user_stats.html:447
+#: templates/user_stats.html:366
 msgid "GPU Details"
 msgstr ""
 
-#: templates/user_stats.html:453
+#: templates/user_stats.html:372
 msgid "Close"
 msgstr ""
 

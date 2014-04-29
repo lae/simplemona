@@ -294,20 +294,21 @@ class Transfer(AbstractConcreteBase, base):
     def status(self):
         if self.transaction:
             if self.transaction.confirmed is True:
-                return "Payout Transaction Confirmed"
+                return gettext("Payout Transaction Confirmed")
             else:
-                return "Payout Transaction Pending"
+                return gettext("Payout Transaction Pending")
         elif self.block.orphan:
             return "Block Orphaned"
         elif not self.block.mature:
 
             confirms = self.block.confirms_remaining
             if confirms is not None:
-                return "{} Block Confirms Remaining".format(confirms)
+                return gettext("%(confirms)d Block Confirms Remaining",
+                               confirms = confirms)
             else:
-                return "Pending Block Confirmation"
+                return gettext("Pending Block Confirmation")
         else:
-            return "Payout Pending"
+            return gettext("Payout Pending")
 
 
 class Payout(Transfer):
@@ -349,7 +350,8 @@ class Payout(Transfer):
 
             confirms = self.block.confirms_remaining
             if confirms is not None:
-                return gettext("%(confirms)d Block Confirms Remaining", confirms = confirms)
+                return gettext("%(confirms)d Block Confirms Remaining",
+                               confirms = confirms)
             else:
                 return gettext("Pending Block Confirmation")
         else:
