@@ -19,6 +19,9 @@ SECRET_KEY: 'somethting_really_secret'
 # database table at some point
 redacted_addresses:
     - dsflkgsdlfkgsld;fkgsl;dfkg
+# the amount of time a action type signed message can be used for before
+# expiring (in seconds)
+#message_expiry: 7200
 
 # connection information for the coinserver RPC
 coinserv:
@@ -122,6 +125,9 @@ site_url: simpledoge.com
 repopath: https://github.com/simplecrypto/simplecoin/commit/
 # the block reward. Used to calculate averages, etc
 reward: 250000
+# the expected time for the network to find a block in seconds. used for
+# computing network hashrate
+block_time: 60
 # the colloquial name of the coin
 coin_name: Doge
 site_title: Simple Doge

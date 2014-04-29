@@ -15,10 +15,6 @@ caching_tasks = {
         'task': 'simplecoin.tasks.update_online_workers',
         'schedule': timedelta(minutes=2)
     },
-    'update_diff_average': {
-        'task': 'simplecoin.tasks.difficulty_avg',
-        'schedule': timedelta(minutes=15),
-    },
     'server_status': {
         'task': 'simplecoin.tasks.server_status',
         'schedule': timedelta(minutes=2),
@@ -37,6 +33,10 @@ database_tasks = {
     'general_cleanup': {
         'task': 'simplecoin.tasks.general_cleanup',
         'schedule': timedelta(minutes=120),
+    },
+    'share_cleanup': {
+        'task': 'simplecoin.tasks.cleanup',
+        'schedule': timedelta(hours=24),
     },
     'update_block_state': {
         'task': 'simplecoin.tasks.update_block_state',

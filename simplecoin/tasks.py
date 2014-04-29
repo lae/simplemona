@@ -9,12 +9,12 @@ import sqlalchemy
 
 from celery import Celery
 from simplecoin import db, coinserv, cache
-from simplecoin.utils import last_block_time, last_block_share_id
+from simplecoin.utils import last_block_share_id_nocache, last_block_time_nocache
 from simplecoin.models import (
     Share, Block, OneMinuteShare, Payout, Transaction, Blob, FiveMinuteShare,
     Status, OneMinuteReject, OneMinuteTemperature, FiveMinuteReject,
     OneMinuteHashrate, Threshold, Event, DonationPercent, BonusPayout,
-    FiveMinuteTemperature, FiveMinuteHashrate)
+    FiveMinuteTemperature, FiveMinuteHashrate, FiveMinuteType, OneMinuteType)
 from sqlalchemy.sql import func, select
 from cryptokit import bits_to_shares, bits_to_difficulty
 
@@ -77,13 +77,15 @@ def update_pplns_est(self):
         # shares
         remain = total_shares
         user_shares = {}
-        for share in Share.query.order_by(Share.id.desc()).yield_per(5000):
-            user_shares.setdefault('pplns_' + share.user, 0)
-            if remain > share.shares:
-                user_shares['pplns_' + share.user] += share.shares
-                remain -= share.shares
+        for shares, user in (db.engine.execution_options(stream_results=True).
+                             execute(select([Share.shares, Share.user]).
+                                     order_by(Share.id.desc()))):
+            user_shares.setdefault('pplns_' + user, 0)
+            if remain > shares:
+                user_shares['pplns_' + user] += shares
+                remain -= shares
             else:
-                user_shares['pplns_' + share.user] += remain
+                user_shares['pplns_' + user] += remain
                 remain = 0
                 break
 
@@ -223,9 +225,9 @@ def add_block(self, user, height, total_value, transaction_fees, bits,
         "Total Height: {}\nTransaction Fees: {}\nBits: {}\nHash Hex: {}"
         .format(user, height, total_value, transaction_fees, bits, hash_hex))
     try:
-        last = last_block_share_id()
+        last = last_block_share_id_nocache()
         block = Block.create(user, height, total_value, transaction_fees, bits,
-                             hash_hex, time_started=last_block_time())
+                             hash_hex, time_started=last_block_time_nocache())
         db.session.flush()
         count = (db.session.query(func.sum(Share.shares)).
                  filter(Share.id > last).
@@ -233,6 +235,7 @@ def add_block(self, user, height, total_value, transaction_fees, bits,
         block.shares_to_solve = count
         db.session.commit()
         payout.delay()
+        new_block.delay(height, bits, total_value)
     except Exception as exc:
         logger.error("Unhandled exception in add_block", exc_info=True)
         db.session.rollback()
@@ -289,17 +292,41 @@ def add_one_minute(self, user, valid_shares, minute, worker='', dup_shares=0,
 def new_block(self, blockheight, bits=None, reward=None):
     """
     Notification that a new block height has been reached in the network.
-    Sets some things into the cache for display on the website.
+    Sets some things into the cache for display on the website, adds graphing
+    for the network difficulty graph.
     """
+    # prevent lots of duplicate rerunning...
+    last_blockheight = cache.get('blockheight') or 0
+    if blockheight == last_blockheight:
+        logger.warn("Recieving duplicate new_block notif, ignoring...")
+        return
     logger.info("Recieved notice of new block height {}".format(blockheight))
 
+    difficulty = bits_to_difficulty(bits)
     cache.set('blockheight', blockheight, timeout=1200)
-    cache.set('difficulty', bits_to_difficulty(bits), timeout=1200)
+    cache.set('difficulty', difficulty, timeout=1200)
     cache.set('reward', reward, timeout=1200)
 
     # keep the last 500 blocks in the cache for getting average difficulty
     cache.cache._client.lpush('block_cache', bits)
     cache.cache._client.ltrim('block_cache', 0, 500)
+    diff_list = cache.cache._client.lrange('block_cache', 0, 500)
+    total_diffs = sum([bits_to_difficulty(diff) for diff in diff_list])
+    cache.set('difficulty_avg', total_diffs / len(diff_list), timeout=120 * 60)
+
+    # add the difficulty as a one minute share
+    now = datetime.datetime.utcnow()
+    try:
+        m = OneMinuteType(typ='netdiff', value=difficulty * 1000, time=now)
+        db.session.add(m)
+        db.session.commit()
+    except sqlalchemy.exc.IntegrityError:
+        db.session.rollback()
+        slc = OneMinuteType.query.with_lockmode('update').filter_by(
+            time=now, typ='netdiff').one()
+        # just average the diff of two blocks that occured in the same second..
+        slc.value = ((difficulty * 1000) + slc.value) / 2
+        db.session.commit()
 
 
 @celery.task(bind=True)
@@ -371,7 +398,7 @@ def cleanup(self, simulate=False):
 @celery.task(bind=True)
 def payout(self, simulate=False):
     """
-    Calculates payouts for users from share records for found blocks.
+    Calculates payouts for users from share records for the latest found block.
     """
     try:
         if simulate:
@@ -394,13 +421,17 @@ def payout(self, simulate=False):
         start = block.last_share.id
         logger.debug("Identified last matching share id as {}".format(start))
         user_shares = {}
-        for share in Share.query.order_by(Share.id.desc()).filter(Share.id <= start).yield_per(100):
-            user_shares.setdefault(share.user, 0)
-            if remain > share.shares:
-                user_shares[share.user] += share.shares
-                remain -= share.shares
+
+        for shares, user in (db.engine.execution_options(stream_results=True).
+                             execute(select([Share.shares, Share.user]).
+                                     order_by(Share.id.desc()).
+                                     where(Share.id <= start))):
+            user_shares.setdefault(user, 0)
+            if remain > shares:
+                user_shares[user] += shares
+                remain -= shares
             else:
-                user_shares[share.user] += remain
+                user_shares[user] += remain
                 remain = 0
                 break
 
@@ -420,7 +451,6 @@ def payout(self, simulate=False):
         accrued = 0
         user_payouts = {}
         for user, share_count in user_shares.iteritems():
-            user_payouts.setdefault(share.user, 0)
             user_payouts[user] = (share_count * block.total_value) // total_shares
             accrued += user_payouts[user]
 
@@ -513,7 +543,7 @@ def payout(self, simulate=False):
                 donate_address = current_app.config['donate_address']
                 BonusPayout.create(donate_address, donation_total,
                                    "Total donations from block {}"
-                                   .format(block.height))
+                                   .format(block.height), block)
                 logger.info("Added bonus payout to donation address {} for {}"
                             .format(donate_address, donation_total / 100000000.0))
 
@@ -521,7 +551,7 @@ def payout(self, simulate=False):
             if block_bonus > 0:
                 BonusPayout.create(block.user, block_bonus,
                                    "Blockfinder bonus for block {}"
-                                   .format(block.height))
+                                   .format(block.height), block)
                 logger.info("Added bonus payout for blockfinder {} for {}"
                             .format(block.user, block_bonus / 100000000.0))
 
@@ -541,6 +571,7 @@ def compress_minute(self):
         OneMinuteReject.compress()
         OneMinuteTemperature.compress()
         OneMinuteHashrate.compress()
+        OneMinuteType.compress()
         db.session.commit()
     except Exception:
         logger.error("Unhandled exception in compress_minute", exc_info=True)
@@ -554,6 +585,7 @@ def compress_five_minute(self):
         FiveMinuteReject.compress()
         FiveMinuteTemperature.compress()
         FiveMinuteHashrate.compress()
+        FiveMinuteType.compress()
         db.session.commit()
     except Exception:
         logger.error("Unhandled exception in compress_five_minute", exc_info=True)
@@ -737,18 +769,3 @@ def server_status(self):
     except Exception:
         logger.error("Unhandled exception in server_status", exc_info=True)
         db.session.rollback()
-
-
-@celery.task(bind=True)
-def difficulty_avg(self):
-    """
-    Setup a blob with the average network difficulty for the last 500 blocks
-    """
-    try:
-        diff_list = cache.cache._client.lrange('block_cache', 0, 500)
-        total_diffs = sum([bits_to_difficulty(diff) for diff in diff_list])
-        cache.set('difficulty_avg', total_diffs / len(diff_list),
-                  timeout=120 * 60)
-    except Exception as exc:
-        logger.warn("Unknown failure in difficulty_avg", exc_info=True)
-        raise self.retry(exc=exc)

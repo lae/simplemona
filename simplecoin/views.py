@@ -8,15 +8,16 @@ from flask import (current_app, request, render_template, Blueprint, abort,
                    jsonify, g, session, Response)
 from lever import get_joined
 
-from .models import (OneMinuteShare, Block, Blob,
+from .models import (OneMinuteShare, Block, OneMinuteType, FiveMinuteType,
                      FiveMinuteShare, OneHourShare, Status, DonationPercent,
                      FiveMinuteHashrate, OneMinuteHashrate, OneHourHashrate, OneMinuteTemperature,
-                     FiveMinuteTemperature, OneHourTemperature)
+                     FiveMinuteTemperature, OneHourTemperature, OneHourType)
 from . import db, root, cache
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
                     get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, last_block_time, get_alerts,
-                    last_block_found, last_blockheight)
+                    last_block_found, all_blocks, get_block_stats,
+                    last_blockheight, resort_recent_visit, collect_acct_items)
 
 
 main = Blueprint('main', __name__)
@@ -36,8 +37,14 @@ def news():
 
 @main.route("/blocks")
 def blocks():
-    blocks = db.session.query(Block).order_by(Block.height.desc())
+    blocks = all_blocks()
     return render_template('blocks.html', blocks=blocks)
+
+
+@main.route("/<address>/account")
+def account(address):
+    return render_template('account.html',
+                           acct_items=collect_acct_items(address, None))
 
 
 @main.route("/pool_stats")
@@ -45,8 +52,9 @@ def pool_stats():
     current_block = {'reward': cache.get('reward') or 0,
                      'difficulty': cache.get('difficulty') or 0,
                      'height': cache.get('blockheight') or 0}
-    blocks = db.session.query(Block).order_by(Block.height.desc()).limit(10)
 
+    blocks = db.session.query(Block).order_by(Block.height.desc()).limit(10)
+    pool_luck, effective_return, orphan_perc = get_block_stats(g.average_difficulty)
     reject_total, accept_total = get_pool_acc_rej()
     efficiency = get_pool_eff()
 
@@ -55,17 +63,82 @@ def pool_stats():
                            current_block=current_block,
                            efficiency=efficiency,
                            accept_total=accept_total,
-                           reject_total=reject_total)
+                           reject_total=reject_total,
+                           pool_luck=pool_luck,
+                           effective_return=effective_return,
+                           orphan_perc=orphan_perc)
+
+
+@main.route("/network_stats")
+def network_stats():
+    network_block_time = current_app.config['block_time']
+    network_difficulty = cache.get('difficulty') or 0
+    network_avg_difficulty = g.average_difficulty or 0
+    network_blockheight = cache.get('blockheight') or 0
+    network_hashrate = (network_difficulty * (2**32)) / network_block_time
+
+    return render_template('network_stats.html',
+                           network_difficulty=network_difficulty,
+                           network_avg_difficulty=network_avg_difficulty,
+                           network_blockheight=network_blockheight,
+                           network_hashrate=network_hashrate,
+                           network_block_time=network_block_time)
+
+
+@main.route("/network_stats/<graph_type>/<window>")
+def network_graph_data(graph_type=None, window="hour"):
+    if not graph_type:
+        return None
+
+    type_map = {'hour': OneMinuteType,
+                'month': OneHourType,
+                'day': FiveMinuteType}
+    typ = type_map[window]
+    types = {}
+
+    compress = None
+    if window == "day":
+        compress = OneMinuteType
+    elif window == "month":
+        compress = FiveMinuteType
+
+    if compress:
+        for slc in get_typ(compress, q_typ=graph_type):
+            slice_dt = compress.floor_time(slc.time)
+            stamp = calendar.timegm(slice_dt.utctimetuple())
+            types.setdefault(slc.typ, {})
+            types[slc.typ].setdefault(stamp, 0)
+            types[slc.typ][stamp] += slc.value
+
+    for m in get_typ(typ, q_typ=graph_type):
+        stamp = calendar.timegm(m.time.utctimetuple())
+        types.setdefault(m.typ, {})
+        types[m.typ].setdefault(stamp, 0)
+        types[m.typ][stamp] += m.value
+
+    step = typ.slice_seconds
+    end = ((int(time.time()) // step) * step) - (step * 2)
+    start = end - typ.window.total_seconds() + (step * 2)
+
+    return jsonify(start=start, end=end, step=step, workers=types)
 
 
 @main.before_request
 def add_pool_stats():
+    try:
+        try:
+            if len(session['recent_users'][0]) != 2:
+                session['recent_users'] = []
+        except (KeyError, IndexError):
+            pass
+    except IndexError:
+        pass
     g.completed_block_shares = get_adj_round_shares()
     g.round_duration = (datetime.datetime.utcnow() - last_block_time()).total_seconds()
     g.hashrate = get_pool_hashrate()
 
     g.worker_count = cache.get('total_workers') or 0
-    g.average_difficulty = cache.get('difficulty_avg') or 0
+    g.average_difficulty = cache.get('difficulty_avg') or 1
     g.shares_to_solve = g.average_difficulty * (2 ** 16)
     g.total_round_shares = g.shares_to_solve * current_app.config['last_n']
     g.alerts = get_alerts()
@@ -91,7 +164,11 @@ def pool_stats_api():
     ret['shares_per_sec'] = sps
     ret['last_block_found'] = last_blockheight()
     ret['shares_to_solve'] = g.shares_to_solve
-    ret['est_sec_remaining'] = (float(g.shares_to_solve) - g.completed_block_shares) / sps
+    if sps > 0:
+        ret['est_sec_remaining'] = (float(g.shares_to_solve) - g.completed_block_shares) / sps
+    else:
+        ret['est_sec_remaining'] = 'infinite'
+    ret['pool_luck'], ret['effective_return'], ret['orphan_perc'] = get_block_stats(g.average_difficulty)
     return jsonify(**ret)
 
 
@@ -125,12 +202,11 @@ def mpos_pool_stats_api():
                 "esttime": round((float(g.shares_to_solve) - g.completed_block_shares) / sps, 0),
                 "estshares": round(g.shares_to_solve, 0),
                 "timesincelast": round(g.round_duration, 0),
-                "nethashrate": round((difficulty * 2**32) / 60, 0)
+                "nethashrate": round((difficulty * 2**32) / current_app.config['block_time'], 0)
                 }
         ret['getpoolstatus'] = {"version": "0.3", "runtime": 0, "data": data}
 
     return jsonify(**ret)
-
 
 
 @main.route("/stats")
@@ -229,11 +305,9 @@ def worker_stats(address=None, worker=None, stat_type=None, window="hour"):
     typ = type_lut[stat_type][window]
 
     if window == "day":
-        compress_typ(type_lut[stat_type]['day_compressed'], address, workers, worker=worker)
+        compress_typ(type_lut[stat_type]['day_compressed'], workers, address, worker=worker)
     elif window == "month":
-        compress_typ(type_lut[stat_type]['month_compressed'], address, workers, worker=worker)
-
-
+        compress_typ(type_lut[stat_type]['month_compressed'], workers, address, worker=worker)
 
     for m in get_typ(typ, address, worker=worker):
         stamp = calendar.timegm(m.time.utctimetuple())
@@ -260,12 +334,11 @@ def user_dashboard(address=None):
     stats = collect_user_stats(address)
 
     # reorganize/create the recently viewed
-    recent = session.get('recent_users', [])
-    if address in recent:
-        recent.remove(address)
-    recent.insert(0, address)
-    session['recent_users'] = recent[:10]
-
+    recent = session.get('recent_user_counts', {})
+    recent.setdefault(address, 0)
+    recent[address] += 1
+    session['recent_user_counts'] = recent
+    resort_recent_visit(recent)
     return render_template('user_stats.html', username=address, **stats)
 
 
@@ -290,16 +363,15 @@ def address_api(address):
 
 @main.route("/<address>/clear")
 def address_clear(address=None):
-    if len(address) != 34:
-        abort(404)
-
     # remove address from the recently viewed
-    recent = session.get('recent_users', [])
-    if address in recent:
-        recent.remove(address)
-    session['recent_users'] = recent[:10]
+    recent = session.get('recent_users_counts', {})
+    try:
+        del recent[address]
+    except KeyError:
+        pass
+    resort_recent_visit(recent)
 
-    return jsonify(recent=recent[:10])
+    return jsonify(recent=session['recent_users'])
 
 
 @main.route("/<address>/stats")
@@ -311,10 +383,10 @@ def address_stats(address=None, window="hour"):
     if window == "hour":
         typ = OneMinuteShare
     elif window == "day":
-        compress_typ(OneMinuteShare, address, workers)
+        compress_typ(OneMinuteShare, workers, address)
         typ = FiveMinuteShare
     elif window == "month":
-        compress_typ(FiveMinuteShare, address, workers)
+        compress_typ(FiveMinuteShare, workers, address)
         typ = OneHourShare
 
     for m in get_typ(typ, address):
