@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-29 01:03-0500\n"
-"PO-Revision-Date: 2014-04-29 02:37-0600\n"
+"POT-Creation-Date: 2014-04-29 13:15-0500\n"
+"PO-Revision-Date: 2014-04-29 13:15-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -85,7 +85,7 @@ msgstr ""
 
 #: templates/account.html:3
 msgid "Account Details - Historical payout list"
-msgstr ""
+msgstr "アカウント詳細 - 過去の支払い履歴"
 
 #: templates/acct_table.html:20
 msgid "Time"
@@ -451,7 +451,7 @@ msgstr "平均ネットワークDifficulty"
 
 #: templates/network_stats.html:21
 msgid "The average difficulty for the last 500 blocks"
-msgstr ""
+msgstr "最近500ブロックの平均difficulty"
 
 #: templates/network_stats.html:32
 msgid "Network&nbsp;Difficulty"
@@ -459,7 +459,7 @@ msgstr "ネットワークDifficulty"
 
 #: templates/network_stats.html:34
 msgid "Difficulty to solve the current block"
-msgstr ""
+msgstr "現在のブロックのdifficulty"
 
 #: templates/network_stats.html:45 templates/network_stats.html:89
 msgid "Network Hashrate"
@@ -467,11 +467,11 @@ msgstr "ネットワークハッシュレート"
 
 #: templates/network_stats.html:47
 msgid "Total hashrate for the network"
-msgstr ""
+msgstr "ネットワークの合計ハッシュレート"
 
 #: templates/network_stats.html:60
 msgid "Number of blocks in the blockchain"
-msgstr ""
+msgstr "ブロックチェインのブロック数"
 
 #: templates/network_stats.html:72
 msgid "Network Difficulty"
@@ -546,14 +546,17 @@ msgid "Pool&nbsp;Luck"
 msgstr "プール運"
 
 #: templates/pool_stats.html:96
+#, python-format
 msgid ""
-"All time luck for the pool. Over time this will approach 100%. Lower numbers "
-"are worse, higher numbers are better"
+"All time luck for the pool. Over time this will approach 100%%. Lower "
+"numbers are worse, higher numbers are better"
 msgstr ""
+"全時間でのプールの運です。時間が経つにつれて100%%に近付きます。低ければ運が悪"
+"く、高ければ運がいい状態です。"
 
 #: templates/pool_stats.html:107
 msgid "Current&nbsp;Effective&nbsp;Return"
-msgstr ""
+msgstr "現在の実質収益"
 
 #: templates/pool_stats.html:109
 msgid ""
@@ -561,6 +564,8 @@ msgid ""
 "the average difficulty for the last 500 blocks, and removes the percentage "
 "of orphaned blocks."
 msgstr ""
+"現在の全時間プール運、最近500ブロックの平均difficultyに基づき、孤立ブロックの"
+"割合を除外した、1MH日あたりの期待収益です。"
 
 #: templates/pool_stats.html:120
 msgid "Orphan&nbsp;Percentage"
@@ -568,7 +573,7 @@ msgstr "孤立%%"
 
 #: templates/pool_stats.html:122
 msgid "All time percentage of blocks that are orphaned"
-msgstr ""
+msgstr "全時間での孤立ブロックの割合"
 
 #: templates/pool_stats.html:132
 msgid "View all blocks"
