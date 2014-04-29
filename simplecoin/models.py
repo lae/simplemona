@@ -51,6 +51,8 @@ class Block(base):
     bonus_payed = db.Column(db.BigInteger)
     # Difficulty of block when solved
     bits = db.Column(db.String(8), nullable=False)
+    # Average difficulty of last x (default 500..) blocks when it was solved
+    difficulty_avg = db.Column(db.Integer)
     # the last share id that was processed when the block was entered.
     # used as a marker for calculating last n shares
     last_share_id = db.Column(db.BigInteger, db.ForeignKey('share.id'))
@@ -84,7 +86,8 @@ class Block(base):
                     bits=bits,
                     last_share=share,
                     hash=hash,
-                    time_started=time_started)
+                    time_started=time_started,
+                    difficulty_avg=cache.get('difficulty_avg'))
         # add and flush
         db.session.add(block)
         db.session.flush()
@@ -107,9 +110,13 @@ class Block(base):
         return bits_to_difficulty(self.bits)
 
     @property
+    def timestamp(self):
+        return calendar.timegm(self.found_at.utctimetuple())
+
+    @property
     def duration(self):
         seconds = round((self.found_at - self.time_started).total_seconds())
-        formatted_time = str(timedelta(seconds=seconds))
+        formatted_time = timedelta(seconds=seconds)
         return formatted_time
 
     @property
@@ -262,7 +269,7 @@ class Event(base):
 
 class DonationPercent(base):
     user = db.Column(db.String, primary_key=True)
-    perc = db.Column(db.Integer)
+    perc = db.Column(db.Float)
 
 
 class Transfer(AbstractConcreteBase, base):
@@ -282,6 +289,25 @@ class Transfer(AbstractConcreteBase, base):
     @declared_attr
     def transaction(self):
         return db.relationship('Transaction')
+
+    @property
+    def status(self):
+        if self.transaction:
+            if self.transaction.confirmed is True:
+                return "Payout Transaction Confirmed"
+            else:
+                return "Payout Transaction Pending"
+        elif self.block.orphan:
+            return "Block Orphaned"
+        elif not self.block.mature:
+
+            confirms = self.block.confirms_remaining
+            if confirms is not None:
+                return "{} Block Confirms Remaining".format(confirms)
+            else:
+                return "Pending Block Confirmation"
+        else:
+            return "Payout Pending"
 
 
 class Payout(Transfer):
@@ -307,6 +333,10 @@ class Payout(Transfer):
         return payout
 
     @property
+    def timestamp(self):
+        return calendar.timegm(self.created_at.utctimetuple())
+
+    @property
     def status(self):
         if self.transaction:
             if self.transaction.confirmed is True:
@@ -329,14 +359,17 @@ class Payout(Transfer):
 class BonusPayout(Transfer):
     __tablename__ = "bonus_payout"
     description = db.Column(db.String)
+    blockhash = db.Column(db.String, db.ForeignKey('block.hash'))
+    block = db.relationship('Block', foreign_keys=[blockhash])
     __mapper_args__ = {
         'polymorphic_identity': 'bonus_payout',
         'concrete': True
     }
 
     @classmethod
-    def create(cls, user, amount, description):
-        bonus = cls(user=user, amount=amount, description=description)
+    def create(cls, user, amount, description, block):
+        bonus = cls(user=user, amount=amount, description=description,
+                    block=block)
         db.session.add(bonus)
         return bonus
 
@@ -420,6 +453,20 @@ class SliceMixin(object):
         create_upper()
 
 
+@classmethod
+def average_combine(cls, *lst):
+    """ Takes an iterable and combines the values. Usually either returns
+    an average or a sum. Can assume at least one item in list """
+    return sum(lst) / len(lst)
+
+
+@classmethod
+def sum_combine(cls, *lst):
+    """ Takes a query list and combines the values. Usually either returns
+    an average or a sum. Can assume at least one item in ql """
+    return sum(lst)
+
+
 class WorkerTimeSlice(AbstractConcreteBase, SliceMixin, base):
     """ An time abstracted data sample that pertains to a single worker.
     Currently used to represent accepted and rejected shares. """
@@ -428,12 +475,7 @@ class WorkerTimeSlice(AbstractConcreteBase, SliceMixin, base):
     worker = db.Column(db.String, primary_key=True)
     value = db.Column(db.Integer)
 
-    @classmethod
-    def combine(cls, *lst):
-        """ Takes a query list and combines the values. Usually either returns
-        an average or a sum. Can assume at least one item in ql """
-        return sum(lst)
-
+    combine = sum_combine
     key = namedtuple('Key', ['user', 'worker'])
 
     def make_key(self):
@@ -449,16 +491,25 @@ class DeviceTimeSlice(AbstractConcreteBase, SliceMixin, base):
     worker = db.Column(db.String, primary_key=True)
     value = db.Column(db.Integer)
 
-    @classmethod
-    def combine(cls, *lst):
-        """ Takes an iterable and combines the values. Usually either returns
-        an average or a sum. Can assume at least one item in list """
-        return sum(lst) / len(lst)
-
+    combine = average_combine
     key = namedtuple('Key', ['user', 'worker', 'device'])
 
     def make_key(self):
         return self.key(user=self.user, worker=self.worker, device=self.device)
+
+
+class TypeTimeSlice(AbstractConcreteBase, SliceMixin, base):
+    """ An time abstracted data sample that pertains to a single workers single
+    device.  Currently used to temperature and hashrate. """
+    typ = db.Column(db.String, primary_key=True)
+    time = db.Column(db.DateTime, primary_key=True)
+    value = db.Column(db.Integer)
+
+    combine = average_combine
+    key = namedtuple('Key', ['typ'])
+
+    def make_key(self):
+        return self.key(typ=self.typ)
 
 
 # Mixin classes the define time windows of generic timeslices
@@ -560,6 +611,7 @@ class OneMinuteTemperature(DeviceTimeSlice, OneMinute):
         'concrete': True
     }
 
+
 # Hashrate timeslices
 class OneHourHashrate(DeviceTimeSlice, OneHour):
     __tablename__ = 'one_hour_hashrate'
@@ -583,5 +635,32 @@ class OneMinuteHashrate(DeviceTimeSlice, OneMinute):
     upper = FiveMinuteHashrate
     __mapper_args__ = {
         'polymorphic_identity': 'one_minute_hashrate',
+        'concrete': True
+    }
+
+
+# Pool global attributes split up by type, such as worker count
+class OneHourType(TypeTimeSlice, OneHour):
+    __tablename__ = 'one_hour_type'
+    __mapper_args__ = {
+        'polymorphic_identity': 'one_hour_type',
+        'concrete': True
+    }
+
+
+class FiveMinuteType(TypeTimeSlice, FiveMinute):
+    __tablename__ = 'five_minute_type'
+    upper = OneHourType
+    __mapper_args__ = {
+        'polymorphic_identity': 'five_minute_type',
+        'concrete': True
+    }
+
+
+class OneMinuteType(TypeTimeSlice, OneMinute):
+    __tablename__ = 'one_minute_type'
+    upper = FiveMinuteType
+    __mapper_args__ = {
+        'polymorphic_identity': 'one_minute_type',
         'concrete': True
     }

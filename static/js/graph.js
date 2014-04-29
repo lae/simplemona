@@ -1,7 +1,4 @@
-
-
 $(document).ready(function() {
-
     //Swap classes on nav tabs
     $('.tab').click(function () {
         $(this).siblings().removeClass('active')
@@ -13,13 +10,31 @@ $(document).ready(function() {
         var $anchor = $(this);
         if ($anchor.data('html-target') != undefined) {
             $('#' + $anchor.data('html-target') + ' img').show()
-            generate_worker_data($anchor.data('html-target'), $anchor.data('target'), $anchor.data('format'), $anchor.data('user'),
-                $anchor.data('worker'), $anchor.data('stat-type'));
+            if ($anchor.data('net-block-time') == undefined) {
+                generate_worker_data($anchor.data('html-target'), $anchor.data('target'), $anchor.data('format'), $anchor.data('user'),
+                    $anchor.data('worker'), $anchor.data('stat-type'));
+            } else {
+                generate_network_data($anchor.data('html-target'), $anchor.data('target'), $anchor.data('format'), $anchor.data('graph-type'),
+                    $anchor.data('net-block-time'));
+            }
+
         } else {
             $('#chart img').show()
             generate_data($anchor.data('target'), $anchor.data('format'), $anchor.data('user'));
         }
     });
+
+    find_seconds = function(request_url) {
+      var seconds;
+      if (request_url == 'hour') {
+        seconds = 60;
+      } else if (request_url == 'day') {
+        seconds = 300;
+      } else if (request_url == 'month') {
+        seconds = 3600;
+      }
+      return seconds
+    }
 });
 
 generate_graph = function(request_url, date_format, user) {
@@ -67,16 +82,7 @@ generate_graph = function(request_url, date_format, user) {
       }
 
       //set seconds to determine hashrate by
-      var seconds = 0;
-      if (request_url == 'hour') {
-        //convenient place to get avg after iteration
-        window.last_10min = last_10min / 10;
-        seconds = 60;
-      } else if (request_url == 'day') {
-        seconds = 300;
-      } else if (request_url == 'month') {
-        seconds = 3600;
-      }
+      var seconds = find_seconds(request_url);
 
       //Actually generate/regenerate the graph here
       nv.addGraph(window.generate_graph = function() {
@@ -118,7 +124,6 @@ generate_graph = function(request_url, date_format, user) {
 
   // Initial graph generation
   generate_data(request_url, date_format, user);
-
 }
 
 
@@ -153,14 +158,7 @@ generate_worker_graph = function(target, request_url, date_format, user, worker,
       }
 
       //set seconds to determine hashrate by
-      var seconds = 0;
-      if (request_url == 'hour') {
-        seconds = 60;
-      } else if (request_url == 'day') {
-        seconds = 300;
-      } else if (request_url == 'month') {
-        seconds = 3600;
-      }
+      var seconds = find_seconds(request_url);
 
       //Actually generate/regenerate the graph here
       nv.addGraph(window.generate_graph = function() {
@@ -199,17 +197,6 @@ generate_worker_graph = function(target, request_url, date_format, user, worker,
 
         chart.forceY([0, d3.max(values_no_stamp)*1.1 ]);
 
-//        // build array of
-//        var values_array = [];
-//        for (var i = 0; i <= clean_data.length-1; i += 1) {
-//            for (var u = 0; u <= clean_data[i]['values'].length; u += 1) {
-//                if (u in clean_data[i]['values']) {
-//                   values_array.push(clean_data[i]['values'][u][1]);
-//                }
-//            }
-//        }
-//        console.log(d3.max(values_array));
-
         d3.select('#' + target + ' svg')
           .datum(clean_data)
           .call(chart);
@@ -228,5 +215,92 @@ generate_worker_graph = function(target, request_url, date_format, user, worker,
 
   // Initial graph generation
   generate_worker_data(target, request_url, date_format, user, worker, stat_type);
+
+}
+
+
+generate_network_graph = function(target, request_url, date_format, graph_type, network_block_time) {
+
+  var clean_data = [];
+  generate_network_data = function(target, request_url, date_format, graph_type, network_block_time) {
+    clean_data = [];
+    d3.json('/network_stats/' + graph_type + '/' + request_url, function(data) {
+
+      start = data.start;
+      end = data.end;
+      step = data.step;
+      var values_no_stamp = []
+      for (var key in data.workers) {
+        var worker = data.workers[key];
+        var values = [];
+
+        var x;
+        for (x in worker) {
+          values.push([x * 1000, worker[x]/1000]);
+        }
+
+        if (key == "")
+          key = "[unnamed]";
+          clean_data.push({key: key, seriesIndex: 0, values: values});
+      }
+
+      //set seconds to determine hashrate by
+      var seconds = find_seconds(request_url);
+
+      //Actually generate/regenerate the graph here
+      nv.addGraph(window.generate_graph = function() {
+
+      // if a block time is passed in, lets get ready to return a calculated hashrate
+      // rather than a difficulty
+      var multiplier = 1;
+
+      if (network_block_time > 0) {
+        multiplier = Math.pow(2, 32) / network_block_time
+        var chart = nv.models.stackedAreaChart()
+                      .x(function(d) { return d[0] })   //We can modify the data accessor functions...
+                      .y(function(d) { return (d[1] * multiplier)/1000000 })   //...in case your data is formatted differently.
+                      .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
+                      .transitionDuration(500)
+                      .showControls(true)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
+                      .clipEdge(true);
+        var axis_label = 'MHash/sec';
+      } else {
+          var chart = nv.models.lineChart()
+                        .x(function(d) { return d[0] })   //We can modify the data accessor functions...
+                        .y(function(d) { return d[1] })   //...in case your data is formatted differently.
+                        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                        .transitionDuration(350)  //how fast do you want the lines to transition?
+                        .clipEdge(true);
+
+          var axis_label = 'Network Difficulty';
+      }
+
+        // Format x-axis labels with custom function.
+        chart.xAxis
+            .tickFormat(function(d) { return d3.time.format(date_format)(new Date(d)) })
+            .scale(d3.time.scale())
+            .axisLabel('Time')
+            .axisLabelDistance(30);
+
+        chart.yAxis
+            .tickFormat(d3.format(',.2f'))
+            .axisLabel(axis_label)
+            .axisLabelDistance(25);
+
+        chart.forceY([0, d3.max(values_no_stamp)*1.1 ]);
+
+        d3.select('#' + target + ' svg')
+          .datum(clean_data)
+          .call(chart);
+
+        $('#' + target + ' img').hide()
+
+        nv.utils.windowResize(chart.update);
+      });
+    });
+  }
+
+  // Initial graph generation
+  generate_network_data(target, request_url, date_format, graph_type, network_block_time);
 
 }

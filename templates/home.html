@@ -43,7 +43,7 @@ $(document).ready(function() {
                         {{ _('Paste your %(coin)s address for quick access to individualized stats.', coin = config['coin_name']) }}
                         {% if 'recent_users' in session %}
                           <h4>{{ _('Recently Visited Stats') }}:</h4>
-                          {% for address in session['recent_users'][:2] %}
+                          {% for address, _ in session['recent_users'][:2] %}
                           <h5><a href="/{{ address }}">{{ address }}</a></h5>
                           {% endfor %}
                         {% endif %}
