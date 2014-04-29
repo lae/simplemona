@@ -117,9 +117,9 @@ mpos_api_keys:
 # Coin/Branding
 # =======================================================================
 # Website name
-site_name: Simple Doge
+site_name: Simple Mona
 # Website title
-site_url: simpledoge.com
+site_url: simplemona.com
 # the path that will be postfixed with the current git hash in the footer.
 # comment out to remove the footer mark
 repopath: https://github.com/liliff/simplemona/commit/
