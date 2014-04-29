@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-04-29 01:03-0500\n"
-"PO-Revision-Date: 2014-04-29 01:10-0600\n"
+"PO-Revision-Date: 2014-04-29 02:37-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -462,7 +462,6 @@ msgid "Difficulty to solve the current block"
 msgstr ""
 
 #: templates/network_stats.html:45 templates/network_stats.html:89
-#, fuzzy
 msgid "Network Hashrate"
 msgstr "ネットワークハッシュレート"
 
