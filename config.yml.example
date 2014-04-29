@@ -127,7 +127,7 @@ repopath: https://github.com/liliff/simplemona/commit/
 reward: 50
 # the expected time for the network to find a block in seconds. used for
 # computing network hashrate
-block_time: 60
+block_time: 90
 # the colloquial name of the coin
 coin_name: Mona
 site_title: Simple Mona
