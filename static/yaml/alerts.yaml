@@ -1,3 +1,16 @@
+#- title: Frontend Update
+#  severity: warning
+#  date: 2014.04.29 15:18 JST
+#  key: 16
+#  body: |
+#    Currently updating the frontend, so some things may not work. Mining
+#    apparati are fine.
+#- title: Stratum Update
+#  severity: warning
+#  date: 2014.04.29 11:24 JST
+#  key: 15
+#  body: |
+#    Strata will be restarted for a quick update at 12 JST.<br />
 #- title: Data Issues
 #  severity: danger
 #  date: 2014.04.17 04:37 JST
