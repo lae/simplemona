@@ -19,6 +19,9 @@ SECRET_KEY: 'something_really_secret'
 # database table at some point
 redacted_addresses:
     - dsflkgsdlfkgsld;fkgsl;dfkg
+# the amount of time a action type signed message can be used for before
+# expiring (in seconds)
+#message_expiry: 7200
 
 # connection information for the coinserver RPC
 coinserv:
@@ -105,13 +108,26 @@ rpc_url: http://simplemona.com
 # LTC, etc
 payout_prefix: M
 
+# Mimic some MPOS stuff
+# ========================================================================
+# Allowed API keys
+mpos_api_keys:
+    - asdf
+
 # Coin/Branding
 # =======================================================================
+# Website name
+site_name: Simple Mona
+# Website title
+site_url: simplemona.com
 # the path that will be postfixed with the current git hash in the footer.
 # comment out to remove the footer mark
 repopath: https://github.com/liliff/simplemona/commit/
 # the block reward. Used to calculate averages, etc
 reward: 50
+# the expected time for the network to find a block in seconds. used for
+# computing network hashrate
+block_time: 90
 # the colloquial name of the coin
 coin_name: Mona
 site_title: Simple Mona

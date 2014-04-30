@@ -124,8 +124,7 @@ class RPCClient(object):
                 logger.warn("User {} has been excluded due to invalid address"
                             .format(user))
 
-
-        """for user, amount, id in bonus_payouts:
+        for user, amount, id in bonus_payouts:
             if user.startswith(current_app.config['payout_prefix']):
                 totals.setdefault(user, 0)
                 totals[user] += amount
@@ -133,8 +132,7 @@ class RPCClient(object):
                 bids[user].append(id)
             else:
                 logger.warn("User {} has been excluded due to invalid address"
-                            .format(user))"""
-
+                            .format(user))
 
         # identify the users who meet minimum payout and format for sending
         # to rpc

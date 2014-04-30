@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% set active_page = "network_stats" %}
+{% set page_title = gettext("Network Stats - Difficulty and Network Hashrate graphs for %(coin)s mining pool", coin = config['coin_name']) %}
+{% block body %}
+<script>
+$(document).ready(function() {
+  {# Initial graph generation #}
+  generate_network_graph('netdifficulty-chart', 'hour', '%H:%M %p', 'netdiff', 0);
+  generate_network_graph('nethashrate-chart', 'month', '%H:%M %p', 'netdiff', {{ network_block_time }});
+});
+</script>
+
+<div class="row page-header">
+  <h2 style="word-wrap:break-word;">{{ _('Network Stats') }}</h2>
+  <br>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <small>{{ _('Avg Network Difficulty') }}</small>&nbsp;
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
+                     title="{{ _('The average difficulty for the last 500 blocks') }}"></i>
+        <br>
+        <h4>
+          <p><span>{{ '{:8,}'.format(network_avg_difficulty|round(2)) }}</span></p>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <small>{{ _('Network&nbsp;Difficulty') }}</small>&nbsp;
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
+                     title="{{ _('Difficulty to solve the current block') }}"></i>
+        <br>
+        <h4>
+          <p><span>{{ '{:8,}'.format(network_difficulty|round(2)) }}</span></p>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <small>{{ _('Network Hashrate') }}</small>&nbsp;
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
+                     title="{{ _('Total hashrate for the network') }}"></i>
+        <br>
+        <h4>
+          <p><span>{{ '{:8,}'.format((network_hashrate/1000000) |round(2)) }}&nbsp;MH/sec</span></p>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-body text-center">
+        <small>{{ _('Blockheight') }}</small>&nbsp;
+        <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right"
+                     title="{{ _('Number of blocks in the blockchain') }}"></i>
+        <br>
+        <h4>
+          <p><span>{{ '{:8,}'.format(network_blockheight) }}</span></p>
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row row-header">
+  <div class="col-lg-12">
+    <h2>{{ _('Network Difficulty') }}</h2>
+    <br>
+      <ul class="nav nav-tabs">
+        <li class="active tab"><a id="hour" data-target="hour" data-format="%M:%S" data-html-target="netdifficulty-chart"
+             data-graph-type="netdiff" data-net-block-time="0">{{ _('Hour') }}</a></li>
+        <li class="tab"><a id="day" data-target="day" data-format="%H:%M %p" data-html-target="netdifficulty-chart"
+            data-graph-type="netdiff" data-net-block-time="0">{{ _('Day') }}</a></li>
+        <li class="tab"><a id="month" data-target="month" data-format="%m/%d %H:%M" data-html-target="netdifficulty-chart"
+            data-graph-type="netdiff" data-net-block-time="0">{{ _('Month') }}</a></li>
+      </ul>
+    <div id="netdifficulty-chart" style="height:400px;">
+      <img src="{{ config['assets_address'] | safe }}/img/712.GIF" style="position:absolute;padding-top:150px;padding-left:400px;"><svg></svg>
+    </div>
+  </div>
+</div>
+<div class="row row-header">
+  <div class="col-lg-12">
+    <h2>{{ _('Network Hashrate') }}</h2>
+    <br>
+      <ul class="nav nav-tabs">
+        <li class="tab"><a id="hour" data-target="hour" data-format="%M:%S" data-html-target="nethashrate-chart"
+            data-graph-type="netdiff" data-net-block-time="{{ network_block_time }}">{{ _('Hour') }}</a></li>
+        <li class="tab"><a id="day" data-target="day" data-format="%H:%M %p" data-html-target="nethashrate-chart"
+            data-graph-type="netdiff" data-net-block-time="{{ network_block_time }}">{{ _('Day') }}</a></li>
+        <li class="active tab"><a id="month" data-target="month" data-format="%m/%d %H:%M" data-html-target="nethashrate-chart"
+            data-graph-type="netdiff" data-net-block-time="{{ network_block_time }}">{{ _('Month') }}</a></li>
+      </ul>
+    <div id="nethashrate-chart" style="height:400px;">
+      <img src="{{ config['assets_address'] | safe }}/img/712.GIF" style="position:absolute;padding-top:150px;padding-left:400px;"><svg></svg>
+    </div>
+  </div>
+</div>
+{% endblock %}

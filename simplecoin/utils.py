@@ -4,10 +4,9 @@ import time
 import itertools
 
 import yaml
-from flask import current_app
+from flask import current_app, session
 from sqlalchemy.sql import func
 
-import requests
 from bitcoinrpc import CoinRPCException
 from . import db, coinserv, cache, root
 from .models import (DonationPercent, OneMinuteReject, OneMinuteShare,
@@ -19,8 +18,15 @@ class CommandException(Exception):
     pass
 
 
+@cache.cached(timeout=3600, key_prefix='all_blocks')
+def all_blocks():
+    return db.session.query(Block).order_by(Block.height.desc()).all()
+
 @cache.cached(timeout=60, key_prefix='last_block_time')
 def last_block_time():
+    return last_block_time_nocache()
+
+def last_block_time_nocache():
     """ Retrieves the last time a block was solved using progressively less
     accurate methods. Essentially used to calculate round time. """
     last_block = Block.query.order_by(Block.height.desc()).first()
@@ -44,6 +50,10 @@ def last_block_time():
 
 @cache.cached(timeout=60, key_prefix='last_block_share_id')
 def last_block_share_id():
+    return last_block_share_id_nocache()
+
+
+def last_block_share_id_nocache():
     last_block = Block.query.order_by(Block.height.desc()).first()
     if not last_block:
         return 0
@@ -54,11 +64,47 @@ def last_block_share_id():
 def last_block_found():
     last_block = Block.query.order_by(Block.height.desc()).first()
     if not last_block:
+        return None
+    return last_block
+
+
+def last_blockheight():
+    last = last_block_found()
+    if not last:
         return 0
-    return last_block.height
+    return last.height
+
+@cache.cached(timeout=3600, key_prefix='block_stats')
+def get_block_stats(average_diff):
+    blocks = all_blocks()
+    total_shares = 0
+    total_difficulty = 0
+    total_orphans = 0
+    for block in blocks:
+        total_shares += block.shares_to_solve
+        total_difficulty += block.difficulty
+        if block.orphan is True:
+            total_orphans += 1
+
+    total_blocks = len(blocks)
+
+    if total_orphans > 0 and total_blocks > 0:
+        orphan_perc = (float(total_orphans) / total_blocks) * 100
+    else:
+        orphan_perc = 0
+
+    if total_shares > 0 and total_difficulty > 0:
+        pool_luck = (total_difficulty * (2**32)) / (total_shares * (2**16))
+    else:
+        pool_luck = 1
+
+    coins_per_day = ((current_app.config['reward'] / (average_diff * (2**32 / 86400))) * 1000000)
+    effective_return = (coins_per_day * pool_luck) * ((100 - orphan_perc) / 100)
+    return pool_luck, effective_return, orphan_perc
 
 
-def get_typ(typ, address, window=True, worker=None):
+
+def get_typ(typ, address=None, window=True, worker=None, q_typ=None):
     """ Gets the latest slices of a specific size. window open toggles
     whether we limit the query to the window size or not. We disable the
     window when compressing smaller time slices because if the crontab
@@ -66,17 +112,21 @@ def get_typ(typ, address, window=True, worker=None):
     portion of data that should already be compressed not yet being
     compressed. """
     # grab the correctly sized slices
-    base = db.session.query(typ).filter_by(user=address)
+    base = db.session.query(typ)
 
+    if address is not None:
+        base = base.filter_by(user=address)
     if worker is not None:
         base = base.filter_by(worker=worker)
+    if q_typ is not None:
+        base = base.filter_by(typ=q_typ)
     if window is False:
         return base
     grab = typ.floor_time(datetime.datetime.utcnow()) - typ.window
     return base.filter(typ.time >= grab)
 
 
-def compress_typ(typ, address, workers, worker=None):
+def compress_typ(typ, workers, address=None, worker=None):
     for slc in get_typ(typ, address, window=False, worker=worker):
         if worker is not None:
             slice_dt = typ.floor_time(slc.time)
@@ -105,6 +155,16 @@ def get_pool_hashrate():
     # khash per second
     return (float(ten_min) * (2 ** 16)) / 600000
 
+@cache.cached(timeout=60, key_prefix='pool_workers')
+def get_pool_workers():
+    """ Retrieves the pool's worker count over the past 10 minutes. """
+    dt = datetime.datetime.utcnow()
+    twelve_ago = dt - datetime.timedelta(minutes=12)
+    two_ago = dt - datetime.timedelta(minutes=2)
+    ten_min = (OneMinuteShare.query.filter(OneMinuteShare.time >= twelve_ago,
+                                           OneMinuteShare.time <= two_ago))
+    ten_min = len(set(["%s.%s" % (s.user, s.worker) for s in ten_min]))
+    return ten_min
 
 @cache.cached(timeout=60, key_prefix='round_shares')
 def get_round_shares():
@@ -166,6 +226,10 @@ def total_bonus(user):
             filter_by(user=user).scalar() or 0.0)
 
 
+@cache.memoize(timeout=60)
+def get_network_hashrate():
+    return coinserv.getmininginfo()['networkhashps']/10.0**3
+
 @cache.cached(timeout=3600, key_prefix='get_pool_acc_rej')
 def get_pool_acc_rej():
     rejects = db.session.query(OneHourReject).order_by(OneHourReject.time.asc())
@@ -178,6 +242,13 @@ def get_pool_acc_rej():
         accepts = accepts.filter(OneHourShare.time >= rejects[0].time)
     accept_total = sum([hour.value for hour in accepts])
     return reject_total, accept_total
+
+
+def collect_acct_items(address, limit):
+    payouts = Payout.query.filter_by(user=address).order_by(Payout.id.desc()).limit(limit)
+    bonuses = BonusPayout.query.filter_by(user=address).order_by(BonusPayout.id.desc()).limit(limit)
+    return sorted(itertools.chain(payouts, bonuses),
+                  key=lambda i: i.created_at, reverse=True)
 
 
 def collect_user_stats(address):
@@ -197,16 +268,12 @@ def collect_user_stats(address):
     unconfirmed_balance = sum([payout.amount for payout in unconfirmed_balance])
     balance -= unconfirmed_balance
 
-    payouts = Payout.query.filter_by(user=address).order_by(Payout.id.desc()).limit(20)
-    bonuses = BonusPayout.query.filter_by(user=address).order_by(BonusPayout.id.desc()).limit(20)
-    acct_items = sorted(itertools.chain(payouts, bonuses),
-                        key=lambda i: i.created_at, reverse=True)
-    round_shares = cache.get('pplns_' + address) or 0
     pplns_cached_time = cache.get('pplns_cache_time')
     if pplns_cached_time != None:
         pplns_cached_time.strftime("%Y-%m-%d %H:%M:%S")
 
     pplns_total_shares = cache.get('pplns_total_shares') or 0
+    round_shares = cache.get('pplns_' + address) or 0
 
     # store all the raw data of we're gonna grab
     workers = {}
@@ -295,7 +362,7 @@ def collect_user_stats(address):
                 round_shares=round_shares,
                 pplns_cached_time=pplns_cached_time,
                 pplns_total_shares=pplns_total_shares,
-                acct_items=acct_items,
+                acct_items=collect_acct_items(address, 20),
                 total_earned=earned,
                 total_paid=total_payout_amount,
                 balance=balance,
@@ -334,7 +401,7 @@ def verify_message(address, message, signature):
     except ValueError:
         raise Exception("Second line must be integer timestamp!")
     now = time.time()
-    if abs(now - stamp) > 820:
+    if abs(now - stamp) > current_app.config.get('message_expiry', 840):
         raise Exception("Signature has expired!")
 
     if command not in commands:
@@ -359,3 +426,20 @@ def verify_message(address, message, signature):
             raise Exception("Invalid arguments provided to command!")
     else:
         raise Exception("Invalid signature! Coinserver returned " + str(res))
+
+def resort_recent_visit(recent):
+    """ Accepts a new dictionary of recent visitors and calculates what
+    percentage of your total visits have gone to that address. Used to dim low
+    percentage addresses. Also sortes showing most visited on top. """
+    # accumulate most visited addr while trimming dictionary. NOT Python3 compat
+    session['recent_users'] = []
+    for i, (addr, visits) in enumerate(sorted(recent.items(), key=lambda x: x[1], reverse=True)):
+        if i > 20:
+            del recent[addr]
+            continue
+        session['recent_users'].append((addr, visits))
+
+    # total visits in the list, for calculating percentage
+    total = float(sum([t[1] for t in session['recent_users']]))
+    session['recent_users'] = [(addr, (visits / total))
+                               for addr, visits in session['recent_users']]

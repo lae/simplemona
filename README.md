@@ -66,6 +66,18 @@ separate console.
 
     tail -f webserver.log
 
+It's also possible that gunicorn is failing to start completely, in which case
+you can run it by hand to see what's going wrong. Usually I have this running
+in a terminal multiplexer:
+
+    gunicorn simplecoin.wsgi_entry:app -p gunicorn.pid -b 0.0.0.0:9400 --access-logfile gunicorn.log
+
+If you're running powerpool as well you'll need to start a celery worker to process
+the tasks (found shares/blocks/stats etc) that it generates. You can run the worker
+like this:
+
+    python simplecoin/celery_entry.py -l INFO --beat
+
 Contributing
 ============
 

@@ -1,3 +1,78 @@
+- title: New updates
+  date: 2014.04.30 11:50 JST
+  body: |
+    Following Simple Doge's update, I've introduced the following interface
+    improvements to Simple Mona (copied over from Simple Doge):
+    <ul>
+      <li>Sorting for all tables on the site. Just click the headers to sort by that column.</li>
+      <li>Prioritized recently visited stats. The addresses you visit the most often will naturally be at the top of the list.</li>
+      <li>See orphan percentage, effective payout/MH/day, and all time luck on pool stats</li>
+      <li>View the networks difficulty/hashrate over time in our new Network Stats. Note that we're still smoothing out the kinks, so some things may be a bit off.</li>
+      <li>See all transactions for your address, instead of just the last 20</li>
+      <li>Set a donation amount that is isn't a whole number, like 1.5%</li>
+    </ul>
+    There were other backend improvements as well. For a list of all changes,
+    you can view the <a href="https://github.com/liliff/simplemona/releases/tag/v0.6.2">
+    release</a> on Github. As usual, feel free to report any bugs in Github's
+    Issue tracker (Japanese is OK).<br /><br />
+    Upcoming changes will be related to automated deployments and will involve
+    server moves. More information to come later. There will also be strata
+    updates soon, but will likely occur with the server moves.
+- title: Regarding recent downtime/最近の障害期間について
+  date: 2014.04.18 09:30 JST
+  body: |
+    One of our dedicated server providers, Dacentec, who hosts this web site
+    and tasks worker lost connectivity to the internet temporarily due to a
+    traffic surge to Cogent. This lasted temporarily, but resulted in causing
+    the RabbitMQ nodes on the stratum servers to disconnect from the RabbitMQ
+    node on this server. The configuration did not have proper failover, and
+    thus the queues on the stratum servers were lost (in other words - shares
+    and new block notifications stopped getting recorded).<br /><br />
+    ウェブサイトとワーカー管理用の専用サーバーを設置しているDacentec社が、
+    一時的なトラフィック増大によりインターネットから切断されました。これは
+    一時的なものでしたが、stratumサーバーがRabbitMQノードから切断される原因に
+    なりました。適切なフェイルオーバーを設定していなかったので、このように
+    stratum上のキューが失われてしまいました(要するに、シェアとブロック発見の
+    記録が止まりました)。<br /><br />
+    As the stratums were still online, blocks were found, and the rewards from
+    those blocks have been paid out. The payouts were estimated based on the
+    aggregate payout from the previous 5 recorded blocks, in the following
+    transactions:<br /><br />
+    その間もstratumはオンラインだったので、ブロックは発見されており、その報酬は
+    支払いました。支払いは最近5ブロックのトランザクションの平均から推測
+    しました。トランザクションは以下の通りです:
+    <blockquote><a href="http://abe.monash.pw/tx/02eba94b7fecfb53241550be98cff4aa81385d878717c6601f46859604e7addf">02eba94b7fecfb53241550be98cff4aa81385d878717c6601f46859604e7addf</a><br />
+    <a href="http://abe.monash.pw/tx/75a6d04ac05dc1b4a39a2795ce4eb4ddb9cec6c5a90e2bd3142c800efbaafe54">75a6d04ac05dc1b4a39a2795ce4eb4ddb9cec6c5a90e2bd3142c800efbaafe54</a></blockquote>
+    To prevent data loss from reoccuring in the future, the RabbitMQ cluster
+    will be configured for proper HA failover in the case of disconnect. I
+    will also be launching a Sensu monitoring instance for proper escalations
+    during emergencies like this one.<br /><br />
+    将来の再発時のデータ喪失を防止するために、RabbitMQクラスタが切断された時に
+    適切にシェアを保存するように設定します。今回のような緊急時用の監視ソフト
+    Sensuも用意する予定です。
+- title: -2% Fees are over!
+  date: 2014.04.12 16:00 JST
+  body: |
+    The -2% fee pool promo is now over. I will be keeping 0% fees running for
+    this pool, with a default donation of 1%. You can change this on your user 
+    stats page, but I would greatly appreciate keeping the donation fee intact 
+    to support the pool servers and development.<br /><br />
+    Thank you to neetvip, palon7, and some anonymous patrons for donating to 
+    the pool funds to help keep the promo going, and thank you to all of our 
+    new miners and I look forward to your continued patronage!<br /><br />
+    -2%手数料ボーナスは終わりました。デフォルト1%、最低0%の手数料はこのまま
+    維持します。ユーザ統計のページから変更することができますが、プールの維持と
+    開発を応援するためにそのままにしてくれると非常に嬉しいです。<br /><br />
+    PRのための資金を提供してくれたneet4vip、palon7、そして何人かの匿名の寄付に
+    感謝します。新規のマイナーの皆さんにも感謝します、今後も愛顧のほどよろしく
+    お願いいたします!
+- title: Payout Scheduling
+  date: 2014.04.10 11:30 JST
+  body: |
+    Payouts will be performed around every 12 hours (give or take a few hours, 
+    depending on if I'm available), to reduce client noise in miners wallets.~$
+    Thank you for understanding.<br />
+    支払いは12時間毎に行われます、。理解に感謝します。
 - title: 本稼働中！ Up and running!
   date: 2014.04.08
   body: |

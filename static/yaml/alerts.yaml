@@ -1,10 +1,73 @@
-- title: プールを新しくしました！/Newly Launched!
-  severity: success
-  date: 2014.04.08
-  key: 7
-  body: |
-    現在プールは本稼働中です。詳しくはニュースを見てください。<br />
-    We're now running in production mode. Please read the news for more info.
+#- title: Frontend Update
+#  severity: warning
+#  date: 2014.04.29 15:18 JST
+#  key: 16
+#  body: |
+#    Currently updating the frontend, so some things may not work. Mining
+#    apparati are fine.
+#- title: Stratum Update
+#  severity: warning
+#  date: 2014.04.29 11:24 JST
+#  key: 15
+#  body: |
+#    Strata will be restarted for a quick update at 12 JST.<br />
+#- title: Data Issues
+#  severity: danger
+#  date: 2014.04.17 04:37 JST
+#  key: 14
+#  body: |
+#    Data is now being recorded again, but the issue that existed over the past
+#    10 hours is still being looked into. 今は<a href="http://askmona.org/728#res_120">Ask Mona</a>を読んでください
+#- title: New York Stratum
+#  severity: warning
+#  date: 2014.04.12 15:06 JST
+#  key: 13
+#  body: |
+#    stratum.simplemona.com failed temporarily. stratum-ja was unaffected. 
+#`    stratum.simplemona.comは一時的に落ちました。stratum-jaは大丈夫です。
+#- title: Stratum Restarts
+#  severity: warning
+#  date: 2014.04.10 13:27 JST
+#  key: 12
+#  body: |
+#    Stratums were offline for a few seconds in order to restart recompiled 
+#    monacoind (for more outbound connections and RPC threads), and to change 
+#    VARDIFF to 8-1024.
+#- title: Payout Scheduling
+#  severity: success
+#  date: 2014.04.10 11:30 JST
+#  key: 11
+#  body: |
+#    Payouts will be performed around every 12 hours, to reduce client noise. 
+#    Thank you for understanding. 支払いは12時間毎に行われます。
+#- title: Stratum Restarts
+#  severity: warning
+#  date: 2014.04.10 06:46 JST
+#  key: 10
+#  body: |
+#    Stratums were offline for a few seconds in order to increase VARDIFF from 
+#    16-512 to 16-2048.
+#- title: Pool Promo
+#  severity: success
+#  date: 2014.04.09 23:55 JST
+#  key: 9
+#  body: |
+#    We're running with -2% fees for the time being (which means you get 2% more
+#    mona). Invite your friends here! しばらくの間 -2% の手数料(つまり2%多くMONA
+#    がもらえます)で運営します。 是非知り合いを紹介してください！
+#- title: Wonky statistics
+#  severity: warning
+#  date: 2014.04.09
+#  key: 8
+#  body: |
+#    Pool hashrate statistics are currently not showing up. Japanese stratum temporarily offline.
+#- title: プールを新しくしました！/Newly Launched!
+#  severity: success
+#  date: 2014.04.08
+#  key: 7
+#  body: |
+#    現在プールは本稼働中です。詳しくはニュースを見てください。<br />
+#    We're now running in production mode. Please read the news for more info.
 #- title: 新しいstratumの場所/New Stratum Location
 #  severity: success
 #  date: 2014.04.06
