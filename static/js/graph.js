@@ -289,7 +289,8 @@ generate_network_graph = function(target, request_url, date_format, graph_type, 
             .axisLabel(axis_label)
             .axisLabelDistance(25);
 
-        chart.forceY([0, d3.max(values_no_stamp)*1.1 ]);
+        chart.forceY([d3.min(clean_data[0].values, function(d) { return d[1]; })*0.95,
+                d3.max(clean_data[0].values, function(d) { return d[1]; })*1.05]);
 
         d3.select('#' + target + ' svg')
           .datum(clean_data)
