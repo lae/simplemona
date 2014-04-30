@@ -17,8 +17,8 @@ from . import db, root, cache, babel
 from .utils import (compress_typ, get_typ, verify_message, get_pool_acc_rej,
                     get_pool_eff, last_10_shares, collect_user_stats, get_adj_round_shares,
                     get_pool_hashrate, get_network_hashrate, last_block_time, get_alerts,
-                    last_block_found, all_blocks, get_block_stats, get_pool_workers,
-                    last_blockheight, resort_recent_visit, collect_acct_items)
+                    last_block_found, last_blockheight, resort_recent_visit,
+                    collect_acct_items, all_blocks, get_block_stats, get_pool_workers)
 
 
 main = Blueprint('main', __name__)
@@ -192,9 +192,13 @@ def last_block_api():
     b = last_block_found()
     if not b:
         return jsonify()
-    return jsonify(difficulty=b.difficulty, duration=str(b.duration),
-                   shares_to_solve=b.shares_to_solve, found_by=b.user,
-                   height=b.height, hash=b.hash)
+    return jsonify(difficulty=b.difficulty,
+                   duration=str(b.duration),
+                   shares_to_solve=b.shares_to_solve,
+                   found_by=b.user,
+                   luck=b.luck,
+                   height=b.height,
+                   hash=b.hash)
 
 
 @main.route("/index.php")
