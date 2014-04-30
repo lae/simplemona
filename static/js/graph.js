@@ -241,6 +241,8 @@ generate_network_graph = function(target, request_url, date_format, graph_type, 
 
         if (key == "")
           key = "[unnamed]";
+        if (network_block_time > 0)
+          key = 'nethash';
           clean_data.push({key: key, seriesIndex: 0, values: values});
       }
 
