@@ -6,7 +6,7 @@
 $(document).ready(function() {
   {# Initial graph generation #}
   generate_network_graph('netdifficulty-chart', 'hour', '%H:%M %p', 'netdiff', 0);
-  generate_network_graph('nethashrate-chart', 'hour', '%H:%M %p', 'netdiff', {{ network_block_time }});
+  generate_network_graph('nethashrate-chart', 'month', '%H:%M %p', 'netdiff', {{ network_block_time }});
 });
 </script>
 
@@ -89,11 +89,11 @@ $(document).ready(function() {
     <h2>{{ _('Network Hashrate') }}</h2>
     <br>
       <ul class="nav nav-tabs">
-        <li class="active tab"><a id="hour" data-target="hour" data-format="%M:%S" data-html-target="nethashrate-chart"
+        <li class="tab"><a id="hour" data-target="hour" data-format="%M:%S" data-html-target="nethashrate-chart"
             data-graph-type="netdiff" data-net-block-time="{{ network_block_time }}">{{ _('Hour') }}</a></li>
         <li class="tab"><a id="day" data-target="day" data-format="%H:%M %p" data-html-target="nethashrate-chart"
             data-graph-type="netdiff" data-net-block-time="{{ network_block_time }}">{{ _('Day') }}</a></li>
-        <li class="tab"><a id="month" data-target="month" data-format="%m/%d %H:%M" data-html-target="nethashrate-chart"
+        <li class="active tab"><a id="month" data-target="month" data-format="%m/%d %H:%M" data-html-target="nethashrate-chart"
             data-graph-type="netdiff" data-net-block-time="{{ network_block_time }}">{{ _('Month') }}</a></li>
       </ul>
     <div id="nethashrate-chart" style="height:400px;">
