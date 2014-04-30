@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-29 22:25-0500\n"
-"PO-Revision-Date: 2014-04-29 22:25-0600\n"
+"POT-Creation-Date: 2014-04-29 22:51-0500\n"
+"PO-Revision-Date: 2014-04-29 22:52-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -217,6 +217,11 @@ msgstr "プール統計"
 #: templates/base.html:157 templates/base.html:167
 msgid "User Stats"
 msgstr "ユーザー統計"
+
+#: templates/base.html:158 templates/base.html:168
+#: templates/network_stats.html:14
+msgid "Network Stats"
+msgstr "ネットワーク統計"
 
 #: templates/base.html:159 templates/base.html:169
 msgid "Round Summary"
@@ -440,10 +445,6 @@ msgid ""
 "Network Stats - Difficulty and Network Hashrate graphs for %(coin)s mining "
 "pool"
 msgstr "ネットワーク統計 - Simple %(coin)s "
-
-#: templates/network_stats.html:14
-msgid "Network Stats"
-msgstr "ネットワーク統計"
 
 #: templates/network_stats.html:19
 msgid "Avg Network Difficulty"
