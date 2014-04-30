@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-29 13:15-0500\n"
+"POT-Creation-Date: 2014-04-29 22:25-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,10 @@ msgstr ""
 msgid "Payout Transaction Pending"
 msgstr ""
 
+#: simplecoin/models.py:301 simplecoin/models.py:348
+msgid "Block Orphaned"
+msgstr ""
+
 #: simplecoin/models.py:306 simplecoin/models.py:353
 #, python-format
 msgid "%(confirms)d Block Confirms Remaining"
@@ -55,19 +59,15 @@ msgstr ""
 msgid "Payout Pending"
 msgstr ""
 
-#: simplecoin/models.py:348
-msgid "Block Orphaned"
-msgstr ""
-
-#: simplecoin/views.py:288
+#: simplecoin/views.py:292
 msgid "Not available"
 msgstr ""
 
-#: simplecoin/views.py:456
+#: simplecoin/views.py:460
 msgid "An error occurred: "
 msgstr ""
 
-#: simplecoin/views.py:458
+#: simplecoin/views.py:462
 msgid "Successfully changed!"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: templates/acct_table.html:21 templates/round_summary.html:79
+#: templates/acct_table.html:21 templates/round_summary.html:87
 msgid "Shares Contributed"
 msgstr ""
 
@@ -97,7 +97,7 @@ msgstr ""
 msgid "Mined"
 msgstr ""
 
-#: templates/acct_table.html:23 templates/round_summary.html:81
+#: templates/acct_table.html:23 templates/round_summary.html:89
 #, python-format
 msgid "Donation %%"
 msgstr ""
@@ -111,7 +111,7 @@ msgid "Total paid"
 msgstr ""
 
 #: templates/acct_table.html:26 templates/block_table.html:27
-#: templates/network_stats.html:58 templates/round_summary.html:17
+#: templates/network_stats.html:58 templates/round_summary.html:25
 msgid "Blockheight"
 msgstr ""
 
@@ -557,19 +557,19 @@ msgstr ""
 msgid "Round Summary - Information regarding the current round on Simple %(coin)s"
 msgstr ""
 
-#: templates/round_summary.html:12
+#: templates/round_summary.html:20
 msgid "Current Round Stats"
 msgstr ""
 
-#: templates/round_summary.html:19
+#: templates/round_summary.html:27
 msgid "Current height of the blockchain."
 msgstr ""
 
-#: templates/round_summary.html:30
+#: templates/round_summary.html:38
 msgid "Est.&nbsp;Shares&nbsp;Remaining"
 msgstr ""
 
-#: templates/round_summary.html:32
+#: templates/round_summary.html:40
 msgid ""
 "An estimation of the number of difficulty 1 shares remaining until "
 "completing a block. This number will be negative if we are unlucky. This "
@@ -577,11 +577,11 @@ msgid ""
 " a little as the difficulty changes"
 msgstr ""
 
-#: templates/round_summary.html:43
+#: templates/round_summary.html:51
 msgid "Est.&nbsp;Round&nbsp;Time&nbsp;Remaining"
 msgstr ""
 
-#: templates/round_summary.html:45
+#: templates/round_summary.html:53
 #, python-format
 msgid ""
 "Estimated time remaining until the next block is found. It assumes round "
@@ -589,11 +589,11 @@ msgid ""
 "be negative if we are in an unlucky round."
 msgstr ""
 
-#: templates/round_summary.html:56
+#: templates/round_summary.html:64
 msgid "Total&nbsp;N&nbsp;This&nbsp;Round"
 msgstr ""
 
-#: templates/round_summary.html:58
+#: templates/round_summary.html:66
 msgid ""
 "When the round is completed the payout will be based on this number of "
 "shares submitted just before the block was completed. This number is "
@@ -601,31 +601,31 @@ msgid ""
 "and multiplied by two."
 msgstr ""
 
-#: templates/round_summary.html:69
+#: templates/round_summary.html:77
 msgid "Top Users PPLNS Summary"
 msgstr ""
 
-#: templates/round_summary.html:70
+#: templates/round_summary.html:78
 msgid ""
 "All shares to be paid out, based on the Pay Per Last N Share algorithm. "
 "If a payout were to occur these would be extremely similar to the stats "
 "used to determine who gets paid what."
 msgstr ""
 
-#: templates/round_summary.html:71
+#: templates/round_summary.html:79
 #, python-format
 msgid "updated %(cached_time)s UTC"
 msgstr ""
 
-#: templates/round_summary.html:78
+#: templates/round_summary.html:86
 msgid "User"
 msgstr ""
 
-#: templates/round_summary.html:80
+#: templates/round_summary.html:88
 msgid "Hashrate"
 msgstr ""
 
-#: templates/round_summary.html:89
+#: templates/round_summary.html:97
 msgid "Anonymous"
 msgstr ""
 

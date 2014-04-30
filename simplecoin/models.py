@@ -298,7 +298,7 @@ class Transfer(AbstractConcreteBase, base):
             else:
                 return gettext("Payout Transaction Pending")
         elif self.block.orphan:
-            return "Block Orphaned"
+            return gettext("Block Orphaned")
         elif not self.block.mature:
 
             confirms = self.block.confirms_remaining
