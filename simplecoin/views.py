@@ -225,7 +225,7 @@ def mpos_pool_stats_api():
 #                "nethashrate": get_network_hashrate()
                 "nethashrate": round((difficulty * 2**32) / current_app.config['block_time'], 0)
                 }
-        ret['getpoolstatus'] = {"version": "0.3", "runtime": 0, "data": data}
+        ret['getpoolstatus'] = {"version": "0.6.3", "runtime": 0, "data": data}
 
     return jsonify(**ret)
 

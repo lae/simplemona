@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-29 22:25-0500\n"
+"POT-Creation-Date: 2014-04-29 22:51-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,6 +207,11 @@ msgstr ""
 
 #: templates/base.html:157 templates/base.html:167
 msgid "User Stats"
+msgstr ""
+
+#: templates/base.html:158 templates/base.html:168
+#: templates/network_stats.html:14
+msgid "Network Stats"
 msgstr ""
 
 #: templates/base.html:159 templates/base.html:169
@@ -418,10 +423,6 @@ msgstr ""
 msgid ""
 "Network Stats - Difficulty and Network Hashrate graphs for %(coin)s "
 "mining pool"
-msgstr ""
-
-#: templates/network_stats.html:14
-msgid "Network Stats"
 msgstr ""
 
 #: templates/network_stats.html:19
