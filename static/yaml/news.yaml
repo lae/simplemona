@@ -12,7 +12,7 @@
       <li>Set a donation amount that is isn't a whole number, like 1.5%</li>
     </ul>
     There were other backend improvements as well. For a list of all changes,
-    you can view the <a href="https://github.com/liliff/simplemona/releases/tag/v0.6.2">
+    you can view the <a href="https://github.com/liliff/simplemona/releases/tag/v0.6.3">
     release</a> on Github. As usual, feel free to report any bugs in Github's
     Issue tracker (Japanese is OK).<br /><br />
     Upcoming changes will be related to automated deployments and will involve
