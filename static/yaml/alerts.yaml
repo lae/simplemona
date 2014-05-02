@@ -1,3 +1,12 @@
+#- title: NY Stratum Down
+#  severity: danger
+#  date: 2014.04.30 21:11 JST
+#  key: 17
+#  body: |
+#    The server stratum.simplemona.com is on has experienced a kernel panic.
+#    It is currently being restored. As the VPN is also on this server, statistics
+#    are currently not being retrieved (however stratum-ja is functioning fine at
+#    this time).
 #- title: Frontend Update
 #  severity: warning
 #  date: 2014.04.29 15:18 JST
