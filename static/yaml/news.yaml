@@ -1,3 +1,21 @@
+- title: Monacoin v0.8.7.0
+  date: 2014.05.02 18:00 JST
+  body: |
+    Monacoin version 0.8.7.0 was released today and introduces a switch to
+    the <a href="http://www.reddit.com/r/Digibyte/comments/213t7b/what_is_digishield_how_it_works_to_retarget/">DigiShield</a>
+    difficulty retargeting algorithm at the 140000th block as well as a few bug
+    fixes and improvements. Please update your clients as soon as possible -
+    new builds can be found on <a href="http://monacoin.org/en/download.html">
+    monacoin.org</a>.<br /><br />
+    We'll be performing maintenance on the strata on 4 May, between 0:00 and 0:30
+    JST for monacoind updates.<br /><br />
+    Monacoinバージョン0.8.7.0が今日リリースされました。バージョン0.8.7.0では
+    <a href="http://www.reddit.com/r/Digibyte/comments/213t7b/what_is_digishield_how_it_works_to_retarget/">DigiShield</a>が
+    導入され、difficulty調整アルゴリズムが140,000ブロック以降変更されます。
+    早急に<a href="http://monacoin.org/ja/download.html">monacoin.org</a>から
+    クライアントをダウンロードし更新してください。<br /><br />
+    5月4日の日本時間0時から0時30分までmonacoindをアップデートするためstratumの
+    メンテナンスを行います。
 - title: New updates/アップデート
   date: 2014.04.30 11:50 JST
   body: |
