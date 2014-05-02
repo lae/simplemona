@@ -1,4 +1,4 @@
-- title: New updates
+- title: New updates/アップデート
   date: 2014.04.30 11:50 JST
   body: |
     Following Simple Doge's update, I've introduced the following interface
@@ -12,12 +12,27 @@
       <li>Set a donation amount that is isn't a whole number, like 1.5%</li>
     </ul>
     There were other backend improvements as well. For a list of all changes,
-    you can view the <a href="https://github.com/liliff/simplemona/releases/tag/v0.6.3">
+    you can view the <a href="https://github.com/liliff/simplemona/releases/tag/v0.6.2">
     release</a> on Github. As usual, feel free to report any bugs in Github's
     Issue tracker (Japanese is OK).<br /><br />
     Upcoming changes will be related to automated deployments and will involve
     server moves. More information to come later. There will also be strata
-    updates soon, but will likely occur with the server moves.
+    updates soon, but will likely occur with the server moves.<br /><br />
+    下記のSimple DogeのアップデートをSimple Monaに導入しました。
+    <ul>
+      <li>表中のヘッダをクリックすることでソートを可能に。</li>
+      <li>「最近見たアドレス」でアクセス頻度の高いアドレスが上位に来るように。</li>
+      <li>現在の実質収益、孤立の割合、プール運の表示。</li>
+      <li>ネットワーク統計にてネットワークDifficulty、ネットワークハッシュレートのグラフ表示。*まだ修正が必要で、表示が乱れる場合があります。</li>
+      <li>アドレスの全取引を表示。（今までは直近20個）</li>
+      <li>寄付率の小数指定を可能に。</li>
+    </ul>
+    これ以外にもバックエンドの改善等をしています。
+    <a href="https://github.com/liliff/simplemona/releases/tag/v0.6.2">GitHubにて</a>
+    全変更点を確認できます。何か問題を発見した場合は、気兼ねなくGitHubのIssue
+    trackerで報告してください。（日本語でOKです）<br /><br />
+    次回の変更は自動配布とサーバの移動に関するものです。詳細は追って
+    お知らせします。stratumのアップデートも行いますがサーバ移動の後の予定です。
 - title: Regarding recent downtime/最近の障害期間について
   date: 2014.04.18 09:30 JST
   body: |
