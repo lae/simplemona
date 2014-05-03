@@ -1,12 +1,17 @@
+#- title: Maintenance
+#  severity: warning
+#  date: 2014.05.04 01:10 JST
+#  key: 19
+#  body: |
+#    Starting maintenance later than scheduled. The strata will be temporarily 
+#    offline for the monacoind update.
 - title: Monacoin 0.8.7.0 hard fork
   severity: success
   date: 2014.05.02 18:00 JST
   key: 18
   body: |
-    Please update your clients. We will perform some maintenance soon, please
-    see the <a href="/news">latest news post</a>.<br />
-    クライアントを更新してください。近いうちにメンテナンスを行う予定です。
-    <a href="/news">ニュース</a>を参照してください。
+    Please update your clients. Please see the <a href="/news">latest news post</a>.<br />
+    クライアントを更新してください。 <a href="/news">ニュース</a>を参照してください。
 #- title: NY Stratum Down
 #  severity: danger
 #  date: 2014.04.30 21:11 JST
