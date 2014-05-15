@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-29 22:51-0500\n"
-"PO-Revision-Date: 2014-04-29 22:52-0600\n"
+"POT-Creation-Date: 2014-05-15 18:27-0500\n"
+"PO-Revision-Date: 2014-05-15 18:31-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -200,7 +200,7 @@ msgstr "ラウンド運"
 msgid "Home"
 msgstr "ホーム"
 
-#: templates/base.html:154 templates/base.html:175 templates/home.html:114
+#: templates/base.html:154 templates/base.html:175 templates/home.html:124
 #: templates/news.html:3
 msgid "News"
 msgstr "ニュース"
@@ -307,6 +307,28 @@ msgstr ""
 "ます。"
 
 #: templates/home.html:23
+#, python-format
+msgid "If you don't already have a wallet, sign up for one at %(onwallet)s."
+msgstr ""
+"もしウォレットアドレスがいないので、%(onwallet)sを登録してアドレス作って。"
+
+#: templates/home.html:24
+msgid "Then download any miner:"
+msgstr " 次にどれかをダウンロードして:"
+
+#: templates/home.html:27
+msgid "For NVidia cards:"
+msgstr "NVidiaなら:"
+
+#: templates/home.html:28
+msgid "For Radeon cards:"
+msgstr "Radeonなら:"
+
+#: templates/home.html:29
+msgid "For CPU:"
+msgstr "CPUなら:"
+
+#: templates/home.html:33
 msgid ""
 "Configure your stratum client with the information below. Worker name can be "
 "anything you'd like:"
@@ -314,35 +336,35 @@ msgstr ""
 "下記の情報を使ってあなたのstratumクライアントの設定してください。ワーカーの名"
 "前は何でも良いです。"
 
-#: templates/home.html:26
+#: templates/home.html:36
 msgid "URL"
 msgstr "URL"
 
-#: templates/home.html:27
+#: templates/home.html:37
 msgid "Port"
 msgstr "ポート"
 
-#: templates/home.html:30
+#: templates/home.html:40
 msgid "Username"
 msgstr "ユーザー名"
 
-#: templates/home.html:30
+#: templates/home.html:40
 msgid "[Your wallet address].[Worker Name]"
 msgstr "[あなたのウォレットアドレス].[ワーカー名]"
 
-#: templates/home.html:31
+#: templates/home.html:41
 msgid "Password"
 msgstr "パスワード"
 
-#: templates/home.html:31
+#: templates/home.html:41
 msgid "anything or empty"
 msgstr "何でもOKです"
 
-#: templates/home.html:32
+#: templates/home.html:42
 msgid "cgminer example"
 msgstr "cgminerの例"
 
-#: templates/home.html:35
+#: templates/home.html:45
 #, python-format
 msgid ""
 "Check your stats and estimated payout by entering your %(coin)s address "
@@ -351,24 +373,24 @@ msgstr ""
 "あなたの統計情報と予想支払金を確認するには、下の欄にあなたの%(coin)sアドレス"
 "を入力してください:"
 
-#: templates/home.html:43 templates/stats.html:44
+#: templates/home.html:53 templates/stats.html:44
 #, python-format
 msgid "Paste your %(coin)s address for quick access to individualized stats."
 msgstr "個別の統計を見るためにあなたの%(coin)sアドレスをペーストしてください。"
 
-#: templates/home.html:45
+#: templates/home.html:55
 msgid "Recently Visited Stats"
 msgstr "最近見たアドレス"
 
-#: templates/home.html:52 templates/stats.html:59
+#: templates/home.html:62 templates/stats.html:59
 msgid "View Stats"
 msgstr "統計情報を見る"
 
-#: templates/home.html:67
+#: templates/home.html:77
 msgid "No registration"
 msgstr "登録不要"
 
-#: templates/home.html:68
+#: templates/home.html:78
 msgid ""
 "Unlike most pools, we don't require, or even provide, registration. Simply "
 "connect to our stratum servers with your wallet address."
@@ -376,11 +398,11 @@ msgstr ""
 "よくあるプールと違い、登録は必要ありません。あなたのウォレットアドレスを使っ"
 "て簡単に接続できます。"
 
-#: templates/home.html:73
+#: templates/home.html:83
 msgid "Secure"
 msgstr "安全"
 
-#: templates/home.html:74
+#: templates/home.html:84
 msgid ""
 "No registration means your credentials can't become compromised, because you "
 "don't have any! All pool funds are kept off server for increased security."
@@ -388,11 +410,11 @@ msgstr ""
 "登録不要ということはあなたの経歴が危険にさらされることはありません。プールの"
 "全資金はセキュリティを高めるためサーバー上にありません。"
 
-#: templates/home.html:79
+#: templates/home.html:89
 msgid "No minimum Payout"
 msgstr "最少支払金なし"
 
-#: templates/home.html:80
+#: templates/home.html:90
 #, python-format
 msgid ""
 "Payouts are processed every 12 hours. No minimum balance required. Payouts "
@@ -402,40 +424,40 @@ msgstr ""
 "支払いは12時間毎に行われます。最小支払金はありません。支払いはPPLNS方式で計算"
 "されます。デフォルトの寄付は1%%、最低0%%にも変更できます。"
 
-#: templates/home.html:87
+#: templates/home.html:97
 msgid "Features"
 msgstr "特徴"
 
-#: templates/home.html:97
+#: templates/home.html:107
 msgid "Insightful statistics"
 msgstr "詳細な統計"
 
-#: templates/home.html:98
+#: templates/home.html:108
 msgid ""
 "Graphs broken down by worker give you a good at-a-glance picture of what is "
 "going on."
 msgstr ""
 "ワーカー別に分析されたグラフは何が起こっているかひと目で分かりやすいです。"
 
-#: templates/home.html:100
+#: templates/home.html:110
 msgid "Easily name a worker anything you want"
 msgstr "ワーカーにはあなたの好きな簡単な名前をつければ良いです"
 
-#: templates/home.html:101
+#: templates/home.html:111
 msgid "Drill down graphs to an individual worker with a click"
 msgstr "クリックすればワーカー別の詳細なグラフになります"
 
-#: templates/home.html:102
+#: templates/home.html:112
 msgid "Tooltips display your hash rate for each worker at a given point"
 msgstr "ツールチップはその時点でのワーカーのハッシュレートを表示します"
 
-#: templates/home.html:103
+#: templates/home.html:113
 msgid ""
 "View in 'expanded' mode to see what percentage of your hashing power each of "
 "your rigs is"
 msgstr "'expaned'モードで見るとあなたのリグでの割合がどのくらいか分かります"
 
-#: templates/home.html:104
+#: templates/home.html:114
 msgid "Easily see your overall hash rate"
 msgstr "あなたの全体ハッシュレートを簡単に見ることができます"
 

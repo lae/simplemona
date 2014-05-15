@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-04-29 22:51-0500\n"
+"POT-Creation-Date: 2014-05-15 18:27-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: templates/base.html:154 templates/base.html:175 templates/home.html:114
+#: templates/base.html:154 templates/base.html:175 templates/home.html:124
 #: templates/news.html:3
 msgid "News"
 msgstr ""
@@ -296,85 +296,106 @@ msgid "No registration required, payouts go to the address used as username."
 msgstr ""
 
 #: templates/home.html:23
+#, python-format
+msgid "If you don't already have a wallet, sign up for one at %(onwallet)s."
+msgstr ""
+
+#: templates/home.html:24
+msgid "Then download any miner:"
+msgstr ""
+
+#: templates/home.html:27
+msgid "For NVidia cards:"
+msgstr ""
+
+#: templates/home.html:28
+msgid "For Radeon cards:"
+msgstr ""
+
+#: templates/home.html:29
+msgid "For CPU:"
+msgstr ""
+
+#: templates/home.html:33
 msgid ""
 "Configure your stratum client with the information below. Worker name can"
 " be anything you'd like:"
 msgstr ""
 
-#: templates/home.html:26
+#: templates/home.html:36
 msgid "URL"
 msgstr ""
 
-#: templates/home.html:27
+#: templates/home.html:37
 msgid "Port"
 msgstr ""
 
-#: templates/home.html:30
+#: templates/home.html:40
 msgid "Username"
 msgstr ""
 
-#: templates/home.html:30
+#: templates/home.html:40
 msgid "[Your wallet address].[Worker Name]"
 msgstr ""
 
-#: templates/home.html:31
+#: templates/home.html:41
 msgid "Password"
 msgstr ""
 
-#: templates/home.html:31
+#: templates/home.html:41
 msgid "anything or empty"
 msgstr ""
 
-#: templates/home.html:32
+#: templates/home.html:42
 msgid "cgminer example"
 msgstr ""
 
-#: templates/home.html:35
+#: templates/home.html:45
 #, python-format
 msgid ""
 "Check your stats and estimated payout by entering your %(coin)s address "
 "below:"
 msgstr ""
 
-#: templates/home.html:43 templates/stats.html:44
+#: templates/home.html:53 templates/stats.html:44
 #, python-format
 msgid "Paste your %(coin)s address for quick access to individualized stats."
 msgstr ""
 
-#: templates/home.html:45
+#: templates/home.html:55
 msgid "Recently Visited Stats"
 msgstr ""
 
-#: templates/home.html:52 templates/stats.html:59
+#: templates/home.html:62 templates/stats.html:59
 msgid "View Stats"
 msgstr ""
 
-#: templates/home.html:67
+#: templates/home.html:77
 msgid "No registration"
 msgstr ""
 
-#: templates/home.html:68
+#: templates/home.html:78
 msgid ""
 "Unlike most pools, we don't require, or even provide, registration. "
 "Simply connect to our stratum servers with your wallet address."
 msgstr ""
 
-#: templates/home.html:73
+#: templates/home.html:83
 msgid "Secure"
 msgstr ""
 
-#: templates/home.html:74
+#: templates/home.html:84
 msgid ""
 "No registration means your credentials can't become compromised, because "
 "you don't have any! All pool funds are kept off server for increased "
 "security."
 msgstr ""
 
-#: templates/home.html:79
+#: templates/home.html:89
 msgid "No minimum Payout"
 msgstr ""
 
-#: templates/home.html:80
+#: templates/home.html:90
 #, python-format
 msgid ""
 "Payouts are processed every 12 hours. No minimum balance required. "
@@ -382,39 +403,39 @@ msgid ""
 "amount is 1%%, lowerable to 0%%"
 msgstr ""
 
-#: templates/home.html:87
+#: templates/home.html:97
 msgid "Features"
 msgstr ""
 
-#: templates/home.html:97
+#: templates/home.html:107
 msgid "Insightful statistics"
 msgstr ""
 
-#: templates/home.html:98
+#: templates/home.html:108
 msgid ""
 "Graphs broken down by worker give you a good at-a-glance picture of what "
 "is going on."
 msgstr ""
 
-#: templates/home.html:100
+#: templates/home.html:110
 msgid "Easily name a worker anything you want"
 msgstr ""
 
-#: templates/home.html:101
+#: templates/home.html:111
 msgid "Drill down graphs to an individual worker with a click"
 msgstr ""
 
-#: templates/home.html:102
+#: templates/home.html:112
 msgid "Tooltips display your hash rate for each worker at a given point"
 msgstr ""
 
-#: templates/home.html:103
+#: templates/home.html:113
 msgid ""
 "View in 'expanded' mode to see what percentage of your hashing power each"
 " of your rigs is"
 msgstr ""
 
-#: templates/home.html:104
+#: templates/home.html:114
 msgid "Easily see your overall hash rate"
 msgstr ""
 

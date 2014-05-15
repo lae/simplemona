@@ -20,6 +20,16 @@ $(document).ready(function() {
       <h3>{{ _('Quick start for mining:') }}</h3>
       <h4><b>{{ _('No registration required, payouts go to the address used as username.') }}</b></h4>
       <ol>
+          <li>{{ _('If you don\'t already have a wallet, sign up for one at %(onwallet)s.', onwallet=config['online_wallet']) }}</li>
+          <li>{{ _('Then download any miner:') }}
+            <small>
+              <pre>
+                {{ _('For NVidia cards:') }} <a href="https://mega.co.nz/#!UIBwiATb!6pCkYdYkLYQfMw5nZIQRVCjIi8teFj1_vtLaGNv74gY">https://mega.co.nz/#!UIBwiATb!6pCkYdYkLYQfMw5nZIQRVCjIi8teFj1_vtLaGNv74gY</a>
+                {{ _('For Radeon cards:') }} <a href="http://2chpool.com/files/cgminer-3.7.2-windows.zip">http://2chpool.com/files/cgminer-3.7.2-windows.zip</a>
+                {{ _('For CPU:') }} <a href="http://sourceforge.net/projects/cpuminer/files/">http://sourceforge.net/projects/cpuminer/files/</a>
+              </pre>
+            </small>
+          </li>
           <li>{{ _('Configure your stratum client with the information below. Worker name can be anything you\'d like:') }}
             <small>
               <pre>

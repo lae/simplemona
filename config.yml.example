@@ -150,6 +150,7 @@ strata:
     port: 8888
 # link to a good beginner guide
 beginner_guide: <a href="http://www.reddit.com/r/dogemining/wiki/index/mining_guide" target="_blank">Reddit</a>
+online_wallet: <a href="https://monappy.jp/">Monappy</a>
 
 # Logging
 # =======================================================================
