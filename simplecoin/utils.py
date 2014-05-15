@@ -18,7 +18,7 @@ class CommandException(Exception):
     pass
 
 
-@cache.cached(timeout=3600, key_prefix='all_blocks')
+@cache.cached(timeout=1800, key_prefix='all_blocks')
 def all_blocks():
     return db.session.query(Block).order_by(Block.height.desc()).all()
 
