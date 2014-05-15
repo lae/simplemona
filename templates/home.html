@@ -20,26 +20,27 @@ $(document).ready(function() {
       <h3>{{ _('Quick start for mining:') }}</h3>
       <h4><b>{{ _('No registration required, payouts go to the address used as username.') }}</b></h4>
       <ol>
-          <li>{{ _('If you don\'t already have a wallet, sign up for one at %(onwallet)s.', onwallet=config['online_wallet']) }}</li>
+          <li>{{ _('If you don\'t already have a wallet, sign up for one at %(onwallet)s.', onwallet=config['online_wallet'] | safe) }}</li>
           <li>{{ _('Then download any miner:') }}
             <small>
-              <pre>
-                {{ _('For NVidia cards:') }} <a href="https://mega.co.nz/#!UIBwiATb!6pCkYdYkLYQfMw5nZIQRVCjIi8teFj1_vtLaGNv74gY">https://mega.co.nz/#!UIBwiATb!6pCkYdYkLYQfMw5nZIQRVCjIi8teFj1_vtLaGNv74gY</a>
-                {{ _('For Radeon cards:') }} <a href="http://2chpool.com/files/cgminer-3.7.2-windows.zip">http://2chpool.com/files/cgminer-3.7.2-windows.zip</a>
-                {{ _('For CPU:') }} <a href="http://sourceforge.net/projects/cpuminer/files/">http://sourceforge.net/projects/cpuminer/files/</a>
-              </pre>
+<pre>
+{{ _('For NVidia cards:') }} <a href="https://mega.co.nz/#!UIBwiATb!6pCkYdYkLYQfMw5nZIQRVCjIi8teFj1_vtLaGNv74gY">https://mega.co.nz/#!UIBwiATb!6pCkYdYkLYQfMw5nZIQRVCjIi8teFj1_vtLaGNv74gY</a>
+{{ _('For Radeon cards:') }} <a href="http://2chpool.com/files/cgminer-3.7.2-windows.zip">http://2chpool.com/files/cgminer-3.7.2-windows.zip</a>
+{{ _('For CPU:') }} <a href="http://sourceforge.net/projects/cpuminer/files/">http://sourceforge.net/projects/cpuminer/files/</a>
+</pre>
             </small>
           </li>
           <li>{{ _('Configure your stratum client with the information below. Worker name can be anything you\'d like:') }}
             <small>
-              <pre>
+<pre>
 {% for stratum in config['strata'] %}<b>{{ _('URL') }}:</b> stratum+tcp://{{ stratum['address'] }}
 <b>{{ _('Port') }}:</b> {{ stratum['port'] }}
 {% if not stratum == config['strata'][-1] %}OR
 {% endif %}{% endfor %}
 <b>{{ _('Username') }}:</b> {{ _('[Your wallet address].[Worker Name]') }}
 <b>{{ _('Password') }}:</b> {{ _('anything or empty') }}
-<b>{{ _('cgminer example') }}:</b> ./cgminer -o stratum+tcp://{{ config['strata'][0]['address'] }}:{{ config['strata'][0]['port'] }} -u {{ config['catchall_address'] }}.nanashi -I 13</pre>
+<b>{{ _('cgminer example') }}:</b> ./cgminer -o stratum+tcp://{{ config['strata'][0]['address'] }}:{{ config['strata'][0]['port'] }} -u {{ config['catchall_address'] }}.nanashi -I 13
+</pre>
             </small>
           </li>
           <li>{{ _('Check your stats and estimated payout by entering your %(coin)s address below:', coin = config['coin_name']) }}</li>
