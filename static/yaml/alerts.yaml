@@ -1,4 +1,19 @@
 #- title: Maintenance
+#  severity: danger
+#  date: 2014.05.15 05:10 JST
+#  key: 21
+#  body: |
+#    We're currently performing maintenance.
+#- title: Simple Mona Reset
+#  severity: danger
+#  date: 2014.05.15 22:30 JST
+#  key: 20
+#  body: |
+#    An unidentified issue has been found with the running of Simple Mona. To
+#    resolve this issue ASAP, we will be performing maintenance and use a new
+#    database at 5AM JST. Old data will be available on an archive site later,
+#    as well.
+#- title: Maintenance
 #  severity: warning
 #  date: 2014.05.04 01:10 JST
 #  key: 19

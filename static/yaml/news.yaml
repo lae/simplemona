@@ -1,3 +1,21 @@
+- title: Server move and reset
+  date: 2014.05.15 06:45 JST
+  body: |
+    We've moved to a server in Detroit. All services are now hosted on one
+    isolated container - this should prevent any network-related issues from
+    causing Simple Mona to malfunction in any way. As a result, the Japanese
+    stratum has also been shutdown and stratum-ja.simplemona.com currently
+    points to stratum.simplemona.com. Multi-region environments still need
+    more stability testing, but work is planned to bring back a Japanese
+    stratum and eventually use multiple servers for high availability.<br /><br />
+    An acquaintance on Twitter/Ask Mona quickly identified an issue where
+    blocks were being paid out multiple times. I'll need to investigate further
+    as to what occurred - but this is the reason why all data has been reset.
+    A site with the older data will be brought up later for archival purposes.
+    The remaining payouts have been paid out.<br /><br />
+    The strata updates mentioned in an earlier news post have also been
+    performed as part of the new instance. It fixes a few connectivity issues
+    and a minor bug with vardiff shares.
 - title: Monacoin v0.8.7.0
   date: 2014.05.02 18:00 JST
   body: |
