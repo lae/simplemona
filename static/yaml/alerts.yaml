@@ -1,3 +1,17 @@
+- title: Block Rewards Promo/ブロックご褒美PR
+  severity: success
+  date: 2014.05.21 03:00 JST
+  key: 23
+  body: |
+    More info at <a href="/news">News</a>. 情報は<a href="/news">ニュース</a>でいます。
+#- title: monacoind update
+#  severity: warning
+#  date: 2014.05.17 11:55 JST
+#  key: 22
+#  body: |
+#    monacoind will need a restart for a pool-specific source modification (for performance reasons).
+#    Stratum will be down for a minute. Will perform this at 17 May 23:00 JST.<br />
+#    <span style="color: red;">This has been completed. 終了しました。</span>
 #- title: Maintenance
 #  severity: danger
 #  date: 2014.05.15 05:10 JST
@@ -20,13 +34,13 @@
 #  body: |
 #    Starting maintenance later than scheduled. The strata will be temporarily 
 #    offline for the monacoind update.
-- title: Monacoin 0.8.7.0 hard fork
-  severity: success
-  date: 2014.05.02 18:00 JST
-  key: 18
-  body: |
-    Please update your clients. Please see the <a href="/news">latest news post</a>.<br />
-    クライアントを更新してください。 <a href="/news">ニュース</a>を参照してください。
+#- title: Monacoin 0.8.7.0 hard fork
+#  severity: success
+#  date: 2014.05.02 18:00 JST
+#  key: 18
+#  body: |
+#    Please update your clients. Please see the <a href="/news">latest news post</a>.<br />
+#    クライアントを更新してください。 <a href="/news">ニュース</a>を参照してください。
 #- title: NY Stratum Down
 #  severity: danger
 #  date: 2014.04.30 21:11 JST
