@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: 0.1.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-05-15 18:27-0500\n"
-"PO-Revision-Date: 2014-05-15 18:31-0600\n"
+"PO-Revision-Date: 2014-05-20 12:44-0600\n"
 "Last-Translator: lae <sleepingkyoto@yahoo.co.jp>\n"
 "Language-Team: ja <sleepingkyoto@yahoo.co.jp>\n"
 "Language: ja\n"
@@ -309,8 +309,7 @@ msgstr ""
 #: templates/home.html:23
 #, python-format
 msgid "If you don't already have a wallet, sign up for one at %(onwallet)s."
-msgstr ""
-"もしウォレットアドレスがいないので、%(onwallet)sを登録してアドレス作って。"
+msgstr "ウォレットアドレスがない場合は、%(onwallet)sに登録してアドレスを作成。"
 
 #: templates/home.html:24
 msgid "Then download any miner:"
